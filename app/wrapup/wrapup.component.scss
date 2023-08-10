@@ -1,0 +1,78 @@
+.btnlabel{
+    font-size: 12px;
+}
+
+.saveCompleteBtn{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+#select-option {
+  
+    -webkit-appearance: menulist;
+    cursor: pointer;
+    
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+.Always {
+    display: none;
+    margin-right: 10px;
+}
+
+.show {
+    display: block ;    margin-right: 10px;
+
+}
+
+.showEapp{
+    display: block !important;    margin-right: 10px;
+
+}
+
+.showcsc{
+    display: none !important;
+}
+.wrapupdisplay{
+    position: fixed;
+    bottom: 50px;
+    margin-left: 10px;
+    padding-top: 6px;
+    width: 93.5%;
+    padding-bottom: 6px;
+    background: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.showHR {
+    display: none;
+}
+.showEA{
+    display: block !important;
+}
+
+.hidden{
+    display: none !important;
+}
+.caseIdLabel{
+    font-size: 13px;
+    color: #29487D;
+}
+
+ .custom-btn {
+     border-color: #003783;
+     color: #003783;
+
+ }
+
+ .custom-btn:hover {
+     background-color: #003783;
+
+     color: #ffffff;
+
+     border-color: #003783;
+
+ }

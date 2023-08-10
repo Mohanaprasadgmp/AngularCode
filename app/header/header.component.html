@@ -1,0 +1,620 @@
+<div class="row">
+  <div class="col-12 d-flex justify-content-between">
+    <div class="col-10 d-flex">
+      <div class="img-logo" style="cursor: pointer">
+        <img
+          src="../../assets/images/moelogo.svg.svg"
+          alt=""
+          height="45"
+          class="logo"
+        />
+      </div>
+      <div class="d-flex">
+        <div
+          class="status-dd d-flex justify-content-between align-items-center"
+        >
+          <span
+            class="statusColorgreen"
+            [ngClass]="{
+          statusColorgreen: selectedAgentState === 'Available',
+          statusColoryellow3: selectedAgentState === 'Lunch',
+          statusColoryellow4: selectedAgentState === 'Take 5',
+          statusColorred: selectedAgentState === 'PendingBusy',
+          statusColorred10: selectedAgentState === 'Pending',
+          statusColoryellow7: selectedAgentState === 'Default',
+          statusColorred2: selectedAgentState === 'Training',
+          statusColoryellow8 :  selectedAgentState === 'AgentRejected',
+          statusColorred7: selectedAgentState === 'Busy',
+          statusColorred8: selectedAgentState === 'MissedCallAgent',
+          statusColorred9: selectedAgentState === 'CallingCustomer',
+          statusColorred1: selectedAgentState === 'Briefing/Huddles',
+          statusColoryellow: selectedAgentState === 'AfterCallWork',
+          statusColorred3: selectedAgentState === 'eApptCall',
+          statusColorred6: selectedAgentState === 'Service Centre',
+          statusColorred4: selectedAgentState === 'Outbound Calls',
+          statusColorred5: selectedAgentState === 'Non-Call Admin',
+          statusColoryellow2: selectedAgentState === 'Email',
+          statusColoryellow5: selectedAgentState === 'Extended ACW',
+          statusColoryellow6: selectedAgentState === 'FailedConnectAgent',
+          statusColorblue: selectedAgentState === 'LoggedIn',
+          statusColorblue1: selectedAgentState === 'Offline',
+        }"
+            >&#x2022;</span
+          >
+          <select
+            name="select"
+            id="select-option"
+            class="form-control"
+            (change)="stateChange()"
+            [(ngModel)]="selectedAgentState"
+            style="cursor: pointer"
+            [disabled]="selectedAgentState === 'AfterCallWork'"
+          >
+            <option
+              *ngFor="let status of GetAgentState()"
+              [value]="status.name"
+            >
+              {{ status.name }}
+            </option>
+            <option
+              *ngIf="
+                agentStates &&
+                selectedAgentState &&
+                !IsAgentStateIncluded(selectedAgentState)
+              "
+              [value]="selectedAgentState"
+            >
+              {{ selectedAgentState }}
+            </option>
+          </select>
+          <div class="timer-new" style="color: white">{{ stateDuration }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2 d-flex justify-content-around align-items-center selectedagent" >
+      <div
+        *ngIf="
+          selectedAgentState === 'Available' ||
+          selectedAgentState === 'Lunch' ||
+          selectedAgentState === 'Take 5' ||
+          selectedAgentState === 'Training' ||
+          selectedAgentState === 'Briefing/Huddles' ||
+          selectedAgentState === 'Outbound Calls' ||
+          selectedAgentState === 'Non-Call Admin' ||
+          selectedAgentState === 'Extended ACW' ||
+          selectedAgentState === 'Email' ||
+          selectedAgentState === 'eApptCall' ||
+          selectedAgentState === 'Service Centre' ||
+          selectedAgentState === 'LoggedIn'
+        "
+        class="call-ic"
+        (click)="clearOutboundfield()"
+        style="cursor: pointer"
+        matTooltip="Dialpad"
+      >
+        <span
+          [cPopover]="popoverHtml"
+          cPopoverPlacement="bottom"
+          [cPopoverTrigger]="'click'"
+          cButton
+          class="keypadPopover"
+          color="danger"
+          size="lg"
+        >
+          <img src="../../assets/images/call_icon.svg" alt="" />
+          <ng-template #popoverHtml style="width: 70px">
+            <mat-tab-group>
+              <mat-tab label="Keypad">
+                <div class="col-12 popover-body">
+                  <div
+                    class="col-3 d-flex justify-content-between align-items-center p-1"
+                    style="
+                      background: #f0f0f0;
+                      border-top-left-radius: 4px;
+                      border-bottom-left-radius: 4px;
+                      height: 35px;
+                    "
+                  >
+                    <img
+                      src="../../assets/images/Flag_of_Singapore.png"
+                      width="25"
+                    />
+                    <p
+                      class="m-0 p-0"
+                      style="font-weight: 500; color: darkgray"
+                    >
+                      +65
+                    </p>
+                  </div>
+                  <div class="col-9">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="phoneCode"
+                        [maxlength]="8"
+                        (keypress)="onKeyPress($event)"
+                        [(ngModel)]="enteredNumber"
+                        style="
+                          width: 100%;
+                          border-top-right-radius: 4px;
+                          border-bottom-right-radius: 4px;
+                          height: 35px;
+                          font-family: 'Servdeskfont';
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 popover-body">
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('1')"
+                    >
+                      1
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('2')"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('3')"
+                    >
+                      3
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="col-12 popover-body"
+                  style="bottom: 20px; position: relative"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('4')"
+                    >
+                      4
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('5')"
+                    >
+                      5
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('6')"
+                    >
+                      6
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="col-12 popover-body"
+                  style="bottom: 40px; position: relative"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('7')"
+                    >
+                      7
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('8')"
+                    >
+                      8
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('9')"
+                    >
+                      9
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="col-12 popover-body"
+                  style="bottom: 60px; position: relative"
+                >
+                  <div class="col-4">
+                    <!-- <button
+                  class="btn btn-primary digits"
+                  (click)="dialpadFunction('*')"
+                >
+                  *
+                </button> -->
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('0')"
+                    >
+                      0
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <!-- <button
+                  class="btn btn-primary digits"
+                  (click)="dialpadFunction('#')"
+                >
+                  #
+                </button> -->
+                  </div>
+                </div>
+                <div
+                  class="col-12 popover-body"
+                  style="bottom: 80px; position: relative"
+                >
+                  <div class="col-4"></div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-success callbtn"
+                      (click)="makeOutboundCall()"
+                    >
+                      Call
+                    </button>
+                  </div>
+                  <div class="col-4"></div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Phonebook">
+                <p-orderList
+                  (click)="handleMenuItemClick($event)"
+                  [value]="quickConnectList"
+                  [(selection)]="selectedQuickConnectList"
+                  name="quickConnect"
+                  [listStyle]="{ height: '185px' }"
+                  filterBy="name"
+                  filterPlaceholder="Filter by name"
+                >
+                  <ng-template let-qc pTemplate="item">
+                    <div class="qc-item">
+                      <div
+                        (click)="handleMenuItemClick($event)"
+                        class="qc-list-detail"
+                      >
+                        <span>{{ qc.name }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-orderList>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                  *ngIf="
+                    quickConnectList.length > 0 && selectedQuickConnectList
+                  "
+                >
+                  <button
+                    class="btn btn-success qcMakeCall"
+                    (click)="onQuickCallClick()"
+                  >
+                    Call
+                  </button>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </ng-template>
+        </span>
+      </div>
+      <div
+        *ngIf="
+          selectedAgentState === 'Offline' ||
+          selectedAgentState === 'PendingBusy' ||
+          selectedAgentState === 'Pending' ||
+          selectedAgentState === 'Default' ||
+          selectedAgentState === 'AgentRejected' ||
+          selectedAgentState === 'Busy' ||
+          selectedAgentState === 'MissedCallAgent' ||
+          selectedAgentState === 'CallingCustomer' ||
+          selectedAgentState === 'FailedConnectAgent' ||
+          selectedAgentState === 'AfterCallWork'
+        "
+        class="call-ic"
+        (click)="clearOutboundfield()"
+        matTooltip="Dialpad"
+      >
+        <span>
+          <img
+            src="../../assets/images/call_icon.svg"
+            alt=""
+            style="opacity: 0.7"
+          />
+        </span>
+      </div>
+
+      <div
+        class="agentStatistic"
+        matTooltip="Agent Statistic"
+        style="cursor: pointer"
+        [matMenuTriggerFor]="agentStat"
+        (click)="loadTopStatistics()"
+      >
+        <mat-icon style="color: white"> insert_chart_outlined</mat-icon>
+        <mat-menu #agentStat="matMenu">
+          <div
+            class="fullTile"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              padding: 0px !important;
+            "
+            mat-menu-item
+          >
+            <div class="tile">
+              <p style="margin-bottom: 0px; margin-right: 6px;font-size: 13px">
+                <img
+                  src="../../assets/images/incoming-call.png"
+                  width="16" style="filter:opacity(0.5);"
+                  alt=""
+                />
+                &nbsp; Answered/Missed:
+              </p>
+
+              <div class="tilebg">
+                <p class="tilevalue">
+                  {{ TopStatisticsList.contactS_HANDLED }}/{{
+                    TopStatisticsList.contactS_MISSED
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="tile">
+              <p style="margin-bottom: 0px;margin-right: 6px; font-size: 13px">
+                <img src="../../assets/images/clock.png" width="16" alt="" style="filter:opacity(0.5);"/>
+                &nbsp; Average Handle Time:
+              </p>
+              <div class="tilebg">
+                <p class="tilevalue">
+                  {{ TopStatisticsList.interactioN_TIME }}
+                </p>
+              </div>
+            </div>
+            <div class="tile">
+              <p style="margin-bottom: 0px;margin-right: 6px; font-size: 13px">
+                <img src="../../assets/images/call.png" width="16" alt="" style="filter:opacity(0.5);"/>
+                &nbsp; After Call Work:
+              </p>
+
+              <div class="tilebg">
+                <p class="tilevalue">
+                  {{ TopStatisticsList.afteR_CONTACT_WORK_TIME }}
+                </p>
+              </div>
+            </div>
+            <div class="tile">
+              <p style="margin-bottom: 0px; margin-right: 6px;font-size: 13px">
+                <img
+                  src="../../assets/images/two-arrows.png"
+                  width="16" style="filter:opacity(0.5);"
+                  alt=""
+                />
+                &nbsp;Transfer Out:
+              </p>
+              <div class="tilebg">
+                <p class="tilevalue">
+                  {{ TopStatisticsList.contactS_TRANSFERRED_OUT }}
+                </p>
+              </div>
+            </div>
+            <div class="tile">
+              <p style="margin-bottom: 0px; font-size: 13px">
+                <img
+                  src="../../assets/images/pause-call.png"
+                  width="16" style="filter:opacity(0.5);"
+                  alt=""
+                />
+                &nbsp;Hold Time:
+              </p>
+              <div class="tilebg">
+                <p class="tilevalue">
+                  {{ TopStatisticsList.holD_TIME }}
+                </p>
+              </div>
+            </div>
+            <!-- <div class="tile">
+              <p style="margin-bottom: 0px; font-size: 13px">
+                <img src="../../assets/images/teamwork.png" width="16" alt="" />
+                &nbsp;Occupancy%:
+              </p>
+              <div class="tilebg">
+                <p class="tilevalue">{{ agentOccupancy }}%</p>
+              </div>
+            </div> -->
+          </div>
+        </mat-menu>
+      </div>
+
+      <div class="log-out" matTooltip="Settings" style="cursor: pointer">
+        <span [matMenuTriggerFor]="menu">
+          <mat-icon style="color: white">settings</mat-icon>
+        </span>
+        <mat-menu #menu="matMenu">
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+            "
+            mat-menu-item
+          >
+            <div class="d-flex align-items-center" >
+              <div class="d-flex" >
+                <img
+                  src="/assets/images/profile-user.png"
+                  width="20"
+                  height="20"  style="margin-right: 10px;filter:opacity(0.3)"
+                />
+                <span style="font-size: 12px; color: black">
+                  {{ loggedInUser }}</span
+                >
+              </div>
+            </div>
+            <div class="d-flex align-items-center" style="text-align: center">
+              <div class="d-flex">
+                <img src="/assets/images/group.png" width="20" height="20" style="margin-right: 10px;filter:opacity(0.3)"/>
+                <span style="font-size: 12px; color: black">
+                  {{ agentDepartment | uppercase }}</span
+                >
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="d-flex" >
+                <div>
+                  <img
+                    src="/assets/images/customer-support.png"
+                    width="20"
+                    height="20" style="margin-right: 10px;filter:opacity(0.3)"
+                  />
+                </div>
+                <div>
+                  <div *ngFor="let item of agentSecurityProfile">
+                    <span style="font-size: 12px; color: black">
+                      {{ item }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr style="color: black; margin-bottom: 0px" />
+          <div
+            *ngIf="showdeskphoneSoftphone"
+            class="label-g"
+            style="background: #f0f0f0; padding: 4px"
+          >
+            <label
+              for=""
+              style="color: black; padding-left: 18px; font-size: 14px"
+              ><b>Phone Type : </b></label
+            >
+          </div>
+
+          <div
+            style="display: flex; justify-content: space-around"
+            mat-menu-item
+            (click)="handleMenuItemClick($event)"
+            *ngIf="showdeskphoneSoftphone"
+          >
+            <div class="d-flex align-items-center">
+              <input
+                type="radio"
+                name="phonetype"
+                value="softphone"
+                (change)="handleChange($event)"
+                [checked]="phoneType === 'SOFT_PHONE'" 
+              />&nbsp;
+              <span style="font-size: 12px; color: black">SoftPhone</span>
+            </div>
+            <div class="d-flex align-items-center"> 
+              <input
+                type="radio"
+                name="phonetype"
+                value="deskphone"
+                (change)="handleChange($event)"
+                [checked]="phoneType === 'DESK_PHONE'"
+              />&nbsp;
+              <span style="font-size: 12px; color: black">DeskPhone</span>
+            </div>
+          </div>
+          <div class="phoneInput d-flex w-100 justify-content-center" *ngIf="showdeskphoneSoftphone">
+            <div *ngIf="deskphone" style="display: flex; height: 30px">
+              <input
+                class="searchText mb-0"
+                type="text"
+                placeholder="DeskPhone"
+                style="width: 235px;
+                margin-top: 4px;"
+                [(ngModel)]="deskPhoneNumber"
+                (click)="handleMenuItemClick($event)"
+              />
+              <!-- <button
+              class="btn btn-primary"
+              style="font-size: 14px; display: inherit"
+              (click)="updatePhoneConfig()"
+            >
+              Save
+            </button> -->
+            </div>
+          </div>
+          <div class="d-flex mt-2 justify-content-around">
+            <button
+              class="btn btn-primary"
+              style="
+                font-size: 12px;
+                background: #29487D;
+                border: 0px;
+              "
+              (click)="updatePhoneConfig()"
+            >
+              Save
+            </button>
+          </div>
+
+          <hr
+            style="color: black"
+            style="
+              margin-top: 8px;
+              margin-bottom: 0px;
+              border-top: 1px solid black;
+            "
+          />
+
+          <div class="label-g" style="background: #f0f0f0; padding: 4px">
+            <label
+              for=""
+              style="color: black; padding-left: 18px; font-size: 14px"
+              ><b>Download Log</b></label
+            >
+          </div>
+          <div
+            class="d-flex align-items-center;"
+            style="text-align: center; padding-left: 20px; padding-top: 8px"
+          >
+            <div
+              (click)="ccpService.downloadLog()"
+              class="d-flex align-items-center "
+              style="gap: 10px; cursor: pointer"
+            >
+              <img
+                src="../../assets/images/downloadlog.svg"
+                width="16"
+                height="16" style="filter:opacity(0.3);"
+              />
+              <span style="font-size: 12px; color: black"> Download Log</span>
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+
+      <div (click)="signOut()" matTooltip="Logout">
+        <mat-icon style="color: white; cursor: pointer"
+          >power_settings_new</mat-icon
+        >
+      </div>
+    </div>
+  </div>
+</div>

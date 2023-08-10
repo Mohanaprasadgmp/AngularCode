@@ -1,0 +1,141 @@
+<div *ngIf="data.action === 'addWrapup'">
+  <div class="header">
+    <span>Add Wrapup </span>
+  </div>
+
+  <div class="col-12 d-flex" style="padding: 20px 22px">
+    <div class="col-3">
+      <label for="" style="padding-top: 7px; font-weight: 600"
+        >WrapupCode <span class="asterick">*</span>:</label
+      >
+    </div>
+
+    <div class="col-9">
+      <input
+        class="searchText"
+        type="text"
+        placeholder="28 character limit"
+        [(ngModel)]="addWrapupCode"
+        maxlength="28"
+        (input)="validateAddInput()"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="addWrapup()"
+            [disabled]="!addWrapupCode"
+            style="font-size: 12px"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.action === 'editWrapup'">
+  <div class="header">
+    <span>Edit Wrapup </span>
+  </div>
+
+  <div class="col-12 d-flex" style="padding: 20px 22px">
+    <div class="col-3">
+      <label for="" style="padding-top: 7px; font-weight: 600"
+        >WrapupCode <span class="asterick">*</span>:</label
+      >
+    </div>
+
+    <div class="col-9">
+      <input
+        class="searchText"
+        type="text"
+        placeholder="28 character limit"
+        [(ngModel)]="editWrapupCode"
+        maxlength="28"
+        (input)="validateEditInput()"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="editWrapup()"
+            [disabled]="!editWrapupCode.trim()"
+            style="font-size: 12px"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.action === 'deleteWrapup'">
+  <div class="header">
+    <strong>Warning!</strong>
+  </div>
+  <div class="col-12 d-flex" style="padding: 20px 22px">
+    <div>
+      <label for=""
+        >Are you sure want to delete the wrapup <b>{{ deleteWrapName }}</b> ?
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="deleteWrapup()"
+            style="font-size: 12px"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

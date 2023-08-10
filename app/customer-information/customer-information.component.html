@@ -1,0 +1,636 @@
+<div class="customer-info">
+  <div class="row">
+    <div
+      class="row d-flex"
+      style="align-items: center"
+      [ngClass]="{
+      Always: whatScreenToDisplay === 'All',
+      show: whatScreenToDisplay === 'CSC',
+      showHR: whatScreenToDisplay === 'HR',
+    }"
+      *ngIf="whatScreenToDisplay != 'Eappointment'"
+    >
+      <br />
+      <br />
+      <!-- <div class="d-flex mt-2 mb-3">
+        <div class="col-2">
+          <label class="inputLabel" for="">Salutation & Name : </label>
+        </div>
+        <div class="col-2">
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplaySaluation"
+          />
+        </div>
+        <div class="col-2">
+          <label class="inputLabel" for="">NRIC or PERNR : </label>
+        </div>
+        <div class="col-2">
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplayNRIC"
+          />
+        </div>
+        <div class="col-2">
+          <label class="inputLabel" for="">Attachment : </label>
+        </div>
+        <div class="col-2">
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplaySchool"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex mt-2 mb-3">
+        <div class="col-2">
+          <label class="inputLabel" for="">Designation : </label>
+        </div>
+        <div class="col-2">
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplayDesignation"
+          />
+        </div>
+        <div class="col-2">
+          <label class="inputLabel" for="">Employee Group : </label>
+        </div>
+        <div class="col-2">
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplayEmployeegroup"
+          />
+        </div>
+      </div> -->
+      <div class="col-12 pt-2 d-flex">
+        <div class="col-3 textOnInput">
+          <label class="inputLabel" for="">Salutation & Name </label>
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplaySaluation"
+          />
+        </div>
+        <div class="col-3 textOnInput">
+          <label class="inputLabel" for="">NRIC or PERNR : </label>
+          <input
+          type="text"
+          class="inputFieldText"
+          [(ngModel)]="hrDataToDisplayNRIC"
+        />
+        </div>
+        <div class="col-3 textOnInput">
+          <label class="inputLabel" for="">Attachment : </label>
+          <input
+          type="text"
+          class="inputFieldText"
+          [(ngModel)]="hrDataToDisplaySchool"
+        />
+        </div>
+        <div class="col-3 textOnInput">
+          <label class="inputLabel" for="">Designation : </label>
+          <input
+          type="text"
+          class="inputFieldText"
+          [(ngModel)]="hrDataToDisplayDesignation"
+        />
+          </div>
+      </div>
+      <br />
+      <div class="col-12 pt-3 d-flex">
+        <div class="col-3 textOnInput">
+          <label class="inputLabel" for="">Employee Group : </label>
+          <input
+            type="text"
+            class="inputFieldText"
+            [(ngModel)]="hrDataToDisplayEmployeegroup"
+          />
+        </div>
+       
+      </div>
+    </div>
+
+    <div class="row d-flex mt-2 mb-3" *ngIf="whatScreenToDisplay != 'Eappointment'">
+      <div class="col-12 mt-2 mb-2 d-flex align-items-center" >
+        <div class="col-3 textOnInput">
+          <label class="inputLabel" for="">NRIC/Phone/Email</label>
+          <input
+          class="searchText mb-0 me-2"
+          type="search"
+          id="myInput"
+          placeholder="NRIC/Phone/Email"
+          style=" height: 32px"
+          title="Type in a name"
+          [(ngModel)]="NRICPhoneNumber"
+        />
+        </div>
+       
+        <button
+          type="button"
+          class="btn btn-outline-primary custom-btn me-2"
+          style="
+            /* width: 15%; */
+            height: 32px;
+            text-align: center;
+          "
+          (click)="searchBasedOnGivenTxt()"
+          [disabled]="!NRICPhoneNumber"
+        >
+         Search 
+        </button>
+        <button
+          style="height: 32px;"
+          type="button"
+          class="btn  custom-btn me-2"
+          (click)="createNewCustomer()"
+        >NewCustomer
+        </button>
+      </div>
+
+      <div class="col-6 otpSearch" *ngIf="whatScreenToDisplay == 'CSC'">
+        <div>
+          <div>
+            <label style="font-size: clamp(10px, 13px, 15px)" for=""
+              >Validate NRIC Number</label
+            >
+          </div>
+          <div style="font-size: clamp(10px, 13px, 15px); color: grey">
+            {{ nric }}
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: clamp(10px, 13px, 15px); height: 32px"
+          [ngClass]="{
+            singpassvalidated: showSingpassvalidated,
+            singpassnotvalidated: !showSingpassvalidated
+          }"
+          (click)="createNewCase()"
+        >
+          OTP validation and Success
+        </button>
+        <button
+          style="
+            font-size: 13px;
+            height: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+          "
+          type="button"
+          class="btn btn-outline-primary custom-btn"
+          (click)="refresh()"
+        >
+          Refresh
+        </button>
+      </div>
+    </div> 
+
+    <!-- Three table based on height adjustment -->
+    <div
+      class="d-grid mt-1"
+      [ngClass]="{
+        tableForCSC: whatScreenToDisplay === 'CSC',
+        tableForHR: whatScreenToDisplay === 'HR'
+      }"
+    
+      *ngIf="!displayTable"
+    >
+      <table class="tableHeader">
+        <thead>
+          <tr class="header">
+            <th>St</th>
+            <th>Full Name</th>
+            <th>Phone 1</th>
+            <th>Phone 2</th>
+            <th>Phone 3</th>
+            <th>NRIC</th>
+            <th>Primary Email</th>
+            <th>Last 3 Cases</th>
+            <th>New Case</th>
+          </tr>
+        </thead>
+        <tbody>
+         
+        </tbody>
+        
+        <!-- <tbody><span>No Data to Display</span></tbody> -->
+      </table>
+      <div style="width: 20%;margin: auto;padding:16px">
+        <img src="../../assets/images/nodatatodisplay.svg" alt="img-nodata" /><span class="ms-3">No Data to Display</span>
+        </div>
+    </div>
+    <div
+      class="d-grid mt-1"
+      [ngClass]="{
+        tableForCSC: whatScreenToDisplay === 'CSC',
+        tableForHR: whatScreenToDisplay === 'HR'
+      }"
+      *ngIf="
+        whatScreenToDisplay != 'Eappointment' &&
+        isConferenceEnabled !== '3' &&
+        displayTable
+      "
+    >
+      <table class="tableHeader">
+        <thead>
+          <tr class="header">
+            <th>St</th>
+            <th>Full Name</th>
+            <th>Phone 1</th>
+            <th>Phone 2</th>
+            <th>Phone 3</th>
+            <th>NRIC</th>
+            <th>Primary Email</th>
+            <th>Last 3 Cases</th>
+            <th>New Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let items of customerContentToShow"
+            (mouseenter)="showTooltip(items.CustomerName)"
+            (mouseleave)="hideTooltip()"
+          >
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Salatution }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <span (click)="detailInformationCustomer(items.CustomerLink)">{{
+                items.CustomerName
+              }}</span>
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Phone1 }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Phone2 }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Phone3 }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.NRIC }}
+            </td>
+            <td
+              [cTooltip]="items.PrimaryEmailAddress"
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <!-- {{ items.PrimaryEmail | truncate : "10" }} -->
+              {{ items.PrimaryEmailAddress }}
+            </td>
+
+            <td
+              style="padding-left: 35px"
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <button
+                style="
+                  font-size: 12px;
+                  height: 28px;
+                  text-align: center;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                type="button"
+                class="btn btn-outline-primary custom-btn"
+                (click)="
+                  last3Cases(
+                    items.Cases,
+                    items.CustomerLink,
+                    items.CustomerGUID,
+                    items.CustomerName
+                  )
+                "
+              >
+                View
+              </button>
+            </td>
+            <td
+              style="padding-left: 35px"
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <img
+                src="../../assets/images/expand-arrows.png"
+                alt=""
+                srcset=""
+                width="19"
+                (click)="NewCase(items.CustomerGUID, items.CustomerName)"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="width: 20%;margin: auto;padding: 8px;">
+        <img src="../../assets/images/nodatatodisplay.svg" alt="img-nodata" class="me-3"/><span>No Data to Display</span>
+        </div>
+    </div>
+    <div
+      class="d-grid mt-1"
+      [ngClass]="{
+        tableForCSC: whatScreenToDisplay === 'CSC',
+        tableForHR: whatScreenToDisplay === 'HR'
+      }"
+      *ngIf="
+        whatScreenToDisplay != 'Eappointment' &&
+        isConferenceEnabled === '3' &&
+        displayTable
+      "
+    >
+      <table class="tableHeader">
+        <thead>
+          <tr class="header">
+            <th>St</th>
+            <th>Full Name</th>
+            <th>Phone 1</th>
+            <th>Phone 2</th>
+            <th>Phone 3</th>
+            <th>NRIC</th>
+            <th>Primary Email</th>
+            <th>Last 3 Cases</th>
+            <th>New Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let items of customerContentToShow"
+            (mouseenter)="showTooltip(items.CustomerName)"
+            (mouseleave)="hideTooltip()"
+          >
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Salatution }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <span (click)="detailInformationCustomer(items.CustomerLink)">{{
+                items.CustomerName
+              }}</span>
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Phone1 }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Phone2 }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.Phone3 }}
+            </td>
+            <td
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.NRIC }}
+            </td>
+            <td
+              [cTooltip]="items.PrimaryEmailAddress"
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              {{ items.PrimaryEmailAddress }}
+            </td>
+
+            <td
+              style="padding-left: 35px"
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <button
+                style="
+                  font-size: 12px;
+                  height: 28px;
+                  text-align: center;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                type="button"
+                class="btn btn-outline-primary custom-btn"
+                (click)="
+                  last3Cases(
+                    items.Cases,
+                    items.CustomerLink,
+                    items.CustomerGUID,
+                    items.CustomerName
+                  )
+                "
+              >
+                View
+              </button>
+            </td>
+            <td
+              style="padding-left: 35px"
+              [ngClass]="{
+                handleWithCareFalse: items.TLCFlag === 'True'
+              }"
+            >
+              <img
+                src="../../assets/images/expand-arrows.png"
+                alt=""
+                srcset=""
+                width="19"
+                (click)="NewCase(items.CustomerGUID, items.CustomerName)"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="width: 20%;margin: auto;padding:10px">
+        <span><img src="../../assets/images/nodatatodisplay.svg" class="me-3" alt="img-nodata"/>No Data to Display</span>
+        </div>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      whatScreenToDisplay != 'Eappointment' &&
+      paginationAvailable &&
+      displayTable
+    "
+    class="paginator col-12 d-flex"
+  >
+    <div class="col-10"></div>
+    <div class="col-2 d-flex paginatorBtn">
+      <div (click)="previousPage()">
+        <button
+          type="button"
+          class="btn btn-primary btn-circle"
+          style="
+            width: 25px;
+            height: 25px;
+            border-radius: 30px;
+            padding: 0px;
+            border: #29487D;
+            background-color: white;
+            color: black;
+          "
+          [disabled]="btn_prev"
+        >
+          <mat-icon>fast_rewind</mat-icon>
+        </button>
+      </div>
+      <div class="paginatorFont">PREV</div>
+      <div class="paginatorFont">NEXT</div>
+      <div (click)="nextPage()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="btn_next"
+          style="
+            width: 25px;
+            height: 25px;
+            border-radius: 30px;
+            padding: 0px;
+            border: #29487D;
+            background-color: white;
+            color: black;
+          "
+        >
+          <mat-icon>fast_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="toolTipDataToDisplay.length > 0"
+    style="
+      width: max-content;
+      position: relative;
+      bottom: 230px;
+      background: white;
+      left: 28%;
+      box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 5px;
+      display: block;
+      border: 1px solid #d5d5d5;
+    "
+    (mouseenter)="cancelTooltipHide()"
+    (mouseleave)="hideTooltip()"
+    [style.display]="tooltipVisible ? 'block' : 'none'"
+  >
+    <table id="myTable" class="tableHeader">
+      <thead>
+        <tr class="header">
+          <th>Case Reference Number</th>
+          <th>Status</th>
+          <th>Mode of Contact</th>
+          <th>Contact Date and Time</th>
+          <th>Case Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let items of toolTipDataToDisplay">
+          <td>
+            {{ items.CaseReferenceNo }}
+          </td>
+          <td>
+            {{ items.Status }}
+          </td>
+          <td>
+            {{ items.ModeofContact }}
+          </td>
+          <td>
+            {{ items.ContactDateTime | date : "dd-MM-YYYY HH:MM:SS" }}
+          </td>
+          <td>
+            <button
+              style="
+                font-size: 12px;
+                height: 28px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              "
+              type="button"
+              class="btn btn-outline-primary custom-btn"
+              (click)="openTooltipview(items.CaseLink)"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-5"></div>
+      <div class="col-5" style="padding-bottom: 15px">
+        <button
+          class="btn btn-outline-primary custom-btn"
+          (click)="Redirect(tooltipNewCase)"
+          style="
+            font-size: 12px;
+            height: 30px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            margin-top: 2px;
+            margin-bottom: 2px;
+          "
+          mat-dialog-close
+        >
+          New Case
+        </button>
+      </div>
+    </div>
+    
+  </div>
+  <br />
+</div>

@@ -1,0 +1,105 @@
+<h1
+  mat-dialog-title
+  style="color: black; font-weight: 600; font-family: 'Servdeskfont'"
+>
+  Last 3 Cases
+</h1>
+<div mat-dialog-content>
+  <table id="myTable" class="tableHeader">
+    <thead>
+      <tr class="header">
+        <th>Case Reference Number</th>
+        <th>Status</th>
+        <th>Mode of Contact</th>
+        <th>Contact Date and Time</th>
+        <th>Case Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let items of tableData">
+        <td>
+          {{ items.CaseReferenceNo }}
+        </td>
+        <td>
+          {{ items.Status }}
+        </td>
+        <td>
+          {{ items.ModeofContact }}
+        </td>
+        <td>
+          {{ items.ContactDateTime | date : "dd-MM-YYYY HH:MM:SS" }}
+        </td>
+
+        <td>
+          <button
+            style="
+              font-size: 12px;
+              height: 28px;
+              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            type="button"
+            class="btn btn-outline-primary custom-btn"
+            (click)="openCaseLink(items.CaseLink)"
+          >
+            View
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions class="popupBtn">
+  <button
+    class="btn btn-outline-primary custom-btn"
+    (click)="Redirect()"
+    style="
+      font-size: 12px;
+      height: 30px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+    "
+    mat-dialog-close
+  >
+    New Case
+  </button>
+  <button
+    class="btn btn-outline-primary custom-btn"
+    style="font-size: 12px; position: relative; left: 6px"
+    mat-dialog-close
+  >
+    Close
+  </button>
+</div>
+
+<!-- <div *ngIf="data.action === 'callIncomingPannel'" id="snackbar">
+  <div class="callcontent">
+    <div class="calldetails">
+      <img src="../../assets/images/profileUser.png" width="75" />
+      <p class="pt-1">Mohan Prasad</p>
+      <h6>19:21:05</h6>
+    </div>
+    <div class="callActions">
+      <div class="d-grid">
+        <div class="answerEnd d-flex justify-content-evenly w-100">
+          <button type="button " class="Phone is-animating p-2"></button>
+          <img
+            class="endButtonIcon"
+            src="../../assets/images/reject.png"
+            width="45"
+            height="45"
+          />
+        </div>
+
+        <div class="clearportion pt-4">
+          <button type="button" class="btn btn-danger" style="width: 125px">
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

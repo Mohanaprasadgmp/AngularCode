@@ -1,0 +1,378 @@
+<div *ngIf="ccpService.isAuthenticated" class="col-12">
+  <app-header></app-header>
+</div>
+
+<div *ngIf="ccpService.isAuthenticated" class="row mainContent">
+  <div class="col-1 leftSide" style="position: fixed; height: 100vh;">
+    <!-- *ngIf="securityProfile && securityProfile.includes('Agent')" -->
+    <div
+      style="cursor: pointer"
+      matTooltip="Home"
+      matTooltipPosition="right"
+      *ngIf="
+        securityProfile &&
+        (securityProfile.includes('Admin_HR_Business_System') ||
+          securityProfile.includes('Admin_CSC_Business_System') ||
+          securityProfile.includes('Admin_HR_Business_Operation') ||
+          securityProfile.includes('Admin_CSC_Business_Operation') ||
+          securityProfile.includes('Admin_HR_User') ||
+          securityProfile.includes('Admin_CSC_User') ||
+          securityProfile.includes('Agent_CSC') ||
+          securityProfile.includes('Agent_HR') ||
+          securityProfile.includes('Admin'))
+      "
+    >
+      <mat-icon routerLink="/dashboard" class="call-li">home</mat-icon>
+      <br /><br />
+    </div>
+    <div
+      style="cursor: pointer"
+      *ngIf="
+        securityProfile &&
+        (securityProfile.includes('Admin_HR_Business_System') ||
+          securityProfile.includes('Admin_CSC_Business_System') ||
+          securityProfile.includes('Admin_HR_Business_Operation') ||
+          securityProfile.includes('Admin_CSC_Business_Operation') ||
+          securityProfile.includes('Admin_HR_User') ||
+          securityProfile.includes('Admin_CSC_User') ||
+          securityProfile.includes('Admin'))
+      "
+    >
+      <mat-icon matTooltip="Menu" [matMenuTriggerFor]="menu">menu</mat-icon>
+      <mat-menu #menu="matMenu" xPosition="after">
+        <button
+          mat-menu-item
+          routerLink="/broadcast"
+          class="custom-menu-item"
+          *ngIf="
+            securityProfile &&
+            (securityProfile.includes('Admin_HR_Business_System') ||
+              securityProfile.includes('Admin_CSC_Business_System') ||
+              securityProfile.includes('Admin'))
+          "
+        >
+          <div class="d-flex">
+            <img src="../../assets/images/radio.png" width="23" />&nbsp;&nbsp;
+            <span style="font-size: 15px; color: #02366c; font-weight: 500"
+              >Broadcast Management</span
+            >
+          </div>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/wrapup"
+          class="custom-menu-item"
+          *ngIf="
+            securityProfile &&
+            (securityProfile.includes('Admin_HR_Business_Operation') ||
+              securityProfile.includes('Admin_CSC_Business_Operation') ||
+              securityProfile.includes('Admin'))
+          "
+        >
+          <div class="d-flex">
+            <img src="../../assets/images/right.png" width="23" />&nbsp;&nbsp;
+            <span style="font-size: 15px; color: #02366c; font-weight: 500"
+              >Wrapup Management</span
+            >
+          </div>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/holiday"
+          class="custom-menu-item"
+          *ngIf="
+            securityProfile &&
+            (securityProfile.includes('Admin_HR_Business_System') ||
+              securityProfile.includes('Admin_CSC_Business_System') ||
+              securityProfile.includes('Admin'))
+          "
+        >
+          <div class="d-flex">
+            <img
+              src="../../assets/images/calendar-silhouette.png"
+              width="23"
+            />&nbsp;&nbsp;
+            <span style="font-size: 15px; color: #02366c; font-weight: 500"
+              >Holiday Management</span
+            >
+          </div>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/transcript"
+          class="custom-menu-item"
+          *ngIf="
+            securityProfile &&
+            (securityProfile.includes('Admin_HR_Business_System') ||
+              securityProfile.includes('Admin_CSC_Business_System') ||
+              securityProfile.includes('Admin'))
+          "
+        >
+          <div class="d-flex">
+            <img
+              src="../../assets/images/settings.png"
+              width="23"
+            />&nbsp;&nbsp;
+            <span style="font-size: 15px; color: #02366c; font-weight: 500"
+              >Call Transcription Download</span
+            >
+          </div>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/auditlog"
+          class="custom-menu-item"
+          *ngIf="
+            securityProfile &&
+            (securityProfile.includes('Admin_HR_Business_Operation') ||
+              securityProfile.includes('Admin_CSC_Business_Operation') ||
+              securityProfile.includes('Admin'))
+          "
+        >
+          <div class="d-flex">
+            <img src="../../assets/images/search.png" width="23" /> &nbsp;&nbsp;
+            <span style="font-size: 15px; color: #02366c; font-weight: 500"
+              >Admin Audit Download</span
+            >
+          </div>
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="sidebarBottom">
+      <!-- <div
+        *ngIf="
+          securityProfile &&
+          (securityProfile.includes('BuisnessOperation') ||
+            securityProfile.includes('SystemManagement') ||
+            securityProfile.includes('UserManagement'))
+        "
+        style="cursor: pointer"
+        matTooltipPosition="right"
+        (click)="goToConnect()"
+        matTooltip="RealTime Dashboard"
+      >
+        <img src="../../assets/images/connectlogo.png" width="22" height="22" />
+      </div> -->
+
+      <div
+        matTooltip="Amazon Connect"
+        matTooltipPosition="right"
+        style="cursor: pointer"
+        [matMenuTriggerFor]="connect"
+      >
+        <img src="../../assets/images/connectlogo.png" width="22" height="22" class="mt-3 mb-3"/>
+        <mat-menu #connect="matMenu" xPosition="after">
+          <button
+            *ngIf="
+              securityProfile &&
+              (securityProfile.includes('Admin_HR_Business_System') ||
+                securityProfile.includes('Admin_CSC_Business_System') ||
+                securityProfile.includes('Admin_HR_Business_Operation') ||
+                securityProfile.includes('Admin_CSC_Business_Operation') ||
+                securityProfile.includes('Admin_HR_User') ||
+                securityProfile.includes('Admin_CSC_User') ||
+                securityProfile.includes('Admin'))
+            "
+            mat-menu-item
+            class="custom-menu-item"
+            (click)="goToConnectAdmin()"
+          >
+            <div class="d-flex">
+              <img src="../../assets/images/groupin.png" width="23" class="mt-3 mb-3"/>
+              &nbsp;&nbsp;
+              <span style="font-size: 15px; color: #02366c; font-weight: 500"
+                >Admin Dashboard</span
+              >
+            </div>
+          </button>
+          <button
+            *ngIf="
+              securityProfile &&
+              (securityProfile.includes('Agent_CSC') ||
+                securityProfile.includes('Agent_HR') ||
+                securityProfile.includes('Admin'))
+            "
+            mat-menu-item
+            class="custom-menu-item"
+            (click)="goToConnect()"
+          >
+            <div class="d-flex">
+              <img src="../../assets/images/real-time.png" width="23" class="mt-3 mb-3"/>
+              &nbsp;&nbsp;<span
+                style="font-size: 15px; color: #02366c; font-weight: 500"
+                >Real Time Dashboard</span
+              >
+            </div>
+          </button>
+        </mat-menu>
+      </div>
+
+      <div
+        *ngIf="
+          securityProfile &&
+          (securityProfile.includes('Agent_CSC') ||
+            securityProfile.includes('Agent_HR') ||
+            securityProfile.includes('Admin'))
+        "
+        style="cursor: pointer"
+        matTooltip="SMS"
+        matTooltipPosition="right"
+        (click)="goToAWS()"
+      >
+        <img src="../../assets/images/cellphone.png" width="24" height="24" class="mt-3 mb-3" />
+      </div>
+      <!-- [matMenuTriggerFor]="calibrio" -->
+      <div
+        matTooltip="Calibrio"
+        matTooltipPosition="right"
+        style="cursor: pointer"
+      >
+        <img
+          src="../../assets/images/calibrio.svg"
+          width="25"
+          height="25" class="mt-3 mb-3"
+          (click)="goToCalibrio()"
+        />
+        <!-- <mat-menu #calibrio="matMenu" xPosition="after">
+          <button
+            *ngIf="
+              securityProfile &&
+              (securityProfile.includes('Admin_HR_Business_System') ||
+                securityProfile.includes('Admin_CSC_Business_System') ||
+                securityProfile.includes('Admin_HR_Business_Operation') ||
+                securityProfile.includes('Admin_CSC_Business_Operation') ||
+                securityProfile.includes('Admin_HR_User') ||
+                securityProfile.includes('Admin_CSC_User') ||
+                securityProfile.includes('Admin'))
+            "
+            mat-menu-item
+            class="custom-menu-item"
+            (click)="goToCalibrio()"
+          >
+            <div class="d-flex">
+              <img src="../../assets/images/groupin.png" width="23" />
+              &nbsp;&nbsp;
+              <span style="font-size: 15px; color: #02366c; font-weight: 500"
+                >Calibrio Administrators</span
+              >
+            </div>
+          </button>
+          <button
+            *ngIf="
+              securityProfile &&
+              (securityProfile.includes('Admin_HR_Business_System') ||
+                securityProfile.includes('Admin_CSC_Business_System') ||
+                securityProfile.includes('Admin_HR_Business_Operation') ||
+                securityProfile.includes('Admin_CSC_Business_Operation') ||
+                securityProfile.includes('Admin_HR_User') ||
+                securityProfile.includes('Admin_CSC_User') ||
+                securityProfile.includes('Agent_CSC') ||
+                securityProfile.includes('Agent_HR') ||
+                securityProfile.includes('Admin'))
+            "
+            mat-menu-item
+            class="custom-menu-item"
+            (click)="goToCalibrio()"
+          >
+            <div class="d-flex">
+              <img src="../../assets/images/userin.png" width="23" />
+              &nbsp;&nbsp;<span
+                style="font-size: 15px; color: #02366c; font-weight: 500"
+                >Calibrio Users</span
+              >
+            </div>
+          </button>
+        </mat-menu> -->
+      </div>
+      <!-- <div
+        style="cursor: pointer"
+        matTooltip="Emite"
+        (click)="goToEmite()"
+        matTooltipPosition="right"
+        [matMenuTriggerFor]="emite"
+      > -->
+
+      <div
+        matTooltip="Emite"
+        matTooltipPosition="right"
+        style="cursor: pointer"
+      >
+        <img
+          src="../../assets/images/Emite.svg"
+          width="25"
+          height="25" class="mt-3 mb-3"
+          (click)="goToEmite()"
+        />
+        <!-- <mat-menu #emite="matMenu" xPosition="after">
+          <button
+            mat-menu-item
+            class="custom-menu-item"
+            (click)="goToEmite()"
+            *ngIf="
+              securityProfile &&
+              (securityProfile.includes('Admin_HR_Business_System') ||
+                securityProfile.includes('Admin_CSC_Business_System') ||
+                securityProfile.includes('Admin_HR_Business_Operation') ||
+                securityProfile.includes('Admin_CSC_Business_Operation') ||
+                securityProfile.includes('Admin_HR_User') ||
+                securityProfile.includes('Admin_CSC_User') ||
+                securityProfile.includes('Admin'))
+            "
+          >
+            <div class="d-flex">
+              <img src="../../assets/images/groupin.png" width="23" />
+              &nbsp;&nbsp;<span
+                style="font-size: 15px; color: #02366c; font-weight: 500"
+                >Emite Administrators</span
+              >
+            </div>
+          </button>
+          <button
+            mat-menu-item
+            class="custom-menu-item"
+            (click)="goToEmite()"
+            *ngIf="
+              securityProfile &&
+              (securityProfile.includes('Admin_HR_Business_System') ||
+                securityProfile.includes('Admin_CSC_Business_System') ||
+                securityProfile.includes('Admin_HR_Business_Operation') ||
+                securityProfile.includes('Admin_CSC_Business_Operation') ||
+                securityProfile.includes('Admin_HR_User') ||
+                securityProfile.includes('Admin_CSC_User') ||
+                securityProfile.includes('Agent_CSC') ||
+                securityProfile.includes('Agent_HR') ||
+                securityProfile.includes('Admin'))
+            "
+          >
+            <div class="d-flex">
+              <img src="../../assets/images/userin.png" width="23" />
+              &nbsp;&nbsp;<span
+                style="font-size: 15px; color: #02366c; font-weight: 500"
+                >Emite Users</span
+              >
+            </div>
+          </button>
+        </mat-menu> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-11 rightSide" style="background: #f4f4f4">
+    <div *ngIf="ccpService.isAuthenticated" class="row">
+      <app-broadcast-message></app-broadcast-message>
+    </div>
+
+    <div
+      *ngIf="ccpService.isAuthenticated"
+      class="row d-flex ccpclass"
+    >
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<div id="containerDiv" style="display: none"></div>
+
+<div *ngIf="!ccpService.isAuthenticated">
+  <app-login></app-login>
+</div>

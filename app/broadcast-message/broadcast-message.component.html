@@ -1,0 +1,46 @@
+<div
+  class="row broad "
+  style="
+    border-bottom: 1px solid #e5e5e5;
+    background: #dee1ef;
+    overflow: hidden;
+  "
+>
+  <div class="col-md-10 d-flex wrapper">
+    <p class="target" style="margin-top: 5px;margin-bottom: 0;">
+      {{
+        messageToDisplay &&
+        messageToDisplay.queue &&
+        messageToDisplay.queue === "NA"
+          ? messageToDisplay.message
+          : ""
+      }}
+
+      {{
+        messageToDisplay &&
+        messageToDisplay.agent &&
+        messageToDisplay.agent === "NA"
+          ? messageToDisplay.message
+          : ""
+      }}
+    </p>
+  </div>
+  <div
+    class="col-md-2 d-flex align-items-center indexmesg"
+    *ngIf="indexOfMessage + 1 !== 0 && message.length !== 0"
+  >
+    <mat-icon
+      matTooltip="Previous Message"
+      style="cursor: pointer"
+      (click)="previousMessage()"
+      >fast_rewind</mat-icon
+    ><span>&nbsp;{{ indexOfMessage + 1 }}</span> &nbsp;&nbsp;<span>of</span>&nbsp;&nbsp;
+    <span>{{ message.length }}&nbsp;</span>
+    <mat-icon
+      matTooltip="Next Message"
+      style="cursor: pointer"
+      (click)="nextMessage()"
+      >fast_forward</mat-icon
+    >
+  </div>
+</div>

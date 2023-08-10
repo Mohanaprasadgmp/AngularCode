@@ -1,0 +1,134 @@
+<div class="holiday">
+  <div class="col-12 d-flex" style="width: 98%">
+    <div class="col-8 holidaySection">
+      <span>Holiday Management</span>
+    </div>
+    <div class="col-4">
+      <div class="d-flex justify-content-evenly">
+        <div class="search">
+          <input
+            class="nosubmit"
+            type="search"
+            placeholder="Search..."
+            style="width: 100%"
+            (keyup)="searchTable()"
+            [(ngModel)]="searchKey"
+          />
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px"
+            (click)="addHolidays()"
+          >
+            Add Holiday
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="holidayDetails">
+    <div class="holidayTable">
+      <table class="tableHeader">
+        <thead>
+          <tr class="header">
+            <!-- <th>TLC</th> -->
+            <th>CSC</th>
+            <th>HR</th>
+            <th>Holiday Name</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Message</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="myTable" *ngIf="holidayIsPresent">
+          <tr *ngFor="let item of customerContentToShow">
+            <td>
+              <div *ngIf="item.csc">
+                <mat-icon style="color: limegreen">check</mat-icon>
+              </div>
+              <div *ngIf="!item.csc">
+                <mat-icon style="color: red">close</mat-icon>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="item.hr">
+                <mat-icon style="color: limegreen">check</mat-icon>
+              </div>
+              <div *ngIf="!item.hr">
+                <mat-icon style="color: red">close</mat-icon>
+              </div>
+            </td>
+            <td>{{ item.holidayname }}</td>
+            <td>{{ convertData(item.fromdate) }}</td>
+            <td>{{ convertData(item.todate) }}</td>
+            <td style="line-break: anywhere">{{ item.holidaymessage }}</td>
+            <td>
+              <div class="d-flex">
+                <div matTooltip="Edit" (click)="editHoliday(item)">
+                  <mat-icon
+                    style="font-size: 20px; color: #29487D; cursor: pointer"
+                    >edit</mat-icon
+                  >
+                </div>
+                <div matTooltip="Delete" (click)="deleteHoliday(item)">
+                  <mat-icon style="color: red; cursor: pointer"
+                    >delete_outline</mat-icon
+                  >
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!holidayIsPresent">
+        <span>No Data to display</span>
+      </div>
+    </div>
+    <div *ngIf="paginationAvailable" class="paginator col-12 d-flex">
+      <div class="col-10"></div>
+      <div class="col-2 d-flex paginatorBtn">
+        <div (click)="previousPage()">
+          <button
+            type="button"
+            class="btn btn-primary btn-circle"
+            style="
+              width: 25px;
+              height: 25px;
+              border-radius: 30px;
+              padding: 0px;
+              border: #29487D;
+              background-color: white;
+              color: black;
+            "
+            [disabled]="btn_prev"
+          >
+            <mat-icon>fast_rewind</mat-icon>
+          </button>
+        </div>
+        <div class="paginatorFont">PREV</div>
+        <div class="paginatorFont">NEXT</div>
+        <div (click)="nextPage()">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="btn_next"
+            style="
+              width: 25px;
+              height: 25px;
+              border-radius: 30px;
+              padding: 0px;
+              border: #29487D;
+              background-color: white;
+              color: black;
+            "
+          >
+            <mat-icon>fast_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

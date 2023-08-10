@@ -1,0 +1,112 @@
+<div class="wrapup">
+  <div class="col-12 d-flex" style="width: 98%">
+    <div class="col-9 wrapupSection">
+      <span>Wrapup Management</span>
+    </div>
+    <div class="col-3">
+      <div class="d-flex justify-content-between">
+        <div class="search">
+          <input
+            class="nosubmit"
+            type="search"
+            placeholder="Search by Wrapup Code"
+            style="width: 105%; font-size: 12px"
+            id="searchInput"
+            (keyup)="searchTable()"
+            [(ngModel)]="searchKey"
+          />
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="addWrapups()"
+            style="font-size: 12px"
+          >
+            Add Wrapup
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapupDetails">
+    <div class="wrapupTable">
+      <table class="tableHeader">
+        <thead>
+          <tr class="header">
+            <!-- <th>TLC</th> -->
+            <th>Wrapup Code</th>
+
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="myTable">
+          <tr *ngFor="let item of customerContentToShow">
+            <td>{{ item.wuP_Code }}</td>
+            <td>
+              <div class="d-flex">
+                <div matTooltip="Edit" (click)="editWrapups(item)">
+                  <mat-icon
+                    style="font-size: 20px; color: #29487D; cursor: pointer"
+                    >edit</mat-icon
+                  >
+                </div>
+                <div matTooltip="Delete" (click)="deleteWrapups(item)">
+                  <mat-icon style="color: #ed1c24; cursor: pointer"
+                    >delete_outline</mat-icon
+                  >
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!wrapupIsPresent">
+        <span>No Data to display</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="paginationAvailable" class="paginator col-12 d-flex">
+    <div class="col-10"></div>
+    <div class="col-2 d-flex paginatorBtn">
+      <div (click)="previousPage()">
+        <button
+          type="button"
+          class="btn btn-primary btn-circle"
+          style="
+            width: 25px;
+            height: 25px;
+            border-radius: 30px;
+            padding: 0px;
+            border: #29487D;
+            background-color: white;
+            color: black;
+          "
+          [disabled]="btn_prev"
+        >
+          <mat-icon>fast_rewind</mat-icon>
+        </button>
+      </div>
+      <div class="paginatorFont">PREV</div>
+      <div class="paginatorFont">NEXT</div>
+      <div (click)="nextPage()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="btn_next"
+          style="
+            width: 25px;
+            height: 25px;
+            border-radius: 30px;
+            padding: 0px;
+            border: #29487D;
+            background-color: white;
+            color: black;
+          "
+        >
+          <mat-icon>fast_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

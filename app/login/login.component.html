@@ -1,0 +1,36 @@
+<div>
+  <img
+    src="../../assets/images/background.jpg"
+    alt=""
+    width="100%"
+    style="height: 100%"
+  />
+</div>
+<button
+  *ngIf="!isLoginIn"
+  class="btn btn-primary"
+  style="
+    border: 1px solid #003873;
+    background-color: #003873;
+    position: fixed;
+    bottom: 45%;
+    left: 75%;
+  "
+  (click)="login()"
+>
+  Click to Login
+</button>
+<button
+  *ngIf="isLoginIn"
+  class="btn btn-primary"
+  style="
+    border: 1px solid #003873;
+    background-color: #003873;
+    position: fixed;
+    bottom: 45%;
+    left: 75%;
+  "
+  disabled
+>
+  Loading...
+</button>

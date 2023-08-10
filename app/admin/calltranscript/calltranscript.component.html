@@ -1,0 +1,213 @@
+<div class="transcript">
+  <div class="transcriptSection">
+    <span>Call Transcript</span>
+  </div>
+
+  <div
+    style="padding-left: 20px; padding-top: 20px; font-size: 12px"
+    class="d-flex"
+  >
+    <div>
+      <label for=""><strong>Contact ID </strong> &nbsp;</label>
+    </div>
+    <div style="width: 25% !important ; padding-left: 7px">
+      <input type="text" class="searchText" [(ngModel)]="contactID" />
+    </div>
+    &nbsp;&nbsp;
+    <div>
+      <label for=""><strong>mCARE Case Ref No.</strong>&nbsp;</label>
+    </div>
+    <div>
+      <input
+        type="text"
+        class="searchText"
+        [(ngModel)]="mcareCaseID"
+        style="width: 105%"
+      />
+    </div>
+  </div>
+
+  <div
+    style="padding-left: 20px; padding-top: 20px; font-size: 12px"
+    class="d-flex"
+  >
+    <div class="col-6 d-flex">
+      <div>
+        <label for=""
+          ><strong>From Date <span class="asterick">*</span>&nbsp; </strong>
+        </label>
+      </div>
+      <div>
+        <input
+          type="datetime-local"
+          class="searchText"
+          [(ngModel)]="fromDate"
+          (ngModelChange)="calculateToDateOptions()"
+        />
+      </div>
+
+      <div style="position: relative; left: 24%">
+        <label for=""
+          ><strong>To Date <span class="asterick">*</span>&nbsp;</strong>
+        </label>
+      </div>
+      <div style="position: relative; left: 37%">
+        <input
+          type="datetime-local"
+          class="searchText"
+          [disabled]="!fromDate"
+          [min]="minToDate"
+          [max]="maxToDate"
+          [(ngModel)]="toDate"
+        />
+      </div>
+    </div>
+
+    <div class="col-4 d-flex"></div>
+    <div class="col-2 d-flex justify-content-evenly">
+      <div>
+        <button
+          class="btn btn-outline-primary custom-btn"
+          (click)="searchTranscript()"
+          [disabled]="!fromDate || !toDate"
+          style="font-size: 12px"
+        >
+          Search
+        </button>
+      </div>
+      <div>
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px"
+          (click)="reset()"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <div class="transcripDetails">
+    <div class="transcriptTable">
+      <table class="tableHeader">
+        <thead>
+          <tr class="header">
+            <th>Contact ID</th>
+            <th>mCARE Case Ref No.</th>
+            <th>Date & Time</th>
+            <th>Recording</th>
+            <th>Transcript</th>
+            <th>Update mCARE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of customerContentToShow; let i = index">
+            <td>{{ row.contactid }}</td>
+            <td>{{ row.mcareid }}</td>
+            <td>{{ convertDate(row.timezone) }}</td>
+            <td>
+              <!-- <mat-icon style="cursor: pointer" (click)="play(row.contactid, i)"
+                >play_arrow</mat-icon
+              > -->
+              <div class="d-flex justify-content-evenly">
+                <div>
+                  <button
+                    *ngIf="!row.button2Enabled"
+                    class="btn btn-outline-primary custom-btn"
+                    (click)="play(row.contactid, i)"
+                    style="font-size: 12px"
+                  >
+                    Play
+                  </button>
+                </div>
+
+                <div>
+                  <audio
+                    *ngIf="row.button2Enabled"
+                    controls
+                    [src]="audioUrl"
+                    controlsList="nodownload"
+                  ></audio>
+                </div>
+                <div style="padding: 10px">
+                  <button
+                    (click)="stop(i)"
+                    *ngIf="row.button2Enabled"
+                    class="btn btn-outline-primary custom-btn"
+                    style="font-size: 12px"
+                  >
+                    Stop
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td>
+              <mat-icon
+                (click)="downloadTranscript(row.contactid)"
+                style="cursor: pointer"
+                >file_download</mat-icon
+              >
+            </td>
+            <td>
+              <mat-icon
+                style="cursor: pointer"
+                (click)="editmCareCaseId(row.mcareid, row.contactid)"
+                >edit</mat-icon
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div
+        *ngIf="!transcriptIsPresent"
+        style="padding-top: 40px; padding-left: 44%"
+      >
+        <span>No Data to display</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="paginationAvailable" class="paginator col-12 d-flex">
+    <div class="col-10"></div>
+    <div class="col-2 d-flex paginatorBtn">
+      <div (click)="previousPage()">
+        <button
+          type="button"
+          class="btn btn-primary btn-circle"
+          style="
+            width: 25px;
+            height: 25px;
+            border-radius: 30px;
+            padding: 0px;
+            border: #29487D;
+            background-color: white;
+            color: black;
+          "
+          [disabled]="btn_prev"
+        >
+          <mat-icon>fast_rewind</mat-icon>
+        </button>
+      </div>
+      <div class="paginatorFont">PREV</div>
+      <div class="paginatorFont">NEXT</div>
+      <div (click)="nextPage()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="btn_next"
+          style="
+            width: 25px;
+            height: 25px;
+            border-radius: 30px;
+            padding: 0px;
+            border: #29487D;
+            background-color: white;
+            color: black;
+          "
+        >
+          <mat-icon>fast_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

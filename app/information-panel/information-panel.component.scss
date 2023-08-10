@@ -1,0 +1,237 @@
+@font-face {
+    font-family: 'Servdeskfont';
+    src: url('/assets/fonts/Montserrat-Bold.ttf');
+    src: url('/assets/fonts/Montserrat-Regular.ttf');
+}
+
+.infoPanel{
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+
+::ng-deep .mat-tab-label:focus:not(.mat-tab-disabled) {
+    opacity: 1;
+    border-bottom: 2px solid #003873;
+    border-radius: 4%;
+}
+
+::ng-deep mat-tab-group.mat-mdc-tab-group.beforeConference.mat-primary.mat-mdc-tab-group-stretch-tabs {
+    height: calc(90vh - 150px) !important; 
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+::ng-deep mat-tab-group.mat-mdc-tab-group.afterConference.mat-primary.mat-mdc-tab-group-stretch-tabs {
+    height: calc(80vh - 150px) !important;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+::ng-deep .mat-tab-label{
+    height: 48px;
+    padding: 0 24px;
+    cursor: pointer;
+    box-sizing: border-box;
+    opacity: .6;
+    width: 150px;
+    transition: unset;
+    translate: none;
+    transform: none;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+}
+
+::ng-deep .mat-tab-labels{
+    justify-content: space-around;
+}
+
+::ng-deep .mdc-tab__ripple::before {
+    background-color: #003873 !important;
+}
+
+
+
+::ng-deep .mdc-tab__text-label{
+    color : #003873 !important;
+    font-family: "Servdeskfont";
+    font-size: 12px;
+}
+
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+    display: inline-flex;
+    align-items: center;
+    letter-spacing: normal;
+}
+
+::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab-indicator__content--underline {
+    border-color: #003873;
+}
+
+::ng-deep .mat-mdc-tab-body-content {
+    overflow-x: hidden !important;
+    height: 100%;
+    overflow-y: hidden !important;
+}
+
+::ng-deep .mat-mdc-tab-body-wrapper{
+    background: white !important;
+    padding: 10px !important;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#myInput {
+    background-image: url('/css/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+    font-size: 12px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.newCustomer {
+    margin-left: 10px;
+}
+
+.searchText {
+    width: 97%;
+    margin-left: 10px;
+    padding: 6px;
+    border-radius: 5px;
+}
+
+.inputFieldText {
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 30px;
+    width: 100%;
+    margin-left: -20px;
+    margin-bottom: 4px;
+
+}
+
+.tableHeader {
+    margin-left: 10px;
+    width: 97%;
+}
+
+.header {
+    background-color: #29487D;
+    color: white;
+}
+
+label {
+    color: #004b92;
+    font-weight: 400;
+}
+
+.btnlabel{
+    font-size: 12px;
+}
+
+.inputLabel{
+    font-size: 12px;
+}
+
+.Always{
+    display: none;
+}
+
+
+.show {
+    display: block;
+    width: 98%;
+    border-radius: 8px;
+}
+
+.showHR {
+    // background: white;
+    // padding: 8px;
+    display: block;
+    width: 98%;
+    border-radius: 8px;
+    height: calc(78vh - 120px) !important;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (min-width: 575px) and (max-width: 1024px)  {
+    .ccpclass{
+        padding-left: 7.5%
+    }
+    ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+        font-weight: 600;
+        font-size: 1.1vw !important;
+        color: #003873 !important;
+        font-family: "Servdeskfont";
+    }
+    }
+
+@media (min-width: 1025px) and (max-width: 1128px)  {
+.ccpclass{
+    padding-left: 6%
+}
+::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+    font-weight: 600;
+    font-size: 1vw !important;
+    color: #003873 !important;
+    font-family: "Servdeskfont";
+}
+}
+@media (min-width: 1128px) and (max-width: 1660px)  {
+    .ccpclass{
+        padding-left: 4.5%
+    }
+    ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+        font-weight: 600;
+        font-size: 1vw !important;
+        color: #003873 !important;
+        font-family: "Servdeskfont";
+    }
+    }
+
+@media (min-width: 1661px) and (max-width: 2560px)  {
+    .ccpclass{
+        padding-left: 3.5%
+    }
+    ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+        font-weight: 600;
+        font-size: 0.8vw !important;
+        color: #003873 !important;
+        font-family: "Servdeskfont";
+    }
+    }
+    @media (min-width: 2561px) and (max-width: 4120px)  {
+        .ccpclass{
+            padding-left: 3%
+        }
+        ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+            font-weight: 600;
+            font-size: 0.8vw !important;
+            color: #003873 !important;
+            font-family: "Servdeskfont";
+        }
+        }

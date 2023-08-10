@@ -1,0 +1,269 @@
+<div class="wrapdisp col-12">
+  <div class="wrapupdisplay">
+    <br />
+    <!-- *ngIf="displayTable" -->
+    <!-- selectedAgentState === 'AfterCallWork' -->
+    <div class="" >
+      <!-- show case id for csc -->
+      <div class="d-flex justify-content-evenly">
+        <div
+          *ngIf="
+            whatScreenToDisplay !== 'Eappointment' &&
+            IsEappointmentCall !== 'Yes'
+            
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          show: whatScreenToDisplay === 'CSC',
+          hidden: whatScreenToDisplay === 'HR',
+        }"
+        >
+          <label
+            style="position: relative; top: 5px; left: 100px"
+            for=""
+            class="caseIdLabel"
+            ><b>mCARE Case Ref No</b></label
+          >
+        </div>
+  
+        <div
+          *ngIf="
+            whatScreenToDisplay != 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          show: whatScreenToDisplay === 'CSC',
+          hidden: whatScreenToDisplay === 'HR',
+        }"
+          class="form-group"
+        >
+          <input
+            style="width: 155%; right: 40%; position: relative"
+            type="text"
+            class="form-control"
+            placeholder="Enter mCARE Case Ref No"
+            [maxlength]="28"
+            [(ngModel)]="cscCaseID"
+            [disabled]="selectedAgentState !== 'AfterCallWork'"
+          />
+        </div>
+        <!-- show wrapup for hr -->
+        <div
+          *ngIf="
+            whatScreenToDisplay != 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          showcsc: whatScreenToDisplay === 'CSC',
+          show: whatScreenToDisplay === 'HR',
+        }"
+        >
+          <label for="" class="caseIdLabel"><b>Choose Wrapup :</b></label>
+        </div>
+        <div
+          *ngIf="
+            whatScreenToDisplay != 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          showcsc: whatScreenToDisplay === 'CSC',
+          show: whatScreenToDisplay === 'HR',
+        }"
+        >
+          <select
+            class="form-control"
+            (change)="changedWrapup($event)"
+            id="select-option"
+            [disabled]="selectedAgentState !== 'AfterCallWork'"
+          >
+            <option selected disabled>--Select--</option>
+            <option *ngFor="let item of hrWrapUp" value="{{ item }}">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- show for eappointemnt -->
+  
+        <div
+          *ngIf="
+            IsEappointmentCall === 'Yes' 
+          "
+          [ngClass]="{
+          showEapp: IsEappointmentCall === 'Yes',
+        }"
+        >
+          <label for="" class="Eappointment"><b>Choose Status:</b></label>
+        </div>
+  
+        <div
+          *ngIf="
+            IsEappointmentCall == 'Yes' 
+          "
+          [ngClass]="{
+          showEapp: IsEappointmentCall === 'Yes',
+        }"
+        >
+          <select
+            id="select-option"
+            class="form-control"
+            (change)="changedEAStatus($event)"
+            [disabled]="selectedAgentState !== 'AfterCallWork'"
+          >
+            <option selected disabled>--Select Status--</option>
+            <option value="{{ item }}" *ngFor="let item of eappointmentStatus">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+  
+        <!-- show case id for eappointment -->
+  
+        <div
+          *ngIf="
+            IsEappointmentCall === 'Yes' 
+          "
+          [ngClass]="{
+          showEapp: IsEappointmentCall === 'Yes',
+        }"
+        >
+          <label for="" class="caseIdLabel"><b>mCARE Case Ref No.</b></label>
+        </div>
+  
+        <div
+          *ngIf="
+            IsEappointmentCall === 'Yes' 
+          "
+          [ngClass]="{
+          showEapp: IsEappointmentCall === 'Yes',
+        }"
+        >
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter mCARE Case Ref No."
+            [maxlength]="28"
+            [(ngModel)]="eappointemntCaseId"
+            [disabled]="selectedAgentState !== 'AfterCallWork'"
+            style="width: 140%; position: relative; right: 35px"
+          />
+        </div>
+  
+        <!-- show case id for hr -->
+  
+        <div
+          *ngIf="
+            whatScreenToDisplay !== 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          showcsc: whatScreenToDisplay === 'CSC',
+          show: whatScreenToDisplay === 'HR',      
+          showEA: whatScreenToDisplay === 'Eappointment',
+        }"
+        >
+          <label for="" class="caseIdLabel"><b>mCARE Case Ref No.</b></label>
+        </div>
+  
+        <div
+          *ngIf="
+            whatScreenToDisplay !== 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          showcsc: whatScreenToDisplay === 'CSC',
+          show: whatScreenToDisplay === 'HR',      
+          showEA: whatScreenToDisplay === 'Eappointment',
+        }"
+        >
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter mCARE Case Ref No."
+            [maxlength]="28"
+            [(ngModel)]="hrCaseID"
+            [disabled]="selectedAgentState !== 'AfterCallWork'"
+            style="width: 140%; position: relative; right: 35px"
+          />
+        </div>
+  
+        <!-- Save and complete button -->
+  
+        <div
+          class="saveCompleteBtn"
+          *ngIf="
+            whatScreenToDisplay != 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          show: whatScreenToDisplay === 'CSC',
+          hidden: whatScreenToDisplay === 'HR',
+        }"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px; position: relative; right: 125%"
+            (click)="ApplyWrapUp('CSC')"
+            [disabled]="!(cscCaseID && cscCaseID.length > 0)"
+          >
+            Save & Complete
+          </button>
+        </div>
+        <div
+          class="saveCompleteBtn"
+          *ngIf="
+            whatScreenToDisplay !== 'Eappointment' &&
+            IsEappointmentCall !== 'Yes' 
+          "
+          [ngClass]="{
+          Always: whatScreenToDisplay === 'All',
+          showcsc: whatScreenToDisplay === 'CSC',
+          show: whatScreenToDisplay === 'HR',      
+          showEA: whatScreenToDisplay === 'Eappointment',
+        }"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px"
+            (click)="ApplyWrapUp('HR')"
+            [disabled]="
+              wrapupDropdownChanged || !(hrCaseID && hrCaseID.length > 0)
+            "
+          >
+            Save & Complete
+          </button>
+        </div>
+        <div
+          class="saveCompleteBtn"
+          *ngIf="
+            IsEappointmentCall == 'Yes' 
+          "
+          [ngClass]="{
+          showEapp: IsEappointmentCall === 'Yes',
+        }"
+        >
+          <button
+            type="button"
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px"
+            (click)="ApplyWrapUp('Eappointment')"
+            [disabled]="
+              statusEADropdownChanged ||
+              !(eappointemntCaseId && eappointemntCaseId.length > 0)
+            "
+          >
+            Save & Complete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div *ngIf="data.action === 'editmCareCaseId'">
+  <div class="header">
+    <span>Update mCARE Ref No.</span>
+  </div>
+
+  <div class="col-12 d-flex" style="padding: 20px 22px">
+    <div class="col-4">
+      <label> mCARE Ref No. </label>
+    </div>
+    <div class="col-8">
+      <input
+        class="searchText"
+        type="text"
+        maxlength="28"
+        [(ngModel)]="mcareCaseID"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="updateCaseID()"
+            style="font-size: 12px"
+            [disabled]="!mcareCaseID.trim()"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

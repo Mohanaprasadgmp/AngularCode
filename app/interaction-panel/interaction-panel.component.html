@@ -1,0 +1,81 @@
+<div id="snackbar" class="callcontent" *ngIf="GetContact() == 1">
+  <div class="calldetails">
+    <img
+      *ngIf="GetContactType() == 1"
+      src="../../assets/images/profileUser.png"
+      width="75"
+    />
+    <p
+      class="pt-1"
+      style="font-family: 'Servdeskfont'; font-size: 14px; color: black"
+    >
+      {{
+        cschrForAcceptRejectCall === "HR"
+          ? duplicateCallerIDentity
+          : callerIdentity
+      }}
+    </p>
+    <h6 style="font-family: 'Servdeskfont'; font-size: 14px; color: #003873">
+      {{ cschrForAcceptRejectCall === "HR" ? "Incoming" : "New" }}
+    </h6>
+  </div>
+  <div class="callActions" *ngIf="cschrForAcceptRejectCall === 'HR'">
+    <div class="d-grid">
+      <div class="answerEnd d-flex justify-content-evenly w-100">
+        <button
+          type="button"
+          (click)="acceptContact()"
+          class="Phone is-animating p-2"
+        ></button>
+        <img
+          (click)="rejectContact()"
+          class="endButtonIcon"
+          src="../../assets/images/reject.png"
+          width="45"
+          height="45"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->
+
+<!-- For Missed call start -->
+<div id="snackbar" class="callcontent" *ngIf="GetContact() == 0">
+  <div class="calldetails">
+    <img
+      *ngIf="GetContactType() == 1"
+      src="../../assets/images/profileUser.png"
+      width="75"
+    />
+    <p
+      class="pt-1"
+      style="font-family: 'Servdeskfont'; font-size: 14px; color: black"
+    >
+      {{
+        cschrForAcceptRejectCall === "HR"
+          ? duplicateCallerIDentity
+          : callerIdentity
+      }}
+    </p>
+    <h6 style="font-family: 'Servdeskfont'; font-size: 14px; color: #003873">
+      {{ callStatus }}
+    </h6>
+  </div>
+  <div class="callActions">
+    <div class="d-grid">
+      <div class="clearportion pt-4">
+        <button
+          (click)="missedContact()"
+          type="button"
+          class="btn btn-danger"
+          style="width: 125px"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->
+<!-- </div> -->

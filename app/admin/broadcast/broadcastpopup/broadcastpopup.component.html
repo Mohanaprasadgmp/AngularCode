@@ -1,0 +1,58 @@
+<h1
+  mat-dialog-title
+  style="color: black; font-weight: 600; font-family: 'Servdeskfont'"
+>
+  Last 3 Cases
+</h1>
+<div mat-dialog-content>
+  <table id="myTable" class="tableHeader">
+    <thead>
+      <tr class="header">
+        <th>StartDate</th>
+        <th>EndDate</th>
+        <th>Message</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let items of tableData">
+        <td>
+          {{ items.fromdate | date : "dd/MM/YYYY HH:MM" }}
+        </td>
+        <td>
+          {{ items.todate | date : "dd/MM/YYYY HH:MM" }}
+        </td>
+        <td>
+          {{ items.message }}
+        </td>
+
+        <td>
+          <button
+            (click)="deleteBroadcastMessage(items.id)"
+            style="
+              font-size: 12px;
+              height: 28px;
+              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+            type="button"
+            class="btn btn-outline-primary custom-btn"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions class="popupBtn">
+  <button
+    class="btn btn-outline-primary custom-btn"
+    style="font-size: 12px; position: relative; left: 6px"
+    mat-dialog-close
+  >
+    Close
+  </button>
+</div>

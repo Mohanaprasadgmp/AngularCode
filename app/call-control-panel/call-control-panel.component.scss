@@ -1,0 +1,230 @@
+.callControlPanel {
+    position: relative;
+    left: 15px;
+    background-color: white;
+    top: 10px;
+    box-shadow: #00000014 0 1px 5px;
+    font-size: 12px;
+    width: 98%;
+}
+
+.controlPanel {
+position: relative;
+    /* left: 15px; */
+    background-color: white;
+    top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.0784313725) 0 1px 5px;
+    font-size: 12px;
+    left: 17px;
+        width: 96%;
+
+}
+
+mat-tab-group.mat-mdc-tab-group.mat-primary.mat-mdc-tab-group-stretch-tabs {
+    padding: 5px !important;
+}
+
+.tilebg {
+    background: #0ae513;
+        padding-right: 4px;
+    /* padding-bottom: 10px; */
+    padding-left: 4px;
+    border-radius: 4px;
+}
+
+.tilevalue {
+    color: #0ae513;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.tilebg1 {
+    background: #ffc7c7;
+    padding-right: 4px;
+    /* padding-bottom: 10px; */
+    padding-left: 4px;
+    border-radius: 4px;
+}
+
+.tilevalue1 {
+    color: red;
+    margin-bottom: 0px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.controlPanelQc{
+margin: 0;
+    position: relative;
+    background-color: white;
+    top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.0784313725) 0 1px 5px;
+    font-size: 12px;
+    width: calc(100vw - 107px);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    left: 16px;
+}
+.customerLabel{
+    padding: 0px 0px 0px 25px;
+}
+
+.endCallbtn{
+    font-size: 12px;
+}
+
+.timer{
+    color: gray;
+}
+.endButton{
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    top: 5px;
+    position: relative;
+    width: 10%;
+}
+
+.callControlIcon{
+    padding-left: 13px;
+    position: relative;
+    top: 6px;
+    align-items: center;
+   // border-right: 2px solid #d5d2d2;
+    height: 30px;
+}
+
+.popover-header {
+    font-family: Servdeskfont;
+    font-size: 14px;
+    color: #003873;
+    text-align: center;
+    font-weight: 600;
+}
+
+.popover-body {
+    display: flex;
+}
+
+
+
+.digits {
+    width: 95%;
+    background-color: #f7f7f7;
+    color: #003873;
+    border: 1px solid #f7f7f7;
+}
+
+::ng-deep .p-orderlist .p-orderlist-controls {
+    display: none;
+}
+
+::ng-deep .p-orderlist .p-orderlist-list {    
+    background: #ffffff;
+    color: #495057;
+    padding: 0.75rem 0;   
+}
+
+.connected {
+    background: #C3F8BF;
+    position: relative;
+    left: 11px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.endCallBtnQc{
+    font-size: 12px;
+}
+
+#connect {
+    padding-bottom: 2px;
+}
+
+.held {
+    background: #FFD5AC ;
+    position: relative;
+    left: 11px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.qcMakeCall{
+    position: relative;
+    left: 40%;
+    bottom: 10px;
+}
+
+.vl{
+    border-left: 2px solid #d5d2d2;
+    height: 30px;
+}
+.call-hold{
+    width: 80px;
+}
+
+.call-resume{
+    width: 80px;
+}
+
+.completeCall{
+position: relative;
+    justify-content: end;
+    display: flex;
+    margin-right: auto;
+    right: 8px;
+    font-size: 12px;
+}
+
+.qcKeypadCall {
+    position: relative;
+    left: 17px;
+}
+
+::ng-deep .p-orderlist .p-orderlist-list {
+    border: none;
+}
+
+
+
+ .custom-btn {
+     border-color: #003783;
+     color: #003783;
+
+ }
+
+ .custom-btn:hover {
+     background-color: #003783;
+
+    //  color: #ffffff;
+
+     border-color: #003783;
+
+ }
+
+
+ @media (min-width: 575px) and (max-width: 1024px)  {
+   
+    ::ng-deep .popover {
+        width: 40vw;
+        height: 200px;
+    }
+    }
+
+@media (min-width: 1025px) and (max-width: 1440px)  {
+    ::ng-deep .popover {
+        width: 35vw;
+        height: 350px;
+    }
+}
+@media (min-width: 1441px) and (max-width: 3000px)  {
+    ::ng-deep .popover {
+        width: 20%;
+        height: 350px;
+    }
+    }

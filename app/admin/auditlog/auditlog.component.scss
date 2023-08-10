@@ -1,0 +1,105 @@
+.auditSection {
+color: #003872;
+    font-size: 17px;
+    padding-left: 20px;
+    /* padding: 25px; */
+    padding-bottom: 20px;
+}
+
+.audit {
+    padding-top: 2%
+}
+
+.searchText {
+    width: 100%;
+    // margin-left: 10px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #d1cfcf;
+}
+
+.searchText:focus-visible {
+    outline: 1px solid #1183d6;
+
+}
+
+.transcript {
+    width: 98%;
+    padding-left: 20px
+}
+
+.header {
+    background-color: #29487D;
+    color: white;
+}
+
+.tableHeader tr:nth-child(even) {
+    background-color: #f2f2f2;
+
+}
+
+.auditTable {
+    padding-left: 3px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.auditdet {
+    padding-left: 25px;
+    justify-content: space-between;
+    width: 98%;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.asterick {
+    color: red;
+    font-size: 14px;
+}
+
+.paginator {
+    width: 100%;
+    height: 45px;
+    position: relative;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.0784313725) 3px 10px 6px 2px;
+    left: 2px;
+}
+label {
+    font-size: 1rem;
+    padding-top: 5px;
+}
+
+.paginatorBtn {
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.paginatorFont {
+    font-size: 12px;
+    color: #003873;
+}
+
+  .custom-btn {
+      border-color: #003783;
+      color: #003783;
+
+  }
+
+  .custom-btn:hover {
+      background-color: #003783;
+
+      color: #ffffff;
+
+      border-color: #003783;
+
+  }

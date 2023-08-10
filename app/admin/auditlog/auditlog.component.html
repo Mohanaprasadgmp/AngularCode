@@ -1,0 +1,175 @@
+<div class="audit">
+  <div class="auditSection">
+    <span>Admin Audit Log Report</span>
+  </div>
+
+  <div class="transcript">
+    <div class="d-flex justify-content-around">
+      <div>
+        <label for=""
+          ><strong>Report Name <span class="asterick">*</span> </strong></label
+        >
+      </div>
+      <div>
+        <select class="searchText" [(ngModel)]="selectedReport">
+          <option disabled value="--Not Selected--">--Not Selected--</option>
+          <option value="Data Audit Report">Data Audit Report</option>
+          <option value="Login Audit Report">Login Audit Report</option>
+        </select>
+      </div>
+      <div>
+        <label for=""
+          ><strong>From Date <span class="asterick">*</span></strong></label
+        >
+      </div>
+      <div>
+        <input
+          type="datetime-local"
+          class="searchText"
+          [(ngModel)]="fromDate"
+          (ngModelChange)="calculateToDateOptions()"
+        />
+      </div>
+      <div>
+        <label for=""
+          ><strong>To Date <span class="asterick">*</span> </strong></label
+        >
+      </div>
+      <div>
+        <input
+          type="datetime-local"
+          class="searchText"
+          [disabled]="!fromDate"
+          [min]="minToDate"
+          [max]="maxToDate"
+          [(ngModel)]="toDate"
+        />
+      </div>
+      <div>
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px"
+          (click)="viewAuditReport()"
+          [disabled]="!fromDate || !toDate || !selectedReport"
+        >
+          View
+        </button>
+      </div>
+      <div>
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px"
+          (click)="exportexcel()"
+          [disabled]="!fromDate || !toDate || !selectedReport"
+        >
+          Download
+        </button>
+      </div>
+      <div>
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px"
+          (click)="reset()"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+    <br />
+    <div
+      *ngIf="selectedReport === 'Login Audit Report' && showTable"
+      class="auditTable"
+      style="height: calc(77vh - 60px); overflow: auto"
+    >
+      <table class="tableHeader" #myTable id="excel-table">
+        <thead>
+          <tr class="header">
+            <th>User Name</th>
+            <th>Login Time</th>
+            <th>Logout Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of loginAuditData">
+            <td>{{ item.username }}</td>
+            <td>{{ this.convertDate(item.logintime) }}</td>
+            <td>{{ this.convertDate(item.logouttime) }}</td>
+            <!-- <td>{{ this.convertDate(item.actiondate) }}</td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      *ngIf="selectedReport === 'Data Audit Report' && showTable"
+      class="auditTable"
+      style="height: calc(77vh - 60px); overflow: auto"
+    >
+      <table class="tableHeader" #myTable id="excel-table">
+        <thead>
+          <tr class="header">
+            <th>DateTime</th>
+            <th>Module</th>
+            <th>Action</th>
+            <th>LoginName</th>
+            <th>Department</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataAuditData">
+            <td>{{ this.convertDate(item.actiondate) }}</td>
+            <td>{{ item.module }}</td>
+            <td>{{ item.action }}</td>
+            <td>{{ item.actionowner }}</td>
+            <td>{{ item.department }}</td>
+            <td>{{ item.remarks }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div *ngIf="showTable" class="paginator col-12 d-flex">
+      <div class="col-10"></div>
+      <div class="col-2 d-flex paginatorBtn">
+        <div (click)="previousPage()">
+          <button
+            type="button"
+            class="btn btn-primary btn-circle"
+            style="
+              width: 25px;
+              height: 25px;
+              border-radius: 30px;
+              padding: 0px;
+              border: #29487D;
+              background-color: #29487D;
+              background-color: white;
+              color: black;
+            "
+            [disabled]="btn_prev"
+          >
+            <mat-icon>fast_rewind</mat-icon>
+          </button>
+        </div>
+        <div class="paginatorFont">PREV</div>
+        <div class="paginatorFont">NEXT</div>
+        <div (click)="nextPage()">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="btn_next"
+            style="
+              width: 25px;
+              height: 25px;
+              border-radius: 30px;
+              padding: 0px;
+              border: #29487D;
+              background-color: white;
+              color: black;
+            "
+          >
+            <mat-icon>fast_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

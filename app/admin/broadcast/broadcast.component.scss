@@ -1,0 +1,86 @@
+.broadcastSection {
+    color: #003872;
+    font-size: 17px;
+    padding: 15px;
+    
+}
+label {
+    font-size: 1rem;
+    padding-top: 5px;
+}
+
+.broadcast{
+    padding-bottom: 35%;
+    background: #f9f9f9;
+    
+}
+//picklist
+::ng-deep .p-picklist-buttons.p-picklist-source-controls.ng-star-inserted {
+    display: none;
+}
+
+::ng-deep .p-picklist-buttons.p-picklist-target-controls.ng-star-inserted {
+    display: none;
+}
+
+::ng-deep .p-button {
+    border-color: #003783 !important;
+        /* background-color: transparent; */
+        background-color: white !important;
+        color: #003783 !important;
+}
+
+::ng-deep .p-picklist-list-wrapper.p-picklist-source-wrapper {
+    width: 300px;
+}
+
+.broadcastMsge:focus-visible{
+outline: 1px solid #1183d6;
+}
+
+
+.searchText:focus-visible {
+    outline: 1px solid #1183d6;
+
+}
+
+.searchText {
+    width: 100%;
+    // margin-left: 10px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #d1cfcf;
+}
+
+::ng-deep .mat-typography h5 {
+    font: 400 calc(14px * 0.83)/20px Roboto, sans-serif;
+    margin: 0 0 12px;
+    font-family: 'Servdeskfont' !important;
+    font-size: 13px !important;
+}
+
+.asterick {
+    color: red;
+    font-size: 14px;
+}
+
+.custom-btn {
+    border-color: #003783;
+    color: #003783;
+
+}
+
+.toast-custom {
+    width: 500px;
+    height: 80px;
+    /* Adjust the desired width */
+}
+
+.custom-btn:hover {
+    background-color: #003783;
+
+    color: #ffffff;
+
+    border-color: #003783;
+
+}

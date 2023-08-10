@@ -1,0 +1,1491 @@
+<!-- control panel for handling incoming call -->
+<!-- {{ GetActiveCallCount() }}Hi{{ callControlVisible }} -->
+<div
+  *ngIf="
+    callControlVisible &&
+    GetActiveCallCount() !== 3 &&
+    GetActiveCallCount() !== 1
+  "
+  class="callControlPanel"
+>
+  <div class="row d-flex" *ngFor="let connection of ccpService.Connections">
+    <ng-container
+      *ngIf="
+        connection.getEndpoint().type != 'agent' &&
+        connection.getState().type != 'disconnected' &&
+        ccpService.CurrentAgent.getState().name != 'AfterCallWork'
+      "
+    >
+      <!-- {{ connection.getEndpoint().type }}
+      {{ connection.getState().type }} -->
+      <!--  *ngIf="ccpService.CurrentAgent.getState().name != 'AfterCallWork'" -->
+      <div class="col-4 customerLabel">
+        <div>
+          <div class="d-flex" style="font-size: 13px">
+            <div>
+              <span>{{ contactStatusText1 }}</span>
+            </div>
+            &nbsp;&nbsp;
+            <div>
+              <span
+                *ngIf="
+                  callStatus === 'ONGOING' &&
+                  connection.getState().type !== 'hold'
+                "
+                >|&nbsp;&nbsp;{{
+                  getDateTimeDiff(connection.getState().timestamp.getTime())
+                }}</span
+              >
+            </div>
+            &nbsp;<span *ngIf="callStatus === 'ONGOING'">|</span>&nbsp;
+            <div class="tilebg" *ngIf="callStatus === 'ONGOING'">
+              <span class="tilevalue">{{ callStatus }}</span>
+            </div>
+            <div class="tilebg1" *ngIf="callStatus === 'WRAPUP'">
+              <span class="tilevalue1">{{ callStatus }}</span>
+            </div>
+          </div>
+
+          <div class="d-flex" style="font-size: 12px; color: grey">
+            <div>
+              <span>Call StartTime : {{ callStartTime }}</span>
+              <span *ngIf="connection.getState().type === 'hold'"
+                >&nbsp;&nbsp;|&nbsp;&nbsp;Hold :
+                {{
+                  getDateTimeDiff(connection.getState().timestamp.getTime())
+                }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-5 d-flex justify-content-evenly callControlIcon">
+        <div
+          class="call-hold"
+          style="display: contents"
+          *ngIf="
+            GetContact(connection.contactId) != undefined &&
+            GetContact(connection.contactId).getState().type == 'connected' &&
+            connection.getState().type != 'hold'
+          "
+        >
+          <button
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px; width: 24%; background: #dee1ef"
+            (click)="holdConnection(connection)"
+          >
+            <img src="../../assets/images/hold_active.png" alt="" width="20" />
+            Hold
+          </button>
+        </div>
+
+        <div
+          style="display: contents"
+          class="call-resume"
+          *ngIf="
+            GetContact(connection.contactId) != undefined &&
+            GetContact(connection.contactId).getState().type == 'connected' &&
+            connection.getState().type == 'hold'
+          "
+        >
+          <button
+            class="btn btn-outline-primary custom-btn"
+            style="
+              font-size: 12px;
+              width: 24%;
+              background-color: #003783;
+              color: white;
+            "
+            (click)="RetrieveConnection(connection)"
+          >
+            <img src="../../assets/images/play.png" width="15" alt="" />
+            Resume
+          </button>
+        </div>
+
+        <!-- *ngIf="
+            GetContact(connection.contactId) != undefined &&
+            GetContact(connection.contactId).getState().type == 'connected' &&
+            !callOnMute
+          " -->
+
+        <!-- {{ ccpService.CurrentContact.getState().type }}
+        {{ ccpService.agentMuteStatus }} -->
+        <div
+          style="display: contents"
+          *ngIf="
+            ccpService.CurrentContact &&
+            ccpService.CurrentContact.getState().type == 'connected' &&
+            !ccpService.agentMuteStatus
+          "
+        >
+          <button
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px; width: 24%; background: #dee1ef"
+            (click)="mutecontact()"
+          >
+            <img src="../../assets/images/mute.png" width="20" alt="" />
+            Mute
+          </button>
+        </div>
+        <!-- *ngIf="
+            GetContact(connection.contactId) != undefined &&
+            GetContact(connection.contactId).getState().type == 'connected' &&
+            callOnMute
+          " -->
+        <div
+          style="display: contents"
+          *ngIf="
+            ccpService.CurrentContact &&
+            ccpService.CurrentContact.getState().type == 'connected' &&
+            ccpService.agentMuteStatus
+          "
+        >
+          <button
+            class="btn btn-outline-primary custom-btn"
+            style="
+              font-size: 12px;
+              width: 24%;
+              background-color: #003783;
+              color: white;
+            "
+            (click)="unMuteContact()"
+          >
+            <img src="../../assets/images/mic.png" width="15" alt="" />
+            UnMute
+          </button>
+        </div>
+        <!-- *ngIf="connection.getState().type == 'connected'" -->
+        <div
+          class="call-transfer"
+          style="display: contents"
+          *ngIf="
+            ccpService.CurrentContact &&
+            ccpService.CurrentContact.getState().type == 'connected'
+          "
+        >
+          <!-- <button
+            [cPopover]="transferCall"
+            cPopoverPlacement="bottom"
+            [cPopoverTrigger]="'click'"
+            cButton
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px; width: 24%"
+            (click)="ShowKeyPad(1)"
+          >
+            <img src="../../assets/images/two-arrows.png" width="20" alt="" />
+            Transfer
+          </button> -->
+          <button
+            mat-button
+            [matMenuTriggerFor]="aboveMenu"
+            class="btn btn-outline-primary custom-btn"
+            style="font-size: 12px; width: 24%; background: #dee1ef"
+            (click)="ShowKeyPad(1)"
+          >
+            <img src="../../assets/images/two-arrows.png" width="20" alt="" />
+            Transfer
+          </button>
+          <mat-menu
+            [hasBackdrop]="false"
+            (click)="handleMenuItemClick($event)"
+            #aboveMenu="matMenu"
+            yPosition="above"
+          >
+            <mat-tab-group (click)="handleMenuItemClick($event)">
+              <mat-tab (click)="handleMenuItemClick($event)" label="Keypad">
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 nt-5 popover-body"
+                >
+                  <div
+                    class="col-3 d-flex justify-content-between align-items-center p-1"
+                    style="
+                      background: #f0f0f0;
+                      border-top-left-radius: 4px;
+                      border-bottom-left-radius: 4px;
+                      height: 35px;
+                    "
+                  >
+                    <img
+                      src="../../assets/images/Flag_of_Singapore.png"
+                      width="25"
+                    />
+                    <p
+                      class="m-0 p-0"
+                      style="font-weight: 500; color: darkgray"
+                    >
+                      +65
+                    </p>
+                  </div>
+                  <div class="col-9">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="phoneCode"
+                        [(ngModel)]="digitsKeyIn"
+                        [maxlength]="8"
+                        (keypress)="onKeyPress($event)"
+                        style="
+                          width: 100%;
+                          border-top-right-radius: 4px;
+                          border-bottom-right-radius: 4px;
+                          height: 35px;
+                          border: 1px solid #cfcfcf;
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('1')"
+                    >
+                      1
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('2')"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('3')"
+                    >
+                      3
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                  style="position: relative"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('4')"
+                    >
+                      4
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('5')"
+                    >
+                      5
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('6')"
+                    >
+                      6
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                  style="position: relative"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('7')"
+                    >
+                      7
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('8')"
+                    >
+                      8
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('9')"
+                    >
+                      9
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                  style="position: relative"
+                >
+                  <div class="col-4">
+                    <!-- <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('*')"
+                    >
+                      *
+                    </button> -->
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('0')"
+                    >
+                      0
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <!-- <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('#')"
+                    >
+                      #
+                    </button> -->
+                  </div>
+                </div>
+                <br />
+                <div class="col-12 popover-body" style="position: relative">
+                  <div class="col-4"></div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-success qcKeypadCall"
+                      (click)="onCallClick()"
+                    >
+                      Call
+                    </button>
+                  </div>
+                  <div class="col-4"></div>
+                </div>
+              </mat-tab>
+              <mat-tab
+                (click)="handleMenuItemClick($event)"
+                label="QuickConnect"
+              >
+                <p-orderList
+                  (click)="handleMenuItemClick($event)"
+                  [value]="quickConnectList"
+                  [(selection)]="selectedQuickConnectList"
+                  name="quickConnect"
+                  [listStyle]="{ height: '185px' }"
+                  filterBy="name"
+                  filterPlaceholder="Filter by name"
+                >
+                  <ng-template let-qc pTemplate="item">
+                    <div class="qc-item">
+                      <div
+                        (click)="handleMenuItemClick($event)"
+                        class="qc-list-detail"
+                      >
+                        <span>{{ qc.name }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-orderList>
+                <div
+                  *ngIf="
+                    quickConnectList.length > 0 && selectedQuickConnectList
+                  "
+                >
+                  <button
+                    class="btn btn-success qcMakeCall"
+                    (click)="onQuickCallClick(1)"
+                  >
+                    Call
+                  </button>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-menu>
+        </div>
+        <!-- *ngIf="connection.getState().type == 'connected'" -->
+        <div
+          class="call-conference"
+          style="display: contents"
+          *ngIf="
+            ccpService.CurrentContact &&
+            ccpService.CurrentContact.getState().type == 'connected'
+          "
+        >
+          <button
+            mat-button
+            [matMenuTriggerFor]="belowMenu"
+            (click)="ShowKeyPad(0)"
+            class="btn btn-outline-primary custom-btn;"
+            style="
+              font-size: 12px;
+              width: 24%;
+              background: #dee1ef;
+              border: 1px solid #003783;
+              color: #003783;
+            "
+          >
+            <img
+              src="../../assets/images/consult call_active.png"
+              width="20"
+              alt=""
+            />
+            Conference
+          </button>
+          <mat-menu
+            [hasBackdrop]="false"
+            (click)="handleMenuItemClick($event)"
+            #belowMenu="matMenu"
+            yPosition="above"
+          >
+            <mat-tab-group (click)="handleMenuItemClick($event)">
+              <mat-tab (click)="handleMenuItemClick($event)" label="Keypad">
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 #cfcfcf popover-body"
+                >
+                  <div
+                    class="col-3 d-flex justify-content-between align-items-center p-1"
+                    style="
+                      background: #f0f0f0;
+                      border-top-left-radius: 4px;
+                      border-bottom-left-radius: 4px;
+                      height: 35px;
+                    "
+                  >
+                    <img
+                      src="../../assets/images/Flag_of_Singapore.png"
+                      width="25"
+                    />
+                    <p
+                      class="m-0 p-0"
+                      style="font-weight: 500; color: darkgray"
+                    >
+                      +65
+                    </p>
+                  </div>
+                  <div class="col-9">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="phoneCode"
+                        [(ngModel)]="digitsKeyIn"
+                        [maxlength]="8"
+                        (keypress)="onKeyPress($event)"
+                        style="
+                          width: 100%;
+                          border-top-right-radius: 4px;
+                          border-bottom-right-radius: 4px;
+                          height: 35px;
+                          border: 1px solid #cfcfcf;
+                        "
+                      />
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('1')"
+                    >
+                      1
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('2')"
+                    >
+                      2
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('3')"
+                    >
+                      3
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                  style="position: relative"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('4')"
+                    >
+                      4
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('5')"
+                    >
+                      5
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('6')"
+                    >
+                      6
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                  style="position: relative"
+                >
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('7')"
+                    >
+                      7
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('8')"
+                    >
+                      8
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('9')"
+                    >
+                      9
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <div
+                  (click)="handleMenuItemClick($event)"
+                  class="col-12 popover-body"
+                  style="position: relative"
+                >
+                  <div class="col-4">
+                    <!-- <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('*')"
+                    >
+                      *
+                    </button> -->
+                  </div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('0')"
+                    >
+                      0
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <!-- <button
+                      class="btn btn-primary digits"
+                      (click)="dialpadFunction('#')"
+                    >
+                      #
+                    </button> -->
+                  </div>
+                </div>
+                <br />
+                <div class="col-12 popover-body" style="position: relative">
+                  <div class="col-4"></div>
+                  <div class="col-4">
+                    <button
+                      class="btn btn-success qcKeypadCall"
+                      (click)="onCallClick()"
+                    >
+                      Call
+                    </button>
+                  </div>
+                  <div class="col-4"></div>
+                </div>
+              </mat-tab>
+              <mat-tab
+                (click)="handleMenuItemClick($event)"
+                label="QuickConnect"
+              >
+                <p-orderList
+                  (click)="handleMenuItemClick($event)"
+                  [value]="quickConnectList"
+                  [(selection)]="selectedQuickConnectList"
+                  name="quickConnect"
+                  [listStyle]="{ height: '185px' }"
+                  filterBy="name"
+                  filterPlaceholder="Filter by name"
+                >
+                  <ng-template let-qc pTemplate="item">
+                    <div class="qc-item">
+                      <div
+                        (click)="handleMenuItemClick($event)"
+                        class="qc-list-detail"
+                      >
+                        <span>{{ qc.name }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-orderList>
+                <div
+                  *ngIf="
+                    quickConnectList.length > 0 && selectedQuickConnectList
+                  "
+                >
+                  <button
+                    class="btn btn-success qcMakeCall"
+                    (click)="onQuickCallClick(0)"
+                  >
+                    Call
+                  </button>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div *ngIf="callStatus === 'ONGOING'" class="col-2 endButton">
+        <button
+          title="End"
+          class="btn btn-outline-danger"
+          style="font-size: 12px; width: 100%"
+          (click)="endClick(connection)"
+        >
+          End
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container
+      *ngIf="
+        connection.getEndpoint().type === 'agent' &&
+        connection.getState().type === 'disconnected'
+      "
+    >
+      <div class="col-4 customerLabel">
+        <div>
+          <div class="d-flex" style="font-size: 13px">
+            <div>
+              <span>{{ contactStatusText1 }}</span>
+            </div>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <div class="tilebg1" *ngIf="callStatus === 'WRAPUP'">
+              <span class="tilevalue1">{{ callStatus }}</span>
+            </div>
+          </div>
+
+          <div class="d-flex" style="font-size: 12px; color: grey">
+            <div>
+              <span>Call StartTime : {{ callStartTime }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- end -->
+
+<!-- This is for enabling quick connect / conference  transfer ui changes -->
+
+<div class="controlPanel">
+  <ng-container
+    *ngIf="
+      GetActiveCallCount() !== 2 &&
+      GetActiveCallCount() !== 1 &&
+      IsActive == true &&
+      ccpService &&
+      ccpService.Connections[0] &&
+      ccpService.Connections[0].getState() &&
+      ccpService.Connections[0].getState().type.toString() !== 'barge' &&
+      ccpService.Connections[0].getState().type.toString() !== 'silent_monitor'
+    "
+  >
+    <div *ngFor="let connection of ccpService.Connections">
+      <!-- {{ connection.getEndpoint().type }}
+      {{ connection.getState().type }} -->
+      <ng-container
+        *ngIf="
+          connection.getEndpoint().type != 'agent' &&
+          connection.getState().type != 'disconnected'
+        "
+      >
+        <div
+          *ngIf="ccpService.CurrentAgent.getState().name != 'AfterCallWork'"
+          [ngClass]="[
+            'row',
+            connection.getState().type == 'connected' ? 'connected' : 'held'
+          ]"
+        >
+          <div class="col-6">
+            <div class="row">
+              <div class="" *ngIf="connection.isInitialConnection()">
+                {{ contactStatusText1 }}
+              </div>
+              <div class="" *ngIf="!connection.isInitialConnection()">
+                {{ connection.getEndpoint().phoneNumber }}
+              </div>
+            </div>
+            <div class="row">
+              <div *ngIf="connection.isInitialConnection()">
+                {{ getDateTimeDiff(connection.getState().timestamp.getTime()) }}
+                |
+                <span
+                  class
+                  [ngClass]="[
+                    connection.getState().type == 'connected'
+                      ? 'onconnected'
+                      : 'onheld'
+                  ]"
+                >
+                  {{ connection.getState().type }}
+                </span>
+                <span *ngIf="connection.getState().type === 'hold'">{{
+                  getDateTimeDiff(connection.getState().timestamp.getTime())
+                }}</span>
+              </div>
+              <div
+                *ngIf="!connection.isInitialConnection()"
+                [ngClass]="[
+                  connection.getState().type == 'connected'
+                    ? 'onconnected'
+                    : 'onheld'
+                ]"
+              >
+                {{
+                  msToHMS(GetContact(connection.contactId).getStatusDuration())
+                }}
+                |
+                <span
+                  class
+                  [ngClass]="[
+                    connection.getState().type == 'connected'
+                      ? 'onconnected'
+                      : 'onheld'
+                  ]"
+                >
+                  {{ connection.getState().type }}
+                </span>
+                <span *ngIf="connection.getState().type === 'hold'">
+                  {{
+                    getDateTimeDiff(connection.getState().timestamp.getTime())
+                  }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-2"> 
+            <button
+              *ngIf="
+                GetContact(connection.contactId) &&
+                GetContact(connection.contactId).getState().type ==
+                  'connected' &&
+                !GetContact(connection.contactId).agentMuteStatus
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="font-size: 12px; width: 60%"
+              (click)="mutecontact()"
+            >
+              <img src="../../assets/images/mute.png" width="20" alt="" />
+              Mute
+            </button>
+            <button
+              *ngIf="
+                GetContact(connection.contactId) &&
+                GetContact(connection.contactId).getState().type == 'connected'
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="
+                font-size: 12px;
+                width: 60%;
+                background-color: #003783;
+                color: white;
+              "
+              (click)="unMuteContact()"
+            >
+              <img src="../../assets/images/mic.png" width="15" alt="" />
+              UnMute
+            </button>
+          </div> -->
+          <div class="col-2">
+            <button
+              *ngIf="
+                GetContact(connection.contactId) != undefined &&
+                GetContact(connection.contactId).getState().type ==
+                  'connected' &&
+                connection.getState().type != 'hold'
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="font-size: 12px; width: 60%"
+              (click)="holdConnection(connection)"
+            >
+              <img
+                src="../../assets/images/hold_active.png"
+                alt=""
+                width="20"
+              />
+              Hold
+            </button>
+            <button
+              *ngIf="
+                GetContact(connection.contactId) != undefined &&
+                GetContact(connection.contactId).getState().type ==
+                  'connected' &&
+                connection.getState().type == 'hold'
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="
+                font-size: 12px;
+                width: 60%;
+                background-color: #003783;
+                color: white;
+              "
+              (click)="RetrieveConnection(connection)"
+            >
+              <img src="../../assets/images/hold.png" width="20" />Resume
+            </button>
+          </div>
+
+          <div class="col-2">
+            <button
+              *ngIf="
+                ['connected', 'connecting'].includes(
+                  GetContact(connection.contactId).getState().type
+                )
+              "
+              type="button"
+              class="btn btn-outline-danger"
+              style="font-size: 12px; width: 60%"
+              (click)="endClick(connection)"
+            >
+              End
+            </button>
+          </div>
+        </div></ng-container
+      >
+    </div>
+  </ng-container>
+</div>
+
+<!-- end -->
+
+<!-- UI for monitor nad barge in -->
+
+<div class="controlPanel">
+  <ng-container
+    *ngIf="
+      GetActiveCallCount() != 2 &&
+      IsActive == true &&
+      ccpService &&
+      ccpService.Connections[0] &&
+      ccpService.Connections[0].getState() &&
+      (ccpService.Connections[0].getState().type.toString() === 'barge' ||
+        ccpService.Connections[0].getState().type.toString() ===
+          'silent_monitor')
+    "
+  >
+    <div *ngFor="let connection of ccpService.Connections">
+      <!-- {{ connection.getEndpoint().type }}
+      {{ connection.getState().type }} -->
+      <ng-container
+        *ngIf="
+          connection.getEndpoint().type != 'agent' &&
+          connection.getState().type != 'disconnected'
+        "
+      >
+        <div
+          *ngIf="ccpService.CurrentAgent.getState().name != 'AfterCallWork'"
+          [ngClass]="[
+            'row',
+            connection.getState().type == 'connected' ? 'connected' : 'held'
+          ]"
+        >
+          <div class="col-6">
+            <div class="row">
+              <div class="" *ngIf="connection.isInitialConnection()">
+                {{ contactStatusText1 }}
+              </div>
+              <div class="" *ngIf="!connection.isInitialConnection()">
+                {{ connection.getEndpoint().phoneNumber }}
+              </div>
+            </div>
+            <div class="row">
+              <div *ngIf="connection.isInitialConnection()">
+                {{ getDateTimeDiff(connection.getState().timestamp.getTime()) }}
+                |
+                <span
+                  class
+                  [ngClass]="[
+                    connection.getState().type == 'connected'
+                      ? 'onconnected'
+                      : 'onheld'
+                  ]"
+                >
+                  {{ connection.getState().type }}
+                </span>
+                <span *ngIf="connection.getState().type === 'hold'">{{
+                  getDateTimeDiff(connection.getState().timestamp.getTime())
+                }}</span>
+              </div>
+              <div
+                *ngIf="!connection.isInitialConnection()"
+                [ngClass]="[
+                  connection.getState().type == 'connected'
+                    ? 'onconnected'
+                    : 'onheld'
+                ]"
+              >
+                {{
+                  msToHMS(GetContact(connection.contactId).getStatusDuration())
+                }}
+                |
+                <span
+                  class
+                  [ngClass]="[
+                    connection.getState().type == 'connected'
+                      ? 'onconnected'
+                      : 'onheld'
+                  ]"
+                >
+                  {{ connection.getState().type }}
+                </span>
+                <span *ngIf="connection.getState().type === 'hold'">
+                  {{
+                    getDateTimeDiff(connection.getState().timestamp.getTime())
+                  }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-2"> 
+            <button
+              *ngIf="
+                GetContact(connection.contactId) &&
+                GetContact(connection.contactId).getState().type ==
+                  'connected' &&
+                !GetContact(connection.contactId).agentMuteStatus
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="font-size: 12px; width: 60%"
+              (click)="mutecontact()"
+            >
+              <img src="../../assets/images/mute.png" width="20" alt="" />
+              Mute
+            </button>
+            <button
+              *ngIf="
+                GetContact(connection.contactId) &&
+                GetContact(connection.contactId).getState().type == 'connected'
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="
+                font-size: 12px;
+                width: 60%;
+                background-color: #003783;
+                color: white;
+              "
+              (click)="unMuteContact()"
+            >
+              <img src="../../assets/images/mic.png" width="15" alt="" />
+              UnMute
+            </button>
+          </div> -->
+          <div class="col-2">
+            <button
+              *ngIf="
+                GetContact(connection.contactId) != undefined &&
+                GetContact(connection.contactId).getState().type ==
+                  'connected' &&
+                connection.getState().type != 'hold' &&
+                ccpService.Connections[0].getState().type.toString() === 'barge'
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="font-size: 12px; width: 60%"
+              (click)="holdConnection(connection)"
+            >
+              <img
+                src="../../assets/images/hold_active.png"
+                alt=""
+                width="20"
+              />
+              Hold
+            </button>
+            <button
+              *ngIf="
+                GetContact(connection.contactId) != undefined &&
+                GetContact(connection.contactId).getState().type ==
+                  'connected' &&
+                connection.getState().type == 'hold' &&
+                ccpService.Connections[0].getState().type.toString() === 'barge'
+              "
+              class="btn btn-outline-primary custom-btn"
+              style="
+                font-size: 12px;
+                width: 60%;
+                background-color: #003783;
+                color: white;
+              "
+              (click)="RetrieveConnection(connection)"
+            >
+              <img src="../../assets/images/hold.png" width="20" />Resume
+            </button>
+          </div>
+
+          <div class="col-2">
+            <button
+              *ngIf="
+                ['connected', 'connecting'].includes(
+                  GetContact(connection.contactId).getState().type
+                ) &&
+                ccpService.Connections[0].getState().type.toString() === 'barge'
+              "
+              type="button"
+              class="btn btn-outline-danger"
+              style="font-size: 12px; width: 60%"
+              (click)="endClick(connection)"
+            >
+              End
+            </button>
+          </div>
+        </div></ng-container
+      >
+    </div>
+  </ng-container>
+</div>
+
+<!-- end -->
+
+<!-- Swapping merging starts -->
+
+<div
+  class="row controlPanelQc"
+  *ngIf="
+    GetActiveCallCount() > 2 &&
+    IsActive == true &&
+    ccpService.Connections[0].getState().type.toString() !== 'barge' &&
+    ccpService.Connections[0].getState().type.toString() !== 'silent_monitor'
+  "
+>
+  <div>
+    <div class="row">
+      <!-- <div *ngIf="BargeHideButton" class="d-flex col-sm-2">
+        <div>
+          <label
+            class="form-check-label"
+            for="flexSwitchCheckDefault"
+            style="font-size: 15px; color: #003873"
+            >Monitor</label
+          >
+          &nbsp;
+        </div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            [checked]="isBargin"
+            [(ngModel)]="roleSwitchValue"
+            (change)="toggleRole()"
+          />
+          <div>
+            <label
+              class="form-check-label"
+              for="flexSwitchCheckDefault"
+              style="font-size: 15px; color: #003873"
+              >Barge</label
+            >
+          </div>
+        </div>
+      </div>
+      Hi {{ ccpService.Connections[0].getState().type.toString() }} -->
+
+      <div
+        *ngIf="
+          ccpService.CurrentContact &&
+          !ccpService.agentMuteStatus &&
+          ccpService.CurrentContact.getState().type == 'connected'
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 60%"
+          (click)="mutecontact()"
+        >
+          <img src="../../assets/images/mute_active.png" height="20" />Mute
+        </button>
+      </div>
+      <div
+        *ngIf="
+          ccpService.CurrentContact &&
+          ccpService.agentMuteStatus &&
+          ccpService.CurrentContact.getState().type == 'connected'
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="
+            font-size: 12px;
+            width: 60%;
+            background-color: #003783;
+            color: white;
+          "
+          (click)="unMuteContact()"
+        >
+          <img src="../../assets/images/mute.png" height="20" />Unmute
+        </button>
+      </div>
+      <div
+        *ngIf="
+          (ccpService.Connections[1].getState().type === 'hold' ||
+            ccpService.Connections[2].getState().type === 'hold') &&
+          !(
+            ccpService.Connections[1].getState().type === 'hold' &&
+            ccpService.Connections[2].getState().type === 'hold'
+          )
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 60%"
+          (click)="ccpService.swapConnection()"
+        >
+          <img src="../../assets/images/swap_ active.png" height="20" />Swap
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          ccpService.Connections[1].getState().type !== 'hold' &&
+          ccpService.Connections[2].getState().type !== 'hold'
+        "
+        class="col-sm-2"
+      >
+        <button
+          name="HoldAllContact"
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 65%"
+          (click)="HoldContact()"
+        >
+          <img src="../../assets/images/hold_active.png" height="20" />Hold
+        </button>
+      </div>
+
+      <div
+        class="col-sm-2"
+        *ngIf="
+          ccpService.Connections[1].getState().type === 'hold' &&
+          ccpService.Connections[2].getState().type === 'hold'
+        "
+      >
+        <button
+          name="ResumeAllContact"
+          class="btn btn-outline-primary custom-btn"
+          style="
+            font-size: 12px;
+            width: 65%;
+            background-color: #003783;
+            color: white;
+          "
+          (click)="RetrieveContact()"
+        >
+          <img src="../../assets/images/hold.png" height="20" />Resume
+        </button>
+      </div>
+      <div
+        class
+        *ngIf="
+          ccpService.Connections[1].getState().type === 'hold' ||
+          ccpService.Connections[2].getState().type === 'hold'
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 60%"
+          (click)="ccpService.joinConnection()"
+        >
+          <img
+            src="../../assets/images/mege_active.png"
+            height="20"
+            style="color: black"
+          />Join
+        </button>
+      </div>
+      <div
+        class="col-sm-2"
+        *ngIf="GetActiveCallCount() > 2 && IsActive == true"
+      >
+        <button
+          title="End"
+          class="btn btn-outline-danger"
+          style="font-size: 12px; width: 60%"
+          (click)="dropAgentConnection()"
+        >
+          End
+        </button>
+      </div>
+      <!-- <div class *ngIf="!canJoin && !BargeHideButton" class="col-sm-2">
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 60%"
+          (click)="ccpService.joinConnection()"
+        >
+          <img
+            src="../../assets/images/merge_disabled.png"
+            height="20"
+            style="color: black"
+          />Join
+        </button>
+      </div> -->
+      <!-- <div
+        class
+        *ngIf="
+          ccpService.CurrentContact &&
+          ccpService.CurrentContact.getState().type == 'connected'
+        "
+        class="col-sm-2"
+      >
+        <button
+          name="Keypad"
+          class="btn btn-sm buttonInActive fontsize"
+          (onShown)="onConsultShown()"
+          id="keypad"
+          style="color: black"
+        >
+          <img
+            class="me-2"
+            src="../../assets/images/keypad.png"
+            height="13"
+          />Keypad
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- end -->
+
+<!--  Swapping merging starts for bargein -->
+
+<div
+  class="row controlPanelQc"
+  *ngIf="
+    GetActiveCallCount() > 2 &&
+    IsActive == true &&
+    (ccpService.Connections[0].getState().type.toString() === 'barge' ||
+      ccpService.Connections[0].getState().type.toString() === 'silent_monitor')
+  "
+>
+  <!-- {{ ccpService.CurrentContact.getState().type }}
+  {{ ccpService.Connections[1].getState().type }}
+  {{ ccpService.Connections[2].getState().type }} -->
+
+  <div>
+    <div class="row">
+      <div *ngIf="BargeHideButton" class="d-flex col-sm-2">
+        <div>
+          <label
+            class="form-check-label"
+            for="flexSwitchCheckDefault"
+            style="font-size: 15px; color: #003873"
+            >Monitor</label
+          >
+          &nbsp;
+        </div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            [checked]="isBargin"
+            [(ngModel)]="roleSwitchValue"
+            (change)="toggleRole()"
+          />
+          <div>
+            <label
+              class="form-check-label"
+              for="flexSwitchCheckDefault"
+              style="font-size: 15px; color: #003873"
+              >Barge</label
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Hi {{ ccpService.Connections[0].getState().type.toString() }} -->
+
+      <div
+        *ngIf="
+          ccpService.CurrentContact &&
+          !ccpService.agentMuteStatus &&
+          ccpService.CurrentContact.getState().type == 'connected' &&
+          ccpService.Connections[0].getState().type.toString() == 'barge'
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 60%"
+          (click)="mutecontact()"
+        >
+          <img src="../../assets/images/mute_active.png" height="20" />Mute
+        </button>
+      </div>
+      <div
+        *ngIf="
+          ccpService.CurrentContact &&
+          ccpService.agentMuteStatus &&
+          ccpService.CurrentContact.getState().type == 'connected' &&
+          ccpService.Connections[0].getState().type.toString() == 'barge'
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="
+            font-size: 12px;
+            width: 60%;
+            background-color: #003783;
+            color: white;
+          "
+          (click)="unMuteContact()"
+        >
+          <img src="../../assets/images/mute.png" height="20" />Unmute
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          ccpService.Connections[1].getState().type !== 'hold' &&
+          ccpService.Connections[2].getState().type !== 'hold' &&
+          ccpService.Connections[0].getState().type.toString() == 'barge'
+        "
+        class="col-sm-2"
+      >
+        <button
+          name="HoldAllContact"
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 65%"
+          (click)="HoldContact()"
+        >
+          <img src="../../assets/images/hold_active.png" height="20" />Hold
+        </button>
+      </div>
+
+      <div
+        class="col-sm-2"
+        *ngIf="
+          ccpService.Connections[1].getState().type === 'hold' &&
+          ccpService.Connections[2].getState().type === 'hold' &&
+          ccpService.Connections[0].getState().type.toString() == 'barge'
+        "
+      >
+        <button
+          name="ResumeAllContact"
+          class="btn btn-outline-primary custom-btn"
+          style="
+            font-size: 12px;
+            width: 65%;
+            background-color: #003783;
+            color: white;
+          "
+          (click)="RetrieveContact()"
+        >
+          <img src="../../assets/images/hold.png" height="20" />Resume
+        </button>
+      </div>
+      <div
+        class
+        *ngIf="
+          ccpService.Connections[1].getState().type === 'hold' ||
+          (ccpService.Connections[2].getState().type === 'hold' &&
+            ccpService.Connections[0].getState().type.toString() == 'barge')
+        "
+        class="col-sm-2"
+      >
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="font-size: 12px; width: 60%"
+          (click)="ccpService.joinConnection()"
+        >
+          <img
+            src="../../assets/images/mege_active.png"
+            height="20"
+            style="color: black"
+          />Join
+        </button>
+      </div>
+      <div
+        class="col-sm-2"
+        *ngIf="
+          GetActiveCallCount() > 2 &&
+          IsActive == true &&
+          ccpService.Connections[0].getState().type.toString() == 'barge'
+        "
+      >
+        <button
+          title="End"
+          class="btn btn-outline-danger"
+          style="font-size: 12px; width: 60%"
+          (click)="dropAgentConnection()"
+        >
+          End
+        </button>
+      </div>
+      <div
+        class="col-sm-2"
+        *ngIf="
+          GetActiveCallCount() > 2 &&
+          IsActive == true &&
+          ccpService.Connections[0].getState().type.toString() ==
+            'silent_monitor'
+        "
+      >
+        <button
+          title="End"
+          class="btn btn-outline-danger"
+          style="font-size: 12px; width: 60%"
+          (click)="dropAgentConnection()"
+        >
+          Leave Call
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->

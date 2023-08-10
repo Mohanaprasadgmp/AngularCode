@@ -1,0 +1,62 @@
+.attribute {
+  // background-color: #f9f6ff;
+  height: calc(80vh - 100px);
+}
+
+@font-face {
+  font-family: 'Servdeskfont';
+  /*a name to be used later*/
+  src: url('/assets/fonts/Montserrat-Bold.ttf');
+  src: url('/assets/fonts/Montserrat-Regular.ttf');
+  /*URL to font*/
+}
+
+.title {
+  font-family: "Servdeskfont";
+  color: #003873;
+}
+
+.header {
+  background-color: #29487D !important;
+  color: white;
+  border-radius: 6px 6px 0px 0px;
+}
+
+
+.alternate-bg {
+  background-color: #f2f2f2;
+  /* Define your desired alternate background color */
+}
+
+
+
+table {
+  border-collapse: collapse;
+  width: 98%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}
+
+th {
+  background-color: #29487D;
+  color: white;
+  font-weight: 500;
+}
+
+.calldetails{
+  padding: 5px;
+    background: #dee1ef;
+    margin-left: 15px;
+    width: 98%;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #003783;
+}

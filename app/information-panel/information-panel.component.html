@@ -1,0 +1,49 @@
+<div
+  class="infoPanel"
+  [ngClass]="{
+    Always: whatScreenToDisplay === 'All',
+    show: whatScreenToDisplay === 'CSC',
+    showHR: whatScreenToDisplay === 'HR'
+  }"
+>
+  <mat-tab-group
+    class="beforeConference d-none"
+    *ngIf="IsEappointmentCall !== 'Yes' && agentStatus !== 'eApptCall'"
+  >
+    <mat-tab label="Customer Information">
+      <app-customer-information></app-customer-information>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-tab-group
+    class="afterConference"
+    *ngIf="IsEappointmentCall !== 'Yes' && agentStatus !== 'eApptCall'"
+  >
+    <mat-tab label="Customer Information">
+      <app-customer-information></app-customer-information>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-tab-group
+    class="beforeConference d-none"
+    *ngIf="IsEappointmentCall === 'Yes' || agentStatus === 'eApptCall'"
+  >
+    <mat-tab label="BookingSG Information">
+      <app-bookingsg></app-bookingsg>
+    </mat-tab>
+    <mat-tab label="Customer Information">
+      <app-customer-information></app-customer-information>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-tab-group
+    class="afterConference"
+    *ngIf="IsEappointmentCall === 'Yes' || agentStatus === 'eApptCall'"
+  >
+    <mat-tab label="BookingSG Information">
+      <app-bookingsg></app-bookingsg>
+    </mat-tab>
+    <mat-tab label="Customer Information">
+      <app-customer-information></app-customer-information>
+    </mat-tab>
+  </mat-tab-group>
+</div>

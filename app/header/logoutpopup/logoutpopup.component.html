@@ -1,0 +1,35 @@
+<div>
+  <div class="header">
+    <strong>Warning!</strong>
+  </div>
+  <div class="col-12 d-flex justify-content-center" style="padding: 20px 22px">
+    <div class="d-flex ">
+      <label for="">Are you sure want to Logout ? </label>
+    </div>
+  </div>
+  <div class="row">
+    <!-- <div class="col-8"></div> -->
+    <div class="col-12">
+      <div class="d-flex justify-content-center" style="padding: 8px 20px">
+        <div class="me-2">
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="ms-2">
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="logout()"
+            style="font-size: 12px; width: 60px"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

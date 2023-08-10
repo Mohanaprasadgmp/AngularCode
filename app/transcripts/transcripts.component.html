@@ -1,0 +1,67 @@
+<div *ngIf="!transcriptAvailable">
+  <p style="padding-left: 43%; padding-top: 15%">No Transcripts Available</p>
+</div>
+
+<div class="col-md-12 transcript" *ngIf="transcriptAvailable">
+  <div class="vh">
+    <div
+      class="vh-body h-100 d-grid"
+      *ngFor="let transcript of transcriptAndSentiment"
+    >
+      <div *ngIf="transcript.participant == 'AGENT'" class="agentSpeaks">
+        <div class="agentbg d-grid">
+          <label class="agentLabel"
+            >Agent
+            <img
+              *ngIf="transcript.sentiment == 'POSITIVE'"
+              src="../../assets/images/happy.png"
+              width="20"
+              height="20"
+              style="bottom: 2px; position: relative" /><img
+              *ngIf="transcript.sentiment == 'NEGATIVE'"
+              src="../../assets/images/sad.png"
+              width="20"
+              height="20"
+              style="bottom: 2px; position: relative" /><img
+              *ngIf="transcript.sentiment == 'NEUTRAL'"
+              src="../../assets/images/neutral.png"
+              width="20"
+              height="20"
+              style="bottom: 2px; position: relative"
+          /></label>
+          <div class="agentContent">
+            {{ transcript.transcript }}
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="transcript.participant == 'CUSTOMER'"
+        class="customerspeacks mt-4"
+      >
+        <div class="customerbg d-grid">
+          <label class="customerLabel"
+            >Customer<img
+              *ngIf="transcript.sentiment == 'POSITIVE'"
+              src="../../assets/images/happy.png"
+              width="20"
+              height="20"
+              style="top: 1px; position: relative; left: 3px" /><img
+              *ngIf="transcript.sentiment == 'NEGATIVE'"
+              src="../../assets/images/sad.png"
+              width="20"
+              height="20"
+              style="top: 1px; position: relative; left: 3px" /><img
+              *ngIf="transcript.sentiment == 'NEUTRAL'"
+              src="../../assets/images/neutral.png"
+              width="20"
+              height="20"
+              style="top: 1px; position: relative; left: 3px"
+          /></label>
+          <div class="customerContent">
+            {{ transcript.transcript }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

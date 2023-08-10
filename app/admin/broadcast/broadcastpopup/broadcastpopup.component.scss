@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Servdeskfont';
+    /*a name to be used later*/
+    src: url('/assets/fonts/Montserrat-Bold.ttf');
+    src: url('/assets/fonts/Montserrat-Regular.ttf');
+    /*URL to font*/
+}
+
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    background: white !important;
+    color: black !important;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__container {
+    transition-duration: var(--mat-dialog-transition-duration, 0ms);
+    width: 68vw
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+td {
+    font-family: 'Servdeskfont';
+    text-align: left;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: black !important;
+}
+
+th {
+    font-family: 'Servdeskfont';
+    text-align: left;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: white !important;
+}
+
+// tr:nth-child(even) {
+//     background-color: #cbc7c7;
+// }
+
+
+.tableHeader {
+    margin-left: 10px;
+    width: 97%;
+}
+
+.header {
+    background-color: #29487D;
+    // color: white;
+}
+
+.popupBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-btn {
+    border-color: #003783;
+    color: #003783;
+
+}
+
+.custom-btn:hover {
+    background-color: #003783;
+
+    color: #ffffff;
+
+    border-color: #003783;
+
+}

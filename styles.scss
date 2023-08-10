@@ -1,0 +1,168 @@
+@font-face {
+    font-family: 'Servdeskfont';
+    /*a name to be used later*/
+    src: url('/assets/fonts/Montserrat-Bold.ttf');
+    src: url('/assets/fonts/Montserrat-Regular.ttf');
+    /*URL to font*/
+}
+
+html,
+body {
+    font-family: 'Servdeskfont' !important;
+    font-size: clamp(14px,12px,16px);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #F7F8FA;
+    margin: 0;
+}
+html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label{
+    color:  #003873 !important;
+}
+
+input[type=radio]{
+    accent-color: #29487D;
+    margin-right: 8px;
+}
+
+::ng-deep .mat-icon{
+    color: #29487D !important;
+    
+}
+::ng-deep mat-icon.mat-icon.notranslate.mat-mdc-tooltip-trigger.material-icons.mat-ligature-font.mat-icon-no-color{
+    color: #29487D !important;
+    font-size: 0.9vw !important;
+}
+::ng-deep mat-icon.mat-icon.notranslate.call-li.material-icons.mat-ligature-font.mat-icon-no-color{
+    color: #29487D !important;
+    font-size: 1.5vw !important;
+}
+
+::ng-deep .material-icons{
+    font-size: 0.9vw !important;
+}
+table{
+    border: 0px solid !important;
+}
+input[type=radio]{
+    accent-color: #29487D !important;
+}
+th{
+    border: 0px solid !important;
+}
+    @media (min-width: 575px) and (max-width: 1024px)  {
+        ::ng-deep .popover {
+            width: 40vw;
+            height: 200px;
+        }
+        span{
+            font-size: 1vw !important;
+            color: #29487D !important;
+        
+        }
+        p{
+            font-size: 1vw !important;
+            color: #29487D !important;
+        
+        }
+        label{
+            color: #29487D !important;
+            font-size: 1.1vw !important; 
+        }
+        b, strong {
+            font-weight: 600 !important;
+        }
+        th{
+            font-size: 1vw !important; 
+        }
+        ::ng-deep span.mdc-tab__text-label{
+            font-size: 1vw !important; 
+        }
+        }
+    
+    @media (min-width: 1025px) and (max-width: 1128px)  {
+        ::ng-deep .popover {
+            width: 35vw;
+            height: 350px;
+        }
+        span{
+            font-size: 1vw !important;
+            color: #29487D !important;
+        
+        }
+        p{
+            font-size: 1vw !important;
+            color: #29487D !important;
+        
+        }
+        label{
+            color: #29487D !important;
+            font-size: 0.9vw !important; 
+        }
+        b, strong {
+            font-weight: 600 !important;
+        }
+        th,td{
+            font-size: 0.9vw !important; 
+        }
+        ::ng-deep span.mdc-tab__text-label{
+            font-size: 1vw !important; 
+        }
+    }
+    @media (min-width: 1128px) and (max-width: 1660px)  {
+        span{
+            font-size: .9vw !important;
+            color: #29487D !important;
+        
+        }
+        p{
+            font-size: .9vw !important;
+            color: #29487D !important;
+        
+        }
+        label{
+            color: #29487D !important;
+            font-size: 0.8vw !important; 
+        }
+        b, strong {
+            font-weight: 600 !important;
+        }
+        th,td{
+            font-size: 0.8vw !important; 
+        }
+        ::ng-deep span.mdc-tab__text-label{
+            font-size: 1vw !important; 
+        }
+        input[type=radio]{
+            accent-color: #29487D !important;
+        }
+        }
+    
+    @media (min-width: 1661px) and (max-width: 2560px)  {
+        span{
+            font-size: .7vw !important;
+            color: #29487D !important;
+        
+        }
+        p{
+            font-size: .7vw !important;
+            color: #29487D !important;
+        
+        }
+        label{
+            color: #29487D !important;
+            font-size: 0.8vw !important; 
+        }
+        b, strong {
+            font-weight: 600 !important;
+        }
+        th,td{
+            font-size: 0.8vw !important; 
+        }
+        input[type=radio]{
+            accent-color: #29487D !important;
+        }
+       
+        }

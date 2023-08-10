@@ -1,0 +1,318 @@
+<div *ngIf="data.action === 'addHoliday'">
+  <div class="header">
+    <span>Add Holiday</span>
+  </div>
+
+  <div class="row">
+    <div class="col-6 d-flex justify-content-evenly" style="padding-top: 10px">
+      <div>
+        <label for="Choose Department" style="font-weight: 600"
+          >Department <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          (change)="selectedCheckBox($event, 'CSC')"
+        />
+        <label class="form-check-label"> CSC </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          (change)="selectedCheckBox($event, 'HR')"
+        />
+        <label class="form-check-label"> HR </label>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="d-flex"
+    style="
+      flex-direction: column;
+      text-align: left;
+      justify-content: space-between;
+      height: 338px;
+      padding: 25px;
+      padding-bottom: 8px;
+    "
+  >
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >Name <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="col-9">
+        <input
+          class="searchText"
+          type="text"
+          name=""
+          placeholder="Enter Name"
+          [(ngModel)]="addName"
+        />
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >From Date <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="col-9">
+        <input
+          class="searchText"
+          type="datetime-local"
+          [min]="minfromDateAdd"
+          [(ngModel)]="addFromDate"
+        />
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >To Date <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="col-9">
+        <input
+          class="searchText"
+          type="datetime-local"
+          [min]="mintoDateAdd"
+          [(ngModel)]="addToDate"
+        />
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >Announcement
+        </label>
+      </div>
+      <div class="col-9">
+        <textarea
+          [maxLength]="250"
+          cols="29"
+          rows="7"
+          [(ngModel)]="addAnnouncement"
+          placeholder="250 character limit"
+          (keydown)="validateAddInput()"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="addHoliday()"
+            style="font-size: 12px"
+            [disabled]="
+              (!cscSelected && !hrSelected) ||
+              !addName ||
+              !addFromDate ||
+              !addToDate
+            "
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.action === 'editHoliday'">
+  <div class="header">
+    <span>Edit Holiday</span>
+  </div>
+
+  <div class="row">
+    <div class="col-6 d-flex justify-content-evenly" style="padding-top: 10px">
+      <div>
+        <label for="Choose Department" style="font-weight: 600"
+          >Department <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="editcsc"
+          (change)="editCheckBox($event, 'CSC')"
+        />
+        <label class="form-check-label"> CSC </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="edithr"
+          (change)="editCheckBox($event, 'HR')"
+        />
+        <label class="form-check-label"> HR </label>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="d-flex"
+    style="
+      flex-direction: column;
+      text-align: left;
+      justify-content: space-between;
+      height: 338px;
+      padding: 25px;
+      padding-bottom: 8px;
+    "
+  >
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >Name <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="col-9">
+        <input
+          class="searchText"
+          type="text"
+          placeholder="Enter Name"
+          [(ngModel)]="editHolidayName"
+        />
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >From Date <span class="asterick">*</span></label
+        >
+      </div>
+
+      <div class="col-9">
+        <input
+          class="searchText"
+          type="datetime-local"
+          [min]="minfromDateEdit"
+          [(ngModel)]="editHolidayFromDate"
+        />
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >To Date <span class="asterick">*</span></label
+        >
+      </div>
+      <div class="col-9">
+        <input
+          class="searchText"
+          type="datetime-local"
+          [min]="mintoDateEdit"
+          [(ngModel)]="editHolidayToDate"
+        />
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+      <div class="col-3">
+        <label for="" style="padding-top: 7px; font-weight: 600"
+          >Announcement
+        </label>
+      </div>
+      <div class="col-9">
+        <textarea
+          cols="29"
+          [maxLength]="250"
+          rows="7"
+          [(ngModel)]="editHolidayMessage"
+          placeholder="250 character limit"
+          (keydown)="validateEditInput()"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+            style="font-size: 12px"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="editHoliday()"
+            style="font-size: 12px"
+            [disabled]="
+              (!editcsc && !edithr) ||
+              !editHolidayName ||
+              !editHolidayFromDate ||
+              !editHolidayToDate
+            "
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="data.action === 'deleteHoliday'">
+  <div class="header">
+    <strong>Warning!</strong>
+  </div>
+
+  <div class="col-12 d-flex" style="padding: 20px 22px">
+    <div>
+      <label for="">Are you sure want to delete the holiday ? </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="onClose()"
+          >
+            Cancel
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn btn-outline-primary custom-btn"
+            (click)="deleteHoliday()"
+            style="font-size: 12px"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+.app-int {
+    width: 22% !important;
+}
+
+
+
+.mainContent {
+    padding-left: 0 !important;
+   
+}
+
+.rightSide {
+    flex: 0 0 auto;
+    width: 93.666667%;
+    padding-left: 0;
+}
+
+.leftSide {
+    width: 5.333333% !important;
+    background-color: white;
+    box-shadow: #00000014 3px 10px 6px 2px;
+    padding: 28px;
+}
+
+.sidebarBottom {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    bottom: 10px;
+    gap: 30px;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+    color: black;
+}

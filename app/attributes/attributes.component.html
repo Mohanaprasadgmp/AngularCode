@@ -1,0 +1,67 @@
+<!-- <div *ngIf="!attributesAvailable">
+  <p style="padding-left: 43%; padding-top: 15%">No Attributes Available</p>
+</div> -->
+<!-- 
+<div *ngIf="attributesAvailable" class="container mt-4" style="width: 90%">
+  <table class="rwd-table" *ngIf="contactAttr.length > 0">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of contactAttr">
+        <td>{{ item.name }}</td>
+        <td>{{ item.value }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+
+<!-- *ngFor="let item of items; let i = index" [ngClass]="{'alternate-bg': i % 2 === 0}" -->
+
+<div
+  *ngIf="attributesAvailable"
+  class="d-flex justify-content-between calldetails"
+>
+  <div>
+    <label for="" style="padding-left: 16px">Call Info </label>
+  </div>
+
+  <!-- <div class="col-2" *ngFor="let item of contactAttr">
+    <span>{{ item.name }}</span> : <span>{{ item.value }}</span>
+  </div> -->
+
+  <div *ngIf="contactAttr && contactAttr[0]">
+    <span>{{ contactAttr[0].name }}</span> :
+    <span>{{ contactAttr[0].value }}</span>
+  </div>
+  <div *ngIf="contactAttr && contactAttr[1]">
+    <span>{{ contactAttr[1].name }}</span> :
+    <span>{{ contactAttr[1].value }}</span>
+  </div>
+  <div *ngIf="contactAttr && contactAttr[2]">
+    <span>{{ contactAttr[2].name }}</span> :
+    <span>{{ contactAttr[2].value }}</span>
+  </div>
+  <div *ngIf="contactAttr && contactAttr[3]">
+    <span>{{ contactAttr[3].name }}</span> :
+    <span>{{ contactAttr[3].value }}</span>
+  </div>
+
+  <!-- <table class="rwd-table">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of contactAttr">
+        <td>{{ item.name }}</td>
+        <td>{{ item.value }}</td>
+      </tr>
+    </tbody>
+  </table> -->
+</div>

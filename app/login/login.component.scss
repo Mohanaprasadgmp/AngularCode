@@ -1,0 +1,116 @@
+.wave {
+    position: fixed;
+    // bottom: 0;
+    // left: 0;
+    // height: 100%;
+    // z-index: -1;
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 7rem;
+    padding: 0 2rem;
+    overflow: hidden;
+    margin-right: 0;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.form-control {
+    margin-left: 0 !important;
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 8px;
+}
+
+.login-form {
+    position: relative;
+    top: 45%;
+    left: 65%;
+    transform: translate(-25%);
+}
+
+.input-group-lg {
+    width: 60%;
+    margin: auto;
+}
+
+
+
+
+
+.img img {
+    width: 350px;
+}
+
+.servdesk-logo {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 24px;
+}
+
+.world-map {
+    // position: absolute;
+    // width: -webkit-fill-available;
+    // z-index: -99999;
+    // opacity: 0.09;
+
+    position: absolute;      
+    opacity: 0.06;
+    width: 100%;
+}
+
+
+.ocslogo{
+    z-index: 1000;
+}
+
+
+@media screen and (max-width: 1050px) {
+    .container {
+        grid-gap: 5rem;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+
+
+    .login-form h2 {
+        font-size: 2.4rem;
+        margin: 8px 0;
+    }
+
+    .img img {
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .img {
+        display: none;
+    }
+
+    .wave {
+        display: none;
+    }
+
+    .login-form {
+        justify-content: center;
+    }
+}

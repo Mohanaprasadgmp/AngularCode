@@ -1,0 +1,64 @@
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    background: white !important;
+    color: black !important;
+    overflow-x: hidden;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__container {
+    transition-duration: var(--mat-dialog-transition-duration, 0ms);
+    width: 45vw;
+    overflow-x: hidden;
+}
+
+.header {
+    background-color: #2f3851;
+    color: white;
+    padding: 14px;
+    
+}
+
+
+.deleteHeader {
+    padding-top: 19px;
+    padding-bottom: 8px;
+    color: #003783;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.searchText {
+    width: 100%;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #d1cfcf;
+}
+
+.searchText:focus-visible{
+    outline: 1px solid #1183d6;
+
+}
+
+.deleteBody {
+    padding: 10px;
+}
+
+.asterick {
+    color: red;
+    font-size: 14px;
+}
+
+.custom-btn {
+    border-color: #003783;
+    color: #003783;
+
+}
+
+.custom-btn:hover {
+    background-color: #003783;
+
+    color: #ffffff;
+
+    border-color: #003783;
+
+}
