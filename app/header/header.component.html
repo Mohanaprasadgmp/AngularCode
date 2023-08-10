@@ -19,6 +19,7 @@
           statusColorgreen: selectedAgentState === 'Available',
           statusColoryellow3: selectedAgentState === 'Lunch',
           statusColoryellow4: selectedAgentState === 'Take 5',
+          statusColoryellow9: selectedAgentState === 'Take5',
           statusColorred: selectedAgentState === 'PendingBusy',
           statusColorred10: selectedAgentState === 'Pending',
           statusColoryellow7: selectedAgentState === 'Default',
@@ -37,7 +38,8 @@
           statusColoryellow5: selectedAgentState === 'Extended ACW',
           statusColoryellow6: selectedAgentState === 'FailedConnectAgent',
           statusColorblue: selectedAgentState === 'LoggedIn',
-          statusColorblue1: selectedAgentState === 'Offline',
+          statusColorblue1: selectedAgentState === 'Not Ready',
+          statusColorblue2: selectedAgentState === 'Offline',
         }"
             >&#x2022;</span
           >
@@ -71,12 +73,13 @@
         </div>
       </div>
     </div>
-    <div class="col-2 d-flex justify-content-around align-items-center selectedagent" >
+    <div class="col-2 d-flex justify-content-around align-items-center pe-4">
       <div
         *ngIf="
           selectedAgentState === 'Available' ||
           selectedAgentState === 'Lunch' ||
           selectedAgentState === 'Take 5' ||
+          selectedAgentState === 'Take5' ||
           selectedAgentState === 'Training' ||
           selectedAgentState === 'Briefing/Huddles' ||
           selectedAgentState === 'Outbound Calls' ||
@@ -320,6 +323,7 @@
       <div
         *ngIf="
           selectedAgentState === 'Offline' ||
+          selectedAgentState === 'Not Ready' ||
           selectedAgentState === 'PendingBusy' ||
           selectedAgentState === 'Pending' ||
           selectedAgentState === 'Default' ||
@@ -360,14 +364,15 @@
               align-items: center;
               flex-direction: column;
               padding: 0px !important;
+              width: 280px !important;
             "
             mat-menu-item
           >
             <div class="tile">
-              <p style="margin-bottom: 0px; margin-right: 6px;font-size: 13px">
+              <p style="margin-bottom: 0px; font-size: 13px">
                 <img
                   src="../../assets/images/incoming-call.png"
-                  width="16" style="filter:opacity(0.5);"
+                  width="16"
                   alt=""
                 />
                 &nbsp; Answered/Missed:
@@ -382,8 +387,8 @@
               </div>
             </div>
             <div class="tile">
-              <p style="margin-bottom: 0px;margin-right: 6px; font-size: 13px">
-                <img src="../../assets/images/clock.png" width="16" alt="" style="filter:opacity(0.5);"/>
+              <p style="margin-bottom: 0px; font-size: 13px">
+                <img src="../../assets/images/clock.png" width="16" alt="" />
                 &nbsp; Average Handle Time:
               </p>
               <div class="tilebg">
@@ -393,8 +398,8 @@
               </div>
             </div>
             <div class="tile">
-              <p style="margin-bottom: 0px;margin-right: 6px; font-size: 13px">
-                <img src="../../assets/images/call.png" width="16" alt="" style="filter:opacity(0.5);"/>
+              <p style="margin-bottom: 0px; font-size: 13px">
+                <img src="../../assets/images/call.png" width="16" alt="" />
                 &nbsp; After Call Work:
               </p>
 
@@ -405,10 +410,10 @@
               </div>
             </div>
             <div class="tile">
-              <p style="margin-bottom: 0px; margin-right: 6px;font-size: 13px">
+              <p style="margin-bottom: 0px; font-size: 13px">
                 <img
                   src="../../assets/images/two-arrows.png"
-                  width="16" style="filter:opacity(0.5);"
+                  width="16"
                   alt=""
                 />
                 &nbsp;Transfer Out:
@@ -423,7 +428,7 @@
               <p style="margin-bottom: 0px; font-size: 13px">
                 <img
                   src="../../assets/images/pause-call.png"
-                  width="16" style="filter:opacity(0.5);"
+                  width="16"
                   alt=""
                 />
                 &nbsp;Hold Time:
@@ -461,38 +466,56 @@
             "
             mat-menu-item
           >
-            <div class="d-flex align-items-center" >
-              <div class="d-flex" >
+            <div class="d-flex align-items-center" style="row-gap: 10px">
+              <div class="d-flex" style="gap: 10px">
                 <img
                   src="/assets/images/profile-user.png"
-                  width="20"
-                  height="20"  style="margin-right: 10px;filter:opacity(0.3)"
+                  width="22"
+                  height="22"
                 />
-                <span style="font-size: 12px; color: black">
+                <span
+                  style="
+                    font-size: 12px;
+                    color: #004b92;
+                    font-family: Servdeskfont;
+                  "
+                >
                   {{ loggedInUser }}</span
                 >
               </div>
             </div>
             <div class="d-flex align-items-center" style="text-align: center">
-              <div class="d-flex">
-                <img src="/assets/images/group.png" width="20" height="20" style="margin-right: 10px;filter:opacity(0.3)"/>
-                <span style="font-size: 12px; color: black">
+              <div class="d-flex" style="gap: 10px">
+                <img src="/assets/images/group.png" width="22" height="22" />
+                <span
+                  style="
+                    font-size: 12px;
+                    color: #004b92;
+                    font-family: Servdeskfont;
+                  "
+                >
                   {{ agentDepartment | uppercase }}</span
                 >
               </div>
             </div>
             <div class="d-flex">
-              <div class="d-flex" >
+              <div class="d-flex" style="gap: 10px">
                 <div>
                   <img
                     src="/assets/images/customer-support.png"
-                    width="20"
-                    height="20" style="margin-right: 10px;filter:opacity(0.3)"
+                    width="22"
+                    height="22"
                   />
                 </div>
                 <div>
                   <div *ngFor="let item of agentSecurityProfile">
-                    <span style="font-size: 12px; color: black">
+                    <span
+                      style="
+                        font-size: 12px;
+                        color: #004b92;
+                        font-family: Servdeskfont;
+                      "
+                    >
                       {{ item }}</span
                     >
                   </div>
@@ -508,7 +531,12 @@
           >
             <label
               for=""
-              style="color: black; padding-left: 18px; font-size: 14px"
+              style="
+                color: #000;
+                padding-left: 18px;
+                font-size: 14px;
+                font-family: Servdeskfont;
+              "
               ><b>Phone Type : </b></label
             >
           </div>
@@ -519,17 +547,24 @@
             (click)="handleMenuItemClick($event)"
             *ngIf="showdeskphoneSoftphone"
           >
-            <div class="d-flex align-items-center">
+            <div>
               <input
                 type="radio"
                 name="phonetype"
                 value="softphone"
                 (change)="handleChange($event)"
-                [checked]="phoneType === 'SOFT_PHONE'" 
+                [checked]="phoneType === 'SOFT_PHONE'"
               />&nbsp;
-              <span style="font-size: 12px; color: black">SoftPhone</span>
+              <span
+                style="
+                  font-size: 12px;
+                  color: #004b92;
+                  font-family: Servdeskfont;
+                "
+                >SoftPhone</span
+              >
             </div>
-            <div class="d-flex align-items-center"> 
+            <div>
               <input
                 type="radio"
                 name="phonetype"
@@ -537,17 +572,23 @@
                 (change)="handleChange($event)"
                 [checked]="phoneType === 'DESK_PHONE'"
               />&nbsp;
-              <span style="font-size: 12px; color: black">DeskPhone</span>
+              <span
+                style="
+                  font-size: 12px;
+                  color: #004b92;
+                  font-family: Servdeskfont;
+                "
+                >DeskPhone</span
+              >
             </div>
           </div>
-          <div class="phoneInput d-flex w-100 justify-content-center" *ngIf="showdeskphoneSoftphone">
+          <div class="phoneInput d-flex w-100" *ngIf="showdeskphoneSoftphone">
             <div *ngIf="deskphone" style="display: flex; height: 30px">
               <input
                 class="searchText mb-0"
                 type="text"
                 placeholder="DeskPhone"
-                style="width: 235px;
-                margin-top: 4px;"
+                style="font-size: 12px; border-radius: 4px"
                 [(ngModel)]="deskPhoneNumber"
                 (click)="handleMenuItemClick($event)"
               />
@@ -565,7 +606,9 @@
               class="btn btn-primary"
               style="
                 font-size: 12px;
-                background: #29487D;
+                margin-right: 22px;
+                font-family: Servdeskfont;
+                background: #455278;
                 border: 0px;
               "
               (click)="updatePhoneConfig()"
@@ -586,7 +629,12 @@
           <div class="label-g" style="background: #f0f0f0; padding: 4px">
             <label
               for=""
-              style="color: black; padding-left: 18px; font-size: 14px"
+              style="
+                color: #000;
+                padding-left: 18px;
+                font-size: 14px;
+                font-family: Servdeskfont;
+              "
               ><b>Download Log</b></label
             >
           </div>
@@ -596,21 +644,67 @@
           >
             <div
               (click)="ccpService.downloadLog()"
-              class="d-flex align-items-center "
+              class="d-flex"
               style="gap: 10px; cursor: pointer"
             >
               <img
                 src="../../assets/images/downloadlog.svg"
-                width="16"
-                height="16" style="filter:opacity(0.3);"
+                width="22"
+                height="22"
               />
-              <span style="font-size: 12px; color: black"> Download Log</span>
+              <span
+                style="
+                  font-size: 12px;
+                  color: #004b92;
+                  font-family: Servdeskfont;
+                "
+              >
+                Download Log</span
+              >
             </div>
           </div>
         </mat-menu>
       </div>
 
-      <div (click)="signOut()" matTooltip="Logout">
+      <div
+        matTooltip="Logout"
+        *ngIf="
+          selectedAgentState === 'Offline' ||
+          selectedAgentState === 'PendingBusy' ||
+          selectedAgentState === 'Pending' ||
+          selectedAgentState === 'Default' ||
+          selectedAgentState === 'AgentRejected' ||
+          selectedAgentState === 'Busy' ||
+          selectedAgentState === 'MissedCallAgent' ||
+          selectedAgentState === 'CallingCustomer' ||
+          selectedAgentState === 'FailedConnectAgent' ||
+          selectedAgentState === 'AfterCallWork'
+        "
+      >
+        <mat-icon style="color: white; cursor: pointer; opacity: 0.7"
+          >power_settings_new</mat-icon
+        >
+      </div>
+      <div
+        *ngIf="
+          selectedAgentState === 'Available' ||
+          selectedAgentState === 'Lunch' ||
+          selectedAgentState === 'Take 5' ||
+          selectedAgentState === 'Take5' ||
+          selectedAgentState === 'Training' ||
+          selectedAgentState === 'Briefing/Huddles' ||
+          selectedAgentState === 'Outbound Calls' ||
+          selectedAgentState === 'Non-Call Admin' ||
+          selectedAgentState === 'Extended ACW' ||
+          selectedAgentState === 'Email' ||
+          selectedAgentState === 'eApptCall' ||
+          selectedAgentState === 'Service Centre' ||
+          selectedAgentState === 'LoggedIn' ||
+          selectedAgentState === 'Not Ready'
+        "
+        (click)="signOut()"
+        matTooltip="Logout"
+      >
         <mat-icon style="color: white; cursor: pointer"
           >power_settings_new</mat-icon
         >

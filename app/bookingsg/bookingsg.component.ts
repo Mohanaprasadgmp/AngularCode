@@ -94,48 +94,99 @@ export class BookingsgComponent {
         }
       });
     setInterval(() => {
-      this.cticustomapiService
-        .getEappointmentCallbackDetail({
-          action: 'EappointmentCallbackDetails',
-        })
-        .subscribe((response) => {
-          let serviceType = '';
-
-          this.callbackDetailToDisplay = [];
-          if (response && response.body && response.body.length > 0) {
-            this.tableShow = true;
-            for (let i = 0; i < response.body.length; i++) {
-              if (response.body[i].serviceid === environment.settings.walkin) {
-                serviceType = 'Walkin';
+      if (
+        sessionStorage.getItem('clearAllFields') !== null &&
+        sessionStorage.getItem('clearAllFields') !== undefined &&
+        sessionStorage.getItem('clearAllFields') === 'true'
+      ) {
+        this.cticustomapiService
+          .getEappointmentCallbackDetail({
+            action: 'EappointmentCallbackDetails',
+          })
+          .subscribe((response) => {
+            let serviceType = '';
+            this.callbackDetailToDisplay = [];
+            if (response && response.body && response.body.length > 0) {
+              this.tableShow = true;
+              for (let i = 0; i < response.body.length; i++) {
+                if (
+                  response.body[i].serviceid === environment.settings.walkin
+                ) {
+                  serviceType = 'Walkin';
+                }
+                if (
+                  response.body[i].serviceid === environment.settings.callBack
+                ) {
+                  serviceType = 'Callback';
+                }
+                this.callbackDetailToDisplay.push({
+                  highlight: false,
+                  serviceType: serviceType,
+                  serviceId: response.body[i].serviceid,
+                  customerName: response.body[i].customername,
+                  phone: response.body[i].contactnumber,
+                  callbackTime: response.body[i].callbackstarttimes,
+                  status: response.body[i].dialstatus,
+                  topic: response.body[i].topic,
+                  appointmentType: response.body[i].appointmenttype,
+                  attemptStatus: response.body[i].retrycount,
+                  updatedStatus: response.body[i].appointmentstatus,
+                  updatedStatusTime: response.body[i].updateddates,
+                  query: response.body[i].query,
+                  updatedCallbackTime: response.body[i].updatedcallbacktimes,
+                  uniqueServiceId: response.body[i].uniqueserviceid,
+                });
               }
-              if (
-                response.body[i].serviceid === environment.settings.callBack
-              ) {
-                serviceType = 'Callback';
-              }
-              this.callbackDetailToDisplay.push({
-                highlight: false,
-                serviceType: serviceType,
-                serviceId: response.body[i].serviceid,
-                customerName: response.body[i].customername,
-                phone: response.body[i].contactnumber,
-                callbackTime: response.body[i].callbackstarttimes,
-                status: response.body[i].dialstatus,
-                topic: response.body[i].topic,
-                appointmentType: response.body[i].appointmenttype,
-                attemptStatus: response.body[i].retrycount,
-                updatedStatus: response.body[i].appointmentstatus,
-                updatedStatusTime: response.body[i].updateddates,
-                query: response.body[i].query,
-                updatedCallbackTime: response.body[i].updatedcallbacktimes,
-                uniqueServiceId: response.body[i].uniqueserviceid,
-              });
+            } else {
+              this.tableShow = false;
             }
-          } else {
-            this.tableShow = false;
-          }
-        });
-    }, 60000);
+          });
+        sessionStorage.setItem('clearAllFields', 'false');
+      }
+    });
+    // setInterval(() => {
+    //   this.cticustomapiService
+    //     .getEappointmentCallbackDetail({
+    //       action: 'EappointmentCallbackDetails',
+    //     })
+    //     .subscribe((response) => {
+    //       let serviceType = '';
+
+    //       this.callbackDetailToDisplay = [];
+    //       if (response && response.body && response.body.length > 0) {
+    //         this.tableShow = true;
+    //         for (let i = 0; i < response.body.length; i++) {
+    //           if (response.body[i].serviceid === environment.settings.walkin) {
+    //             serviceType = 'Walkin';
+    //           }
+    //           if (
+    //             response.body[i].serviceid === environment.settings.callBack
+    //           ) {
+    //             serviceType = 'Callback';
+    //           }
+    //           this.callbackDetailToDisplay.push({
+    //             highlight: false,
+    //             serviceType: serviceType,
+    //             serviceId: response.body[i].serviceid,
+    //             customerName: response.body[i].customername,
+    //             phone: response.body[i].contactnumber,
+    //             callbackTime: response.body[i].callbackstarttimes,
+    //             status: response.body[i].dialstatus,
+    //             topic: response.body[i].topic,
+    //             appointmentType: response.body[i].appointmenttype,
+    //             attemptStatus: response.body[i].retrycount,
+    //             updatedStatus: response.body[i].appointmentstatus,
+    //             updatedStatusTime: response.body[i].updateddates,
+    //             query: response.body[i].query,
+    //             updatedCallbackTime: response.body[i].updatedcallbacktimes,
+    //             uniqueServiceId: response.body[i].uniqueserviceid,
+    //           });
+    //         }
+    //       } else {
+    //         this.tableShow = false;
+    //       }
+    //     });
+    // }, 120000);
   }
 
   async contactSubscriptionHandler(contact) {
@@ -220,6 +271,9 @@ export class BookingsgComponent {
   };
 
   viewProfile = (details: any) => {
+    for (let i = 0; i < this.callbackDetailToDisplay.length; i++) {
+      this.callbackDetailToDisplay[i].highlight = false;
+    }
     details.highlight = true;
     if (details.serviceType === 'Callback') {
       console.log('Callback ', details);

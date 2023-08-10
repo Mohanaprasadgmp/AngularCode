@@ -23,12 +23,13 @@
 }
 
 .sidebarBottom {
-    position: fixed;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    bottom: 10px;
-    gap: 30px;
+   
+    top: 55%;
+        height: 30%;
 }
 
 ::ng-deep .mdc-list-item__primary-text {

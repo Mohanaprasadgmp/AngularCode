@@ -46,25 +46,29 @@ export class CallControlPanelComponent implements OnInit {
   roleSwitchValue: boolean = false;
   customerData: any;
   ngOnInit(): void {
+    if (sessionStorage.getItem('screenToDisplay') === 'CSC') {
+      this.contactStatusText1 = sessionStorage.getItem('callerPhoneNumber');
+    }
+    if (
+      sessionStorage.getItem('screenToDisplay') === 'HR' &&
+      sessionStorage.getItem('callerPhoneNumber') != null &&
+      sessionStorage.getItem('callerPhoneNumber') != undefined
+    ) {
+      this.cticustomapiService
+        .hrpEmployeeDetails({
+          action: 'HrpEmployeeDetails',
+          phoneNumber: sessionStorage.getItem('callerPhoneNumber'),
+        })
+        .subscribe((response) => {
+          if (response && response.body && response.body[0]) {
+            this.contactStatusText1 = response.body[0].name;
+          } else {
+            this.contactStatusText1 =
+              sessionStorage.getItem('callerPhoneNumber');
+          }
+        });
+    }
     setInterval(() => {
-      if (sessionStorage.getItem('screenToDisplay') === 'CSC') {
-        this.contactStatusText1 = sessionStorage.getItem('callerPhoneNumber');
-      }
-      if (sessionStorage.getItem('screenToDisplay') === 'HR') {
-        this.cticustomapiService
-          .hrpEmployeeDetails({
-            action: 'HrpEmployeeDetails',
-            phoneNumber: sessionStorage.getItem('callerPhoneNumber'),
-          })
-          .subscribe((response) => {
-            if (response && response.body && response.body[0]) {
-              this.contactStatusText1 = response.body[0].name;
-            } else {
-              this.contactStatusText1 =
-                sessionStorage.getItem('callerPhoneNumber');
-            }
-          });
-      }
       if (sessionStorage.getItem('CustomerInfo')) {
         this.customerData = JSON.parse(sessionStorage.getItem('CustomerInfo'));
         this.callStartTime = this.customerData.cases[0].CaseInfo.startTime;
@@ -296,76 +300,76 @@ export class CallControlPanelComponent implements OnInit {
       } catch (ex) {}
     }
 
-    if (contact.event == '_handleAgentRefresh') {
-      if (sessionStorage.getItem('screenToDisplay') === 'CSC') {
-        this.contactStatusText1 = sessionStorage.getItem('callerPhoneNumber');
-      }
-      if (sessionStorage.getItem('screenToDisplay') === 'HR') {
-        this.cticustomapiService
-          .hrpEmployeeDetails({
-            action: 'HrpEmployeeDetails',
-            phoneNumber: sessionStorage.getItem('callerPhoneNumber'),
-          })
-          .subscribe((response) => {
-            if (response && response.body && response.body[0]) {
-              this.contactStatusText1 = response.body[0].name;
-            } else {
-              this.contactStatusText1 =
-                sessionStorage.getItem('callerPhoneNumber');
-            }
-          });
-      }
+    // if (contact.event == '_handleAgentRefresh') {
+    //   if (sessionStorage.getItem('screenToDisplay') === 'CSC') {
+    //     this.contactStatusText1 = sessionStorage.getItem('callerPhoneNumber');
+    //   }
+    //   if (sessionStorage.getItem('screenToDisplay') === 'HR') {
+    //     this.cticustomapiService
+    //       .hrpEmployeeDetails({
+    //         action: 'HrpEmployeeDetails',
+    //         phoneNumber: sessionStorage.getItem('callerPhoneNumber'),
+    //       })
+    //       .subscribe((response) => {
+    //         if (response && response.body && response.body[0]) {
+    //           this.contactStatusText1 = response.body[0].name;
+    //         } else {
+    //           this.contactStatusText1 =
+    //             sessionStorage.getItem('callerPhoneNumber');
+    //         }
+    //       });
+    //   }
 
-      if (
-        contact &&
-        contact._getData() &&
-        contact._getData().snapshot &&
-        contact._getData().snapshot.contacts &&
-        contact._getData().snapshot.contacts[0] &&
-        contact._getData().snapshot.contacts[0].connections &&
-        contact._getData().snapshot.contacts[0].connections[0] &&
-        contact._getData().snapshot.contacts[0].connections[0]
-          .monitorCapabilities &&
-        contact._getData().snapshot.contacts[0].connections[0]
-          .monitorCapabilities !== null &&
-        contact._getData().snapshot.contacts[0].connections[0]
-          .monitorCapabilities.length == 2
-      ) {
-        this.BargeHideButton = true;
-      }
-      if (
-        contact &&
-        contact._getData() &&
-        contact._getData().snapshot &&
-        contact._getData().snapshot.contacts &&
-        contact._getData().snapshot.contacts[0] &&
-        contact._getData().snapshot.contacts[0].connections &&
-        contact._getData().snapshot.contacts[0].connections[0] &&
-        contact._getData().snapshot.contacts[0].connections[0].monitorStatus &&
-        contact._getData().snapshot.contacts[0].connections[0].monitorStatus ===
-          'SILENT_MONITOR'
-      ) {
-        this.isBargin = false;
-      }
-      if (
-        contact &&
-        contact._getData() &&
-        contact._getData().snapshot &&
-        contact._getData().snapshot.contacts &&
-        contact._getData().snapshot.contacts[0] &&
-        contact._getData().snapshot.contacts[0].connections &&
-        contact._getData().snapshot.contacts[0].connections[0] &&
-        contact._getData().snapshot.contacts[0].connections[0].monitorStatus ===
-          'BARGE'
-      ) {
-        this.isBargin = true;
-      }
-      try {
-        if (contact.getStatus().name == 'Busy') {
-          this.callAnswered = true;
-        }
-      } catch (ex) {}
-    }
+    //   if (
+    //     contact &&
+    //     contact._getData() &&
+    //     contact._getData().snapshot &&
+    //     contact._getData().snapshot.contacts &&
+    //     contact._getData().snapshot.contacts[0] &&
+    //     contact._getData().snapshot.contacts[0].connections &&
+    //     contact._getData().snapshot.contacts[0].connections[0] &&
+    //     contact._getData().snapshot.contacts[0].connections[0]
+    //       .monitorCapabilities &&
+    //     contact._getData().snapshot.contacts[0].connections[0]
+    //       .monitorCapabilities !== null &&
+    //     contact._getData().snapshot.contacts[0].connections[0]
+    //       .monitorCapabilities.length == 2
+    //   ) {
+    //     this.BargeHideButton = true;
+    //   }
+    //   if (
+    //     contact &&
+    //     contact._getData() &&
+    //     contact._getData().snapshot &&
+    //     contact._getData().snapshot.contacts &&
+    //     contact._getData().snapshot.contacts[0] &&
+    //     contact._getData().snapshot.contacts[0].connections &&
+    //     contact._getData().snapshot.contacts[0].connections[0] &&
+    //     contact._getData().snapshot.contacts[0].connections[0].monitorStatus &&
+    //     contact._getData().snapshot.contacts[0].connections[0].monitorStatus ===
+    //       'SILENT_MONITOR'
+    //   ) {
+    //     this.isBargin = false;
+    //   }
+    //   if (
+    //     contact &&
+    //     contact._getData() &&
+    //     contact._getData().snapshot &&
+    //     contact._getData().snapshot.contacts &&
+    //     contact._getData().snapshot.contacts[0] &&
+    //     contact._getData().snapshot.contacts[0].connections &&
+    //     contact._getData().snapshot.contacts[0].connections[0] &&
+    //     contact._getData().snapshot.contacts[0].connections[0].monitorStatus ===
+    //       'BARGE'
+    //   ) {
+    //     this.isBargin = true;
+    //   }
+    //   try {
+    //     if (contact.getStatus().name == 'Busy') {
+    //       this.callAnswered = true;
+    //     }
+    //   } catch (ex) {}
+    // }
 
     if (contact.event == 'handleContactConnected') {
     }

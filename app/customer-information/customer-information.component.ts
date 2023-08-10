@@ -66,15 +66,31 @@ export class CustomerInformationComponent implements OnDestroy {
         this.contactSubscriptionHandler(message);
       });
 
-    // setInterval(() => {
-    //   this.whatScreenToDisplay = sessionStorage.getItem('screenToDisplay');
-    //   if (sessionStorage.getItem('CustomerInfo')) {
-    //     this.displayTable = true;
-    //   } else {
-    //     this.displayTable = false;
-    //   }
-    //   this.isConferenceEnabled = sessionStorage.getItem('isConferenceEnabled');
-    // }, 1000);
+    setInterval(() => {
+      // this.whatScreenToDisplay = sessionStorage.getItem('screenToDisplay');
+      // if (sessionStorage.getItem('CustomerInfo')) {
+      //   this.displayTable = true;
+      // } else {
+      //   this.displayTable = false;
+      // }
+      // this.isConferenceEnabled = sessionStorage.getItem('isConferenceEnabled');
+      if (
+        sessionStorage.getItem('clearAllFields') !== null &&
+        sessionStorage.getItem('clearAllFields') !== undefined &&
+        sessionStorage.getItem('clearAllFields') === 'true'
+      ) {
+        this.displayTable = false;
+        this.showSingpassvalidated = false;
+        this.hrDataToDisplaySaluation = '';
+        this.hrDataToDisplayNRIC = '';
+        this.hrDataToDisplaySchool = '';
+        this.hrDataToDisplayDesignation = '';
+        this.hrDataToDisplayEmployeegroup = '';
+        this.NRICPhoneNumber = '';
+        sessionStorage.setItem('clearAllFields', 'false');
+      }
+    }, 1000);
+
     this.whatScreenToDisplay = sessionStorage.getItem('screenToDisplay');
     if (sessionStorage.getItem('CustomerInfo')) {
       this.displayTable = true;
@@ -554,14 +570,7 @@ export class CustomerInformationComponent implements OnDestroy {
         });
     }
     if (contact.event == 'handleContactEnded') {
-      this.displayTable = false;
-      this.showSingpassvalidated = false;
       this.contactID = contact.contactId;
-      this.hrDataToDisplaySaluation = '';
-      this.hrDataToDisplayNRIC = '';
-      this.hrDataToDisplaySchool = '';
-      this.hrDataToDisplayDesignation = '';
-      this.hrDataToDisplayEmployeegroup = '';
     }
   }
 

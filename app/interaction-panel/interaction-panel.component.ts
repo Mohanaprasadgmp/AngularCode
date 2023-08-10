@@ -49,26 +49,26 @@ export class InteractionPanelComponent implements OnInit {
     setInterval(() => {
       // console.log(this.CheckExists());
       this.cschrForAcceptRejectCall = sessionStorage.getItem('screenToDisplay');
-      if (
-        sessionStorage.getItem('screenToDisplay') === 'HR' &&
-        sessionStorage.getItem('callerPhoneNumber') !== undefined &&
-        sessionStorage.getItem('callerPhoneNumber') !== null
-      ) {
-        // console.log('interaction 1');
-        this.cticustomapiService
-          .hrpEmployeeDetails({
-            action: 'HrpEmployeeDetails',
-            phoneNumber: sessionStorage.getItem('callerPhoneNumber'),
-          })
-          .subscribe((response) => {
-            if (response && response.body && response.body[0]) {
-              this.callerIdentity = response.body[0].name;
-              // console.log(this.callerIdentity);
-              this.duplicateCallerIDentity = this.callerIdentity;
-              // console.log(2);
-            }
-          });
-      }
+      // if (
+      //   sessionStorage.getItem('screenToDisplay') === 'HR' &&
+      //   sessionStorage.getItem('callerPhoneNumber') !== undefined &&
+      //   sessionStorage.getItem('callerPhoneNumber') !== null
+      // ) {
+      //   // console.log('interaction 1');
+      //   this.cticustomapiService
+      //     .hrpEmployeeDetails({
+      //       action: 'HrpEmployeeDetails',
+      //       phoneNumber: sessionStorage.getItem('callerPhoneNumber'),
+      //     })
+      //     .subscribe((response) => {
+      //       if (response && response.body && response.body[0]) {
+      //         this.callerIdentity = response.body[0].name;
+      //         // console.log(this.callerIdentity);
+      //         this.duplicateCallerIDentity = this.callerIdentity;
+      //         // console.log(2);
+      //       }
+      //     });
+      // }
       if (sessionStorage.getItem('CallEnded') === '1') {
         sessionStorage.removeItem('CallEnded');
       }

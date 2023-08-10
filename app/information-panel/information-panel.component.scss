@@ -55,7 +55,11 @@
     background-color: #003873 !important;
 }
 
-
+::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+    color: #003873 !important;
+    font-family: "Servdeskfont";
+    font-size: 13px;
+}
 
 ::ng-deep .mdc-tab__text-label{
     color : #003873 !important;
@@ -77,12 +81,6 @@
     overflow-x: hidden !important;
     height: 100%;
     overflow-y: hidden !important;
-}
-
-::ng-deep .mat-mdc-tab-body-wrapper{
-    background: white !important;
-    padding: 10px !important;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 #myInput {
@@ -137,7 +135,7 @@ tr:nth-child(even) {
 }
 
 .header {
-    background-color: #29487D;
+    background-color: #455278;
     color: white;
 }
 
@@ -161,77 +159,13 @@ label {
 
 .show {
     display: block;
-    width: 98%;
-    border-radius: 8px;
 }
 
 .showHR {
-    // background: white;
-    // padding: 8px;
     display: block;
-    width: 98%;
-    border-radius: 8px;
-    height: calc(78vh - 120px) !important;
+    height: calc(78vh - 120px) !important
 }
 
 .hidden {
     display: none;
 }
-
-@media (min-width: 575px) and (max-width: 1024px)  {
-    .ccpclass{
-        padding-left: 7.5%
-    }
-    ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
-        font-weight: 600;
-        font-size: 1.1vw !important;
-        color: #003873 !important;
-        font-family: "Servdeskfont";
-    }
-    }
-
-@media (min-width: 1025px) and (max-width: 1128px)  {
-.ccpclass{
-    padding-left: 6%
-}
-::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
-    font-weight: 600;
-    font-size: 1vw !important;
-    color: #003873 !important;
-    font-family: "Servdeskfont";
-}
-}
-@media (min-width: 1128px) and (max-width: 1660px)  {
-    .ccpclass{
-        padding-left: 4.5%
-    }
-    ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
-        font-weight: 600;
-        font-size: 1vw !important;
-        color: #003873 !important;
-        font-family: "Servdeskfont";
-    }
-    }
-
-@media (min-width: 1661px) and (max-width: 2560px)  {
-    .ccpclass{
-        padding-left: 3.5%
-    }
-    ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
-        font-weight: 600;
-        font-size: 0.8vw !important;
-        color: #003873 !important;
-        font-family: "Servdeskfont";
-    }
-    }
-    @media (min-width: 2561px) and (max-width: 4120px)  {
-        .ccpclass{
-            padding-left: 3%
-        }
-        ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
-            font-weight: 600;
-            font-size: 0.8vw !important;
-            color: #003873 !important;
-            font-family: "Servdeskfont";
-        }
-        }

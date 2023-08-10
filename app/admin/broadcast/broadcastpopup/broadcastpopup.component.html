@@ -2,13 +2,13 @@
   mat-dialog-title
   style="color: black; font-weight: 600; font-family: 'Servdeskfont'"
 >
-  Last 3 Cases
+  Broadcast Messages
 </h1>
 <div mat-dialog-content>
   <table id="myTable" class="tableHeader">
     <thead>
       <tr class="header">
-        <th>StartDate</th>
+        <th>FromDate</th>
         <th>EndDate</th>
         <th>Message</th>
         <th>Action</th>
@@ -17,10 +17,10 @@
     <tbody>
       <tr *ngFor="let items of tableData">
         <td>
-          {{ items.fromdate | date : "dd/MM/YYYY HH:MM" }}
+          {{ convertData(items.fromdate) }}
         </td>
         <td>
-          {{ items.todate | date : "dd/MM/YYYY HH:MM" }}
+          {{ convertData(items.todate) }}
         </td>
         <td>
           {{ items.message }}

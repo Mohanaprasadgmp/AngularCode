@@ -1,10 +1,11 @@
+
 // .broadcastMsge {
 //     width: max-content;
 //     height: fit-content;
 //     border-radius: 2px;
-//     position: relative;
+//     position: relative;  
 //     top: 8px;
-//     color: #003873;
+//     color: #003873;    
 // }
 
 // .broad{
@@ -16,32 +17,32 @@
 // }
 
 .wrapper {
-  height: 100%;
-  // bottom: 20px;
-  //left: 45%;
-  width: 88% !important;
-  left: 80%;
-  position: relative;
-  animation: mymove 20s infinite;
-  animation-timing-function: linear;
-  white-space: pre;
+height: 4px;
+    // bottom: 20px;
+    //left: 45%;
+    left: 70%;
+    position: relative;
+     animation: mymove 20s infinite; 
+    animation-timing-function: linear;
+    white-space: pre;
 }
 
 @keyframes mymove {
-  from {
-    // left: 100%;
-    transform: translateX(1%);
-  }
+    from {
+        // left: 100%;
+        transform: translateX(1%);
+    }
 
-  to {
-    // left: 10%;
-    transform: translateX(-100%);
-  }
+    to {
+        // left: 10%;
+        transform: translateX(-100%);
+    }
 }
 
 // #broadcast {
 //     animation-timing-function: linear;
 // }
+
 
 // @keyframes mymove {
 //     from {
@@ -52,68 +53,3 @@
 //         left: 100%;
 //     }
 // }
-
-
-
-@media (min-width: 575px) and (max-width: 1024px)  {
-    .indexmesg {
-     padding-left: 0; 
-      padding-top: 3px;
-      width: 12%; 
-      padding-bottom: 3px;
-      justify-content: flex-end; 
-      color: #29487d;
-      z-index: 1;
-      background: #dee1ef;
-    }
-}
-
-@media (min-width: 1025px) and (max-width: 1128px)  {
-    .indexmesg {
-        padding-left: 0;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        justify-content: flex-end;
-        width: 12%; 
-        color: #29487d;
-        z-index: 1;
-        background: #dee1ef;
-}
-}
-@media (min-width: 1128px) and (max-width: 1660px)  {
-    .indexmesg {
-        padding-left: 0;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        justify-content: flex-end;
-        width: 11%; 
-        color: #29487d;
-        z-index: 1;
-        background: #dee1ef;
-      }
-    }
-
-@media (min-width: 1661px) and (max-width: 2560px)  {
-    .indexmesg {
-        padding-left: 0;
-        padding-top: 3px;
-        padding-bottom: 3px;
-        justify-content: flex-end;
-        width: 11%; 
-        color: #29487d;
-        z-index: 1;
-        background: #dee1ef;
-      }
-    }
-    @media (min-width: 2560px) and (max-width: 4120px)  {
-        .indexmesg {
-            padding-left: 0;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            justify-content: flex-end;
-            width: 11%; 
-            color: #29487d;
-            z-index: 1;
-            background: #dee1ef;
-          }
-        }

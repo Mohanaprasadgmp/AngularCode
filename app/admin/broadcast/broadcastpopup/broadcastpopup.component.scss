@@ -17,29 +17,29 @@
     width: 68vw
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
+// table {
+//     border-collapse: collapse;
+//     width: 100%;
+// }
 
 
-td {
-    font-family: 'Servdeskfont';
-    text-align: left;
-    padding: 8px;
-    font-size: 12px;
-    font-weight: 500;
-    color: black !important;
-}
+// td {
+//     font-family: 'Servdeskfont';
+//     text-align: left;
+//     padding: 8px;
+//     font-size: 12px;
+//     font-weight: 500;
+//     color: black !important;
+// }
 
-th {
-    font-family: 'Servdeskfont';
-    text-align: left;
-    padding: 8px;
-    font-size: 12px;
-    font-weight: 500;
-    color: white !important;
-}
+// th {
+//     font-family: 'Servdeskfont';
+//     text-align: left;
+//     padding: 8px;
+//     font-size: 12px;
+//     font-weight: 500;
+//     color: white !important;
+// }
 
 // tr:nth-child(even) {
 //     background-color: #cbc7c7;
@@ -52,7 +52,7 @@ th {
 }
 
 .header {
-    background-color: #29487D;
+    background-color: #455278;
     // color: white;
 }
 
@@ -75,4 +75,37 @@ th {
 
     border-color: #003783;
 
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th,
+td {
+    font-size: clamp(10px, 13px, 15px);
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-family: 'Servdeskfont';
+    text-align: left;
+    padding: 8px;
+    width: 10%;
+    font-weight: 500;
+    color: black;
+    font-family: 'Servdeskfont';
+}
+
+th {
+    background-color: #455278;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    color: white !important;
+}
+
+.scrollable-body {
+    // max-height: 300px;
+    overflow-y: auto;
 }

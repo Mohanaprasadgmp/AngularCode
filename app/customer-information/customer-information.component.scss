@@ -14,7 +14,7 @@
 
 
 .clicked-button {
-    background-color: #29487D;
+    background-color: #003783;
     /* Replace with the desired color */
     color:#ffffff !important;
     /* Replace with the desired text color */
@@ -24,6 +24,7 @@
     background-image: url('/css/searchicon.png');
     background-position: 10px 10px;
     background-repeat: no-repeat;
+    font-size: 14px;
     border: 1px solid #003873;
     margin-bottom: 12px;
 }
@@ -47,17 +48,17 @@
   th,
   td {
     font-size: clamp(10px, 13px, 15px);
-      border: 1px solid #ccc;
-      padding: 8px;
+    border: 1px solid #ccc;
+    padding: 8px;
     font-family: 'Servdeskfont';
-        text-align: left;
-        padding: 8px;
-       // font-size: 12px;
-        font-weight: 500;
+    text-align: left;
+    padding: 8px;
+    width: 10%;
+    font-weight: 500;
   }
 
   th {
-    background-color: #29487D;
+    background-color: #455278;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -86,7 +87,7 @@
 }
 
 .searchText {
-    width: 95%;
+    width: 34%;
     padding: 6px;
     border-radius: 5px;
 }
@@ -105,6 +106,12 @@
     color: white;
     background-color: green;
     border: 1px solid green;
+}
+
+#otpvalidation:hover{
+    border-color: #003783 !important;
+    color: #003783 !important;
+    background: aliceblue  !important;
 }
 
 .nric {
@@ -131,7 +138,16 @@
 td{
     border-bottom: 1px solid grey;
 }
-
+.inputFieldText {
+    border-radius: 5px;
+    border: 1px solid #003873;
+    height: 30px;
+    font-size: 12px;
+    width: 100%;
+    position: relative;
+    right: 75px;
+    
+}
 
 .newCustomer{
     color: white;
@@ -156,7 +172,7 @@ td{
 }
 
 .header {
-    background-color: #29487D;
+    background-color: #455278;
     color: white;
 }
 
@@ -196,43 +212,16 @@ label {
 .tableForCSC{
 //min-height: 26vh;
     max-height: 44vh;
-    overflow: auto;
-    width: 99%;
+    overflow: auto
 }
 
 .tableForHR{
 //min-height: 26vh;
     max-height: calc(44vh - 80px);
     overflow: auto;
-    width: 99%;
+  
 }
 
-.textOnInput {
-    position: relative;
-}
-
-.textOnInput label {
-    position: absolute;
-    top: -12px;
-    left: 23px;
-    padding: 2px;
-    z-index: 1;
-    font-size: 12px;
-    color: #011e3c;
-}
-
-.textOnInput label:after {
-    content: " ";
-    background-color: #fff;
-    width: 100%;
-    height: 13px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    z-index: -1;
-    font-size: 12px;
-    color: #011e3c;
-}
 // ::ng-deep .tooltip-inner {
 //     max-width: 500px !important;
 //     padding: var(--bs-tooltip-padding-y) var(--bs-tooltip-padding-x);
@@ -268,7 +257,7 @@ label {
 
 .paginatorFont{
     font-size: 12px;
-    color: #29487D;
+    color: #455278;
 }
 
 
@@ -283,126 +272,14 @@ label {
 
 
 .custom-btn {
-border-color: #29487D;
-color: #29487D;
-background: #dee1ef;
+border-color: #003783;
+color: #003783;
+background: aliceblue;
 }
 
  .custom-btn:hover {
-     background-color: #29487D;    
-     color: #ffffff !important;    
-     border-color: #29487D;
- }
- .btn-outline-primary:hover{
-    background-color: #29487D;    
-     color: #ffffff !important;    
-     border-color: #29487D;
- }
-
- @media (min-width: 575px) and (max-width: 1024px)  {
-    .ccpclass{
-        padding-left: 7.5%
-    }
-    .inputFieldText {
-        border-radius: 5px;
-        border: 1px solid #003873;
-        height: 30px;
-        font-size: 12px;
-        width: 100%;
-        position: relative;
-        // right: 14%;
-        
-    }
-    #myInput{
-        font-size: .8vw;
-    }
-    .custom-btn{
-        font-size: .8vw;
-    }
-    }
-
-@media (min-width: 1025px) and (max-width: 1128px)  {
-.ccpclass{
-    padding-left: 6%
-}
-.inputFieldText {
-    border-radius: 5px;
-    border: 1px solid #003873;
-    height: 30px;
-    font-size: 12px;
-    width: 95%;
-    position: relative;
-    // right: 18%;
+     background-color: #003783;    
+     color: #ffffff;    
+     border-color: #003783;
     
-}
-#myInput{
-    font-size: .9vw;
-}
-.custom-btn{
-    font-size: .9vw;
-}
-}
-@media (min-width: 1128px) and (max-width: 1660px)  {
-    .ccpclass{
-        padding-left: 4.5%
-    }
-    .inputFieldText {
-        border-radius: 5px;
-        border: 1px solid #003873;
-        height: 30px;
-        font-size: 12px;
-        width: 95%;
-        position: relative;
-        // right: 25%;
-        
-    }
-    #myInput{
-        font-size: .8vw;
-    }
-    .custom-btn{
-        font-size: .8vw;
-    }
-    }
-
-@media (min-width: 1661px) and (max-width: 2560px)  {
-    .ccpclass{
-        padding-left: 3.5%
-    }
-    .inputFieldText {
-        border-radius: 5px;
-        border: 1px solid #003873;
-        height: 30px;
-        font-size: 12px;
-        width: 95%;
-        position: relative;
-        // right: 75px;
-        
-    }
-    #myInput{
-        font-size: inherit;
-    }
-    .custom-btn{
-        font-size: inherit;
-    }
-    }
-    @media (min-width: 2561px) and (max-width: 4120px)  {
-        .ccpclass{
-            padding-left: 3%
-        }
-        .inputFieldText {
-            border-radius: 5px;
-            border: 1px solid #003873;
-            height: 30px;
-            font-size: 12px;
-            width: 95%;
-            position: relative;
-            right: 75px;
-            
-        }
-        #myInput{
-            font-size: inherit;
-        }
-        .custom-btn{
-            font-size: inherit;
-        }
-        }
+ }

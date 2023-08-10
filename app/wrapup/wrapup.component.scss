@@ -21,32 +21,20 @@
 
 .Always {
     display: none;
-    margin-right: 10px;
 }
 
 .show {
-    display: block ;    margin-right: 10px;
-
+    display: block ;
 }
 
 .showEapp{
-    display: block !important;    margin-right: 10px;
-
+    display: block !important;
 }
 
 .showcsc{
     display: none !important;
 }
-.wrapupdisplay{
-    position: fixed;
-    bottom: 50px;
-    margin-left: 10px;
-    padding-top: 6px;
-    width: 93.5%;
-    padding-bottom: 6px;
-    background: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
+
 .showHR {
     display: none;
 }
@@ -59,7 +47,7 @@
 }
 .caseIdLabel{
     font-size: 13px;
-    color: #29487D;
+    color: #455278;
 }
 
  .custom-btn {

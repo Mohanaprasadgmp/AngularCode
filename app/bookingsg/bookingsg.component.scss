@@ -24,7 +24,7 @@ tr{
 }
 
 .header {
-    background-color: #29487D;
+    background-color: #455278;
     color: white;
 }
 // .tableHeader tr:nth-child(even) {
@@ -67,7 +67,7 @@ tr{
 
 .textOnInput label {
     position: absolute;
-    top: -12px;
+    top: -15px;
     left: 23px;
     padding: 2px;
     z-index: 1;
@@ -111,7 +111,7 @@ label {
     max-width: 100%;
 }
 .highlighted {
-    background-color: yellow;
+    background-color: #cfe9ff;
 }
 
 .table-container {

@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="ccpService.isAuthenticated" class="row mainContent">
-  <div class="col-1 leftSide" style="position: fixed; height: 100vh;">
+  <div class="col-1 leftSide" style="position: fixed; height: 91vh">
     <!-- *ngIf="securityProfile && securityProfile.includes('Agent')" -->
     <div
       style="cursor: pointer"
@@ -161,7 +161,7 @@
         style="cursor: pointer"
         [matMenuTriggerFor]="connect"
       >
-        <img src="../../assets/images/connectlogo.png" width="22" height="22" class="mt-3 mb-3"/>
+        <img src="../../assets/images/connectlogo.png" width="22" height="22" />
         <mat-menu #connect="matMenu" xPosition="after">
           <button
             *ngIf="
@@ -179,7 +179,7 @@
             (click)="goToConnectAdmin()"
           >
             <div class="d-flex">
-              <img src="../../assets/images/groupin.png" width="23" class="mt-3 mb-3"/>
+              <img src="../../assets/images/groupin.png" width="23" />
               &nbsp;&nbsp;
               <span style="font-size: 15px; color: #02366c; font-weight: 500"
                 >Admin Dashboard</span
@@ -198,7 +198,7 @@
             (click)="goToConnect()"
           >
             <div class="d-flex">
-              <img src="../../assets/images/real-time.png" width="23" class="mt-3 mb-3"/>
+              <img src="../../assets/images/real-time.png" width="23" />
               &nbsp;&nbsp;<span
                 style="font-size: 15px; color: #02366c; font-weight: 500"
                 >Real Time Dashboard</span
@@ -220,7 +220,7 @@
         matTooltipPosition="right"
         (click)="goToAWS()"
       >
-        <img src="../../assets/images/cellphone.png" width="24" height="24" class="mt-3 mb-3" />
+        <img src="../../assets/images/cellphone.png" width="24" height="24" />
       </div>
       <!-- [matMenuTriggerFor]="calibrio" -->
       <div
@@ -231,7 +231,7 @@
         <img
           src="../../assets/images/calibrio.svg"
           width="25"
-          height="25" class="mt-3 mb-3"
+          height="25"
           (click)="goToCalibrio()"
         />
         <!-- <mat-menu #calibrio="matMenu" xPosition="after">
@@ -301,7 +301,7 @@
         <img
           src="../../assets/images/Emite.svg"
           width="25"
-          height="25" class="mt-3 mb-3"
+          height="25"
           (click)="goToEmite()"
         />
         <!-- <mat-menu #emite="matMenu" xPosition="after">
@@ -357,14 +357,15 @@
       </div>
     </div>
   </div>
-  <div class="col-11 rightSide" style="background: #f4f4f4">
+  <div class="col-11 rightSide">
     <div *ngIf="ccpService.isAuthenticated" class="row">
       <app-broadcast-message></app-broadcast-message>
     </div>
 
     <div
       *ngIf="ccpService.isAuthenticated"
-      class="row d-flex ccpclass"
+      class="row d-flex"
+      style="padding-left: 4.5%"
     >
       <router-outlet></router-outlet>
     </div>

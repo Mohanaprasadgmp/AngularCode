@@ -18,11 +18,10 @@ export class HeaderComponent implements OnInit {
   enteredNumber = '';
   loggedInUser!: string;
   stateDuration!: string;
-  selectedAgentState: any = 'LoggedIn';
-  agentStatusType: string = 'offline';
+  selectedAgentState: any = 'Not Ready';
   signOutRequest: boolean = false;
   contactSubscription: Subscription;
-  public agentStates: Array<any> = [{ state: 'Offline' }];
+  public agentStates: Array<any> = [{ state: 'Not Ready' }];
   agentStatus: any = [];
   // CallType = 'Inbound Call';
   showWorkSpace: boolean = false;
@@ -66,7 +65,7 @@ export class HeaderComponent implements OnInit {
     this.stateDuration = '00:00:00';
     this.agentInterval = setInterval(() => {
       this.getAgentDetails();
-    }, 1000);
+    }, 5000);
     this.TopStatisticsList = {
       afteR_CONTACT_WORK_TIME: '00:00:00',
       interactioN_TIME: '00:00:00',
@@ -93,9 +92,9 @@ export class HeaderComponent implements OnInit {
         this.agentSubscriptionHandler(message);
       });
 
-    setInterval(() => {
-      sessionStorage.setItem('selectedAgentState', this.selectedAgentState);
-    }, 2000);
+    // setInterval(() => {
+    //   sessionStorage.setItem('selectedAgentState', this.selectedAgentState);
+    // }, 2000);
 
     // this.loadTopStatistics();
     // setInterval(() => {
@@ -154,16 +153,16 @@ export class HeaderComponent implements OnInit {
         }
       });
 
-    this.cticustomapiService
-      .getAgentOccupancy({ action: 'getAgentOccupancy' })
-      .subscribe((response) => {
-        // // console.log(response);
-        if (response.body && response.body.length > 0) {
-          this.agentOccupancy = response.body;
-        } else {
-          this.agentOccupancy = 0;
-        }
-      });
+    // this.cticustomapiService
+    //   .getAgentOccupancy({ action: 'getAgentOccupancy' })
+    //   .subscribe((response) => {
+    //     // // console.log(response);
+    //     if (response.body && response.body.length > 0) {
+    //       this.agentOccupancy = response.body;
+    //     } else {
+    //       this.agentOccupancy = 0;
+    //     }
+    //   });
   };
 
   // clear the field when click on putbpund icon
@@ -193,6 +192,7 @@ export class HeaderComponent implements OnInit {
       this.ccpService.AWSAgentName +
       ')';
     this.agentStates = this.ccpService.AgentStates;
+    console.log(this.agentStates);
     sessionStorage.setItem('awsAgentID', this.ccpService.loggedinAgentName);
     // sessionStorage.setItem('isLoginReload', 'false');
     this.cticustomapiService
@@ -232,12 +232,13 @@ export class HeaderComponent implements OnInit {
     }
     let status = agent.getStatus().name;
 
-    if (!this.signOutRequest && agent.getStatus().name == 'Offline') {
+    if (!this.signOutRequest && agent.getStatus().name == 'Not Ready') {
       this.selectedAgentState = environment.settings.StartingState;
       await this.stateChange();
     }
 
     this.selectedAgentState = status;
+    sessionStorage.setItem('selectedAgentState', this.selectedAgentState);
   };
 
   async contactSubscriptionHandler(contact) {
@@ -420,7 +421,6 @@ export class HeaderComponent implements OnInit {
         return d.name == selectedagentstate;
       });
       console.log(choosenAgentState);
-      this.agentStatusType = choosenAgentState[0].type;
       await this.ccpService.SetAgentState(choosenAgentState[0]);
       {
         if (this.timer) {
@@ -494,7 +494,7 @@ export class HeaderComponent implements OnInit {
           });
         this.signOutRequest = true;
         this.ccpService.isSignOutRequest = true;
-        this.selectedAgentState = 'Offline';
+        this.selectedAgentState = 'Not Ready';
         await this.stateChange();
         this.ccpService.isAuthenticated = false;
         this.ccpService.signOut();
@@ -502,8 +502,8 @@ export class HeaderComponent implements OnInit {
         await this.delay(1000);
         setTimeout(() => {
           sessionStorage.clear();
-          localStorage.clear();
-        }, 3000);
+        }, 5000);
+        //sessionStorage.clear();
       }
     });
   }
@@ -612,40 +612,4 @@ export class HeaderComponent implements OnInit {
       console.log('Error on Call Click', err);
     }
   }
-
-  // async addCustomerInfo(contact) {
-  //   // console.log('Process call inside');
-  //   try {
-  //     var CaseID = '';
-  //     this.CallType = 'Outbound Call';
-  //     CaseID = contact.contactId;
-  //     var d = new Date();
-
-  //     if (
-  //       sessionStorage.getItem('CustomerInfo') !== null &&
-  //       sessionStorage.getItem('CustomerInfo') !== undefined
-  //     ) {
-  //       sessionStorage.removeItem('CustomerInfo');
-  //     }
-
-  //     var startTime = `${this.padZero(d.getHours())}:${this.padZero(
-  //       d.getMinutes()
-  //     )}:${this.padZero(d.getSeconds())}`;
-
-  //     var newCalller = {
-  //       contactStatusText: 'ONGOING',
-  //       startTime: startTime,
-  //       contactStatus: 'Online',
-  //       NewCallID: CaseID,
-  //       CaseID: CaseID,
-  //     };
-  //     var Customer = {
-  //       cases: [{ caseID: CaseID, CaseInfo: newCalller }],
-  //     };
-  //     sessionStorage.setItem('CustomerInfo', JSON.stringify(Customer));
-
-  //     this.ccpService.CallHandler('CallSaved', '');
-  //     this.ccpService.CallHandler('LoadCallHandler', CaseID);
-  //   } catch (ex) {}
-  // }
 }

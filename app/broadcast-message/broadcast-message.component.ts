@@ -17,42 +17,25 @@ export class BroadcastMessageComponent implements OnInit {
   ngOnInit(): void {
     this.agentname = sessionStorage.getItem('awsAgentID');
     this.fullMessageDetail = '';
-    this.cticustomapiService
-    .getBroadCastMessage({
-      action: 'getBroadcastMessage',
-      agentname: sessionStorage.getItem('awsAgentID'),
-    })
-    .subscribe((response) => {
-      // console.log('Broadcast respone ', response);
-      if (response && response.body && response.body.length > 0) {
-        this.indexOfMessage = 0;
-        this.messageToDisplay = response.body[0];
-        this.message = response.body;
-      } else {
-        this.indexOfMessage = -1;
-        this.messageToDisplay = null;
-        this.message = [];
-      }
-    });
-    // setInterval(() => {
-    //   this.cticustomapiService
-    //     .getBroadCastMessage({
-    //       action: 'getBroadcastMessage',
-    //       agentname: sessionStorage.getItem('awsAgentID'),
-    //     })
-    //     .subscribe((response) => {
-    //       // console.log('Broadcast respone ', response);
-    //       if (response && response.body && response.body.length > 0) {
-    //         this.indexOfMessage = 0;
-    //         this.messageToDisplay = response.body[0];
-    //         this.message = response.body;
-    //       } else {
-    //         this.indexOfMessage = -1;
-    //         this.messageToDisplay = null;
-    //         this.message = [];
-    //       }
-    //     });
-    // }, 20000);
+    setInterval(() => {
+      this.cticustomapiService
+        .getBroadCastMessage({
+          action: 'getBroadcastMessage',
+          agentname: sessionStorage.getItem('awsAgentID'),
+        })
+        .subscribe((response) => {
+          // console.log('Broadcast respone ', response);
+          if (response && response.body && response.body.length > 0) {
+            this.indexOfMessage = 0;
+            this.messageToDisplay = response.body[0];
+            this.message = response.body;
+          } else {
+            this.indexOfMessage = -1;
+            this.messageToDisplay = null;
+            this.message = [];
+          }
+        });
+    }, 60000);
   }
 
   nextMessage = () => {

@@ -6,15 +6,15 @@
 
 ::ng-deep .mat-mdc-dialog-container .mdc-dialog__container {
     transition-duration: var(--mat-dialog-transition-duration, 0ms);
-    width: 40vw;
+    width: 45vw;
     overflow-x: hidden;
 }
 
 .header {
     background-color: #2f3851;
     color: white;
-    padding: 14px;
-    
+    padding: 20px;
+    font-size: 15px;
 }
 
 

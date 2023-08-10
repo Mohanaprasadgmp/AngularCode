@@ -1,13 +1,16 @@
 <div class="broadcast" style="background: white">
   <div class="broadcastSection">
-    <strong>Broadcast Management</strong>
+    <span>Broadcast Management</span>
   </div>
 
   <div
     class="row"
     style="padding-left: 20px; padding-bottom: 10px; background: white"
   >
-    <div class="col-4 d-flex justify-content-between">
+    <div
+      class="col-12 d-flex justify-content-between"
+      style="padding-right: 10%"
+    >
       <div>
         <label for="" style="font-weight: 600"
           >Choose Queue or All <span class="asterick">*</span>
@@ -38,6 +41,41 @@
         />
         <label class="form-check-label" for="flexCheckChecked"> All </label>
       </div>
+      <div>
+        <label for="" style="font-weight: 600"
+          >From Date <span class="asterick">*</span>
+        </label>
+      </div>
+      <div>
+        <input
+          type="datetime-local"
+          class="searchText"
+          [(ngModel)]="fromDate"
+          [min]="minfromDate"
+        />
+      </div>
+      <div>
+        <label for="" style="font-weight: 600"
+          >To Date <span class="asterick">*</span></label
+        >
+      </div>
+      <div>
+        <input
+          type="datetime-local"
+          [min]="mintoDate"
+          class="searchText"
+          [(ngModel)]="toDate"
+        />
+      </div>
+      <div style="float: right">
+        <button
+          class="btn btn-outline-primary custom-btn"
+          style="cursor: pointer"
+          (click)="deleteBroadcastMessage()"
+        >
+          View History
+        </button>
+      </div>
     </div>
   </div>
 
@@ -45,7 +83,7 @@
     class="row"
     style="padding-left: 20px; padding-bottom: 10px; background: white"
   >
-    <div class="col-7 d-flex justify-content-between">
+    <!-- <div class="col-7 d-flex justify-content-between">
       <div>
         <label for="" style="font-weight: 600">From Date </label>
       </div>
@@ -68,70 +106,71 @@
           [(ngModel)]="toDate"
         />
       </div>
-    </div>
-    <div class="col-4"></div>
-    <div class="col-1">
-      <mat-icon style="cursor: pointer" (click)="deleteBroadcastMessage()"
+    </div> -->
+    <!-- <div class="col-3"></div>
+    <div class="col-2"> -->
+    <!-- <mat-icon style="cursor: pointer" (click)="deleteBroadcastMessage()"
         >delete</mat-icon
-      >
-    </div>
-  </div>
+      > -->
 
-  <div class="d-flex ps-4 pe-4" style="justify-content: space-between">
-    <div>
-      <p-pickList
-        [source]="rightsObject"
-        [target]="selectedRights"
-        sourceHeader="Available"
-        targetHeader="Selected"
-        [responsive]="true"
-        [sourceStyle]="{ height: '215px' }"
-        [targetStyle]="{ height: '215px' }"
-        filterBy="Name"
-        sourceFilterPlaceholder="Search by {{ agentorqueue }}"
-        targetFilterPlaceholder="Search by {{ agentorqueue }}"
-      >
-        <ng-template let-product pTemplate="item">
-          <div class="product-item">
-            <div class="product-list-detail">
-              <h5 class="mb-2">{{ product.Name }}</h5>
-            </div>
-          </div>
-        </ng-template>
-      </p-pickList>
-    </div>
-    <div class="d-flex flex-column">
+    <!-- </div> -->
+
+    <div class="d-flex ps-4 pe-4" style="justify-content: space-between">
       <div>
-        <textarea
-          class="broadcastMsge"
-          placeholder="250 character limit"
-          [(ngModel)]="broadcastMsge"
-          cols="70"
-          rows="16"
-          [maxLength]="250"
-        ></textarea>
+        <p-pickList
+          [source]="rightsObject"
+          [target]="selectedRights"
+          sourceHeader="Available"
+          targetHeader="Selected"
+          [responsive]="true"
+          [sourceStyle]="{ height: '215px' }"
+          [targetStyle]="{ height: '215px' }"
+          filterBy="Name"
+          sourceFilterPlaceholder="Search by {{ agentorqueue }}"
+          targetFilterPlaceholder="Search by {{ agentorqueue }}"
+        >
+          <ng-template let-product pTemplate="item">
+            <div class="product-item">
+              <div class="product-list-detail">
+                <h5 class="mb-2">{{ product.Name }}</h5>
+              </div>
+            </div>
+          </ng-template>
+        </p-pickList>
       </div>
+      <div class="d-flex flex-column">
+        <div>
+          <textarea
+            class="broadcastMsge"
+            placeholder="250 character limit"
+            [(ngModel)]="broadcastMsge"
+            cols="70"
+            rows="16"
+            [maxLength]="250"
+          ></textarea>
+        </div>
 
-      <br />
-      <div class="d-flex row">
-        <div class="col-8"></div>
-        <div class="col-4 d-flex justify-content-between">
-          <div>
-            <button
-              class="btn btn-outline-primary custom-btn"
-              (click)="resetField()"
-            >
-              Cancel
-            </button>
-          </div>
-          <div>
-            <button
-              class="btn btn-outline-primary custom-btn"
-              (click)="createBroadcastMessage()"
-              [disabled]="isAnyRadioButtonSelected()"
-            >
-              Send
-            </button>
+        <br />
+        <div class="d-flex row">
+          <div class="col-8"></div>
+          <div class="col-4 d-flex justify-content-between">
+            <div>
+              <button
+                class="btn btn-outline-primary custom-btn"
+                (click)="resetField()"
+              >
+                Cancel
+              </button>
+            </div>
+            <div>
+              <button
+                class="btn btn-outline-primary custom-btn"
+                (click)="createBroadcastMessage()"
+                [disabled]="isAnyRadioButtonSelected() || !fromDate || !toDate"
+              >
+                Send
+              </button>
+            </div>
           </div>
         </div>
       </div>

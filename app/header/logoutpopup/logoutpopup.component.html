@@ -1,17 +1,17 @@
 <div>
   <div class="header">
-    <strong>Warning!</strong>
+    <span>Warning!</span>
   </div>
-  <div class="col-12 d-flex justify-content-center" style="padding: 20px 22px">
-    <div class="d-flex ">
+  <div class="col-12 d-flex" style="padding: 20px 22px">
+    <div>
       <label for="">Are you sure want to Logout ? </label>
     </div>
   </div>
   <div class="row">
-    <!-- <div class="col-8"></div> -->
-    <div class="col-12">
-      <div class="d-flex justify-content-center" style="padding: 8px 20px">
-        <div class="me-2">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="d-flex justify-content-between" style="padding: 8px 20px">
+        <div>
           <button
             class="btn btn-outline-primary custom-btn"
             (click)="onClose()"
@@ -20,7 +20,7 @@
             Cancel
           </button>
         </div>
-        <div class="ms-2">
+        <div>
           <button
             class="btn btn-outline-primary custom-btn"
             (click)="logout()"

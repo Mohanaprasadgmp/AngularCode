@@ -3,6 +3,7 @@ import { CticustomapiService } from '../services/cticustomapi.service';
 import { CcpService } from '../services/ccp.service';
 import { Subscription } from 'rxjs';
 import { WrapupService } from '../services/wrapup.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-wrapup',
   templateUrl: './wrapup.component.html',
@@ -24,18 +25,50 @@ export class WrapupComponent {
   statusEADropdownChanged = true;
   selectedHRWrapup!: string;
   hrWrapUp = [];
-  eappointmentStatus = [];
+  eappointmentCallbackStatus = [];
+  eappointmentWalkinStatus = [];
   stausEapointment!: string;
   displayTable = false;
   selectedAgentState: string;
   dialStatus: any;
   agent: any;
+  nextAgentCsc: boolean = true;
+  nextAgentHr: boolean = true;
+  nextAgentEappt: boolean = true;
+  selectedAgentStateInWrapup: any;
+  public agentStates: Array<any> = [{ state: 'Not Ready' }];
+  agentInterval: any;
+  callbackDropdown = false;
+  walkinDropdown = false;
   constructor(
     public cticustomapiService: CticustomapiService,
     public ccpService: CcpService,
     public wrapupService: WrapupService
   ) {}
   ngOnInit(): void {
+    this.agentInterval = setInterval(() => {
+      this.getAgentDetails();
+    }, 1000);
+    setInterval(() => {
+      if (
+        sessionStorage.getItem('serviceId') != null &&
+        sessionStorage.getItem('serviceId') != undefined
+      ) {
+        if (
+          sessionStorage.getItem('serviceId') === environment.settings.callBack
+        ) {
+          this.callbackDropdown = true;
+          this.walkinDropdown = false;
+        }
+        if (
+          sessionStorage.getItem('serviceId') === environment.settings.walkin
+        ) {
+          this.callbackDropdown = false;
+          this.walkinDropdown = true;
+        }
+      }
+    }, 3000);
+    console.log(this.agentStates);
     this.cscCaseID = '';
     this.hrCaseID = '';
     this.eappointemntCaseId = '';
@@ -60,8 +93,13 @@ export class WrapupComponent {
         action: 'getEappointmentStatusValues',
       })
       .subscribe((response) => {
-        this.eappointmentStatus = response.body;
-        console.log('eappointmentStatus ', this.eappointmentStatus);
+        this.eappointmentCallbackStatus = response.body[0].callback;
+        this.eappointmentWalkinStatus = response.body[0].walkin;
+        console.log(
+          'eappointmentCallbackStatus ',
+          this.eappointmentCallbackStatus
+        );
+        console.log('eappointmentWalkinStatus ', this.eappointmentWalkinStatus);
       });
     setInterval(() => {
       this.IsEappointmentCall = sessionStorage.getItem('IsEappointmentCall');
@@ -115,7 +153,7 @@ export class WrapupComponent {
     }
   }
 
-  ApplyWrapUp = (department) => {
+  ApplyWrapUp = async (department) => {
     this.applyWrapupClicked = true;
     if (department === 'CSC') {
       let params = {
@@ -134,7 +172,8 @@ export class WrapupComponent {
       console.log('State is ', state);
       if (
         this.applyWrapupClicked &&
-        this.agent.getState().name === 'AfterCallWork'
+        this.agent.getState().name === 'AfterCallWork' &&
+        this.nextAgentCsc === true
       ) {
         sessionStorage.setItem('CallEnded', '1');
         this.agent.setState(state, {
@@ -148,6 +187,13 @@ export class WrapupComponent {
             );
           },
         });
+      } else {
+        try {
+          var choosenAgentState = this.agentStates.filter((d) => {
+            return d.name == this.selectedAgentStateInWrapup;
+          });
+          await this.ccpService.SetAgentState(choosenAgentState[0]);
+        } catch {}
       }
     }
     if (department === 'HR') {
@@ -167,7 +213,8 @@ export class WrapupComponent {
       console.log('State is ', state);
       if (
         this.applyWrapupClicked &&
-        this.agent.getState().name === 'AfterCallWork'
+        this.agent.getState().name === 'AfterCallWork' &&
+        this.nextAgentHr === true
       ) {
         sessionStorage.setItem('CallEnded', '1');
         this.agent.setState(state, {
@@ -181,6 +228,13 @@ export class WrapupComponent {
             );
           },
         });
+      } else {
+        try {
+          var choosenAgentState = this.agentStates.filter((d) => {
+            return d.name == this.selectedAgentStateInWrapup;
+          });
+          await this.ccpService.SetAgentState(choosenAgentState[0]);
+        } catch {}
       }
     }
     if (department === 'Eappointment') {
@@ -276,7 +330,8 @@ export class WrapupComponent {
       console.log('State is ', state);
       if (
         this.applyWrapupClicked &&
-        this.agent.getState().name === 'AfterCallWork'
+        this.agent.getState().name === 'AfterCallWork' &&
+        this.nextAgentEappt === true
       ) {
         sessionStorage.setItem('CallEnded', '1');
         this.agent.setState(state, {
@@ -290,17 +345,25 @@ export class WrapupComponent {
             );
           },
         });
+      } else {
+        try {
+          var choosenAgentState = this.agentStates.filter((d) => {
+            return d.name == this.selectedAgentStateInWrapup;
+          });
+          await this.ccpService.SetAgentState(choosenAgentState[0]);
+        } catch {}
       }
 
       sessionStorage.removeItem('uniqueServideid');
       sessionStorage.removeItem('uniqueServideid');
     }
+
     let awsAgentID = sessionStorage.getItem('awsAgentID');
     let screenToRemember = sessionStorage.getItem('screenToDisplay');
     //let CustomerInfo = sessionStorage.getItem('CustomerInfo');
     let securityProfile = sessionStorage.getItem('securityProfile');
-
     sessionStorage.clear();
+    sessionStorage.setItem('clearAllFields', 'true');
     sessionStorage.setItem('screenToDisplay', screenToRemember.toUpperCase());
     sessionStorage.setItem('securityProfile', securityProfile);
     sessionStorage.setItem('awsAgentID', awsAgentID);
@@ -321,4 +384,34 @@ export class WrapupComponent {
     this.stausEapointment = event.target.value;
     console.log(this.stausEapointment);
   };
+
+  async stateChange(department: any) {
+    if (department === 'CSC') {
+      this.nextAgentCsc = false;
+    }
+    if (department === 'HR') {
+      this.nextAgentHr = false;
+    }
+    if (department === 'Eappt') {
+      this.nextAgentEappt = false;
+    }
+    var selectedagentstate = this.selectedAgentStateInWrapup;
+    console.log(selectedagentstate);
+  }
+
+  GetAgentState = () => {
+    return this.agentStates;
+  };
+  IsAgentStateIncluded = (agentState) => {
+    let selectedState = this.agentStates.filter(
+      (item) => item.name == agentState
+    );
+    return selectedState && selectedState.length > 0;
+  };
+
+  getAgentDetails() {
+    this.agentStates = this.ccpService.AgentStates;
+    console.log(this.agentStates);
+    clearInterval(this.agentInterval);
+  }
 }

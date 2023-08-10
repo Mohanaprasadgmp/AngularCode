@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   goToCalibrio = () => {
     window.open(
-      'https://sgp.calabriocloud.com/api/rest/saml/authorize?idp=11:be7ba36f-d661-4765-aeb0-4297199dd3c5',
+      'https://launcher.myapps.microsoft.com/api/signin/a1606321-2a62-4d07-ae47-df3be7f22607?tenantId=db5e17b0-dc06-468e-a1ca-956f989dfdd2',
       '_blank'
     );
   };

@@ -25,8 +25,8 @@ mat-tab-group.mat-mdc-tab-group.mat-primary.mat-mdc-tab-group-stretch-tabs {
 }
 
 .tilebg {
-    background: #0ae513;
-        padding-right: 4px;
+    background: #e9ffe9;
+    padding-right: 4px;
     /* padding-bottom: 10px; */
     padding-left: 4px;
     border-radius: 4px;
@@ -109,7 +109,10 @@ margin: 0;
     display: flex;
 }
 
-
+::ng-deep .popover {
+    width: 20%;
+    height: 350px;
+}
 
 .digits {
     width: 95%;
@@ -206,25 +209,3 @@ position: relative;
      border-color: #003783;
 
  }
-
-
- @media (min-width: 575px) and (max-width: 1024px)  {
-   
-    ::ng-deep .popover {
-        width: 40vw;
-        height: 200px;
-    }
-    }
-
-@media (min-width: 1025px) and (max-width: 1440px)  {
-    ::ng-deep .popover {
-        width: 35vw;
-        height: 350px;
-    }
-}
-@media (min-width: 1441px) and (max-width: 3000px)  {
-    ::ng-deep .popover {
-        width: 20%;
-        height: 350px;
-    }
-    }

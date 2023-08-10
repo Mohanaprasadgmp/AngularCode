@@ -51,4 +51,21 @@ export class BroadcastpopupComponent {
         }
       });
   };
+  convertData = (date: any) => {
+    const utcTimestamp = new Date(date);
+
+    // Extract date components
+    const year = utcTimestamp.getUTCFullYear();
+    const month = String(utcTimestamp.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(utcTimestamp.getUTCDate()).padStart(2, '0');
+
+    // Extract time components
+    const hours = String(utcTimestamp.getUTCHours()).padStart(2, '0');
+    const minutes = String(utcTimestamp.getUTCMinutes()).padStart(2, '0');
+
+    // Formatted date-time string
+    // const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}`;
+    const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+    return formattedDateTime;
+  };
 }

@@ -19,7 +19,9 @@
       {{ cschrForAcceptRejectCall === "HR" ? "Incoming" : "New" }}
     </h6>
   </div>
-  <div class="callActions" *ngIf="cschrForAcceptRejectCall === 'HR'">
+
+  <!-- Since skype not configured it is autoanswering for hr too -->
+  <!-- <div class="callActions" *ngIf="cschrForAcceptRejectCall === 'HR' ">
     <div class="d-grid">
       <div class="answerEnd d-flex justify-content-evenly w-100">
         <button
@@ -36,7 +38,7 @@
         />
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <!-- end -->
 

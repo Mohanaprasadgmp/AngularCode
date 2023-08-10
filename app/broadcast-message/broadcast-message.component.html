@@ -1,13 +1,14 @@
 <div
-  class="row broad "
+  class="row broad p-2 pt-1 pb-1"
   style="
     border-bottom: 1px solid #e5e5e5;
-    background: #dee1ef;
+    background: aliceblue;
     overflow: hidden;
+    margin-left: 4.5%;
   "
 >
-  <div class="col-md-10 d-flex wrapper">
-    <p class="target" style="margin-top: 5px;margin-bottom: 0;">
+  <div class="col-md-11 d-flex wrapper">
+    <p class="target" style="width: 0em; background-color: red">
       {{
         messageToDisplay &&
         messageToDisplay.queue &&
@@ -26,7 +27,8 @@
     </p>
   </div>
   <div
-    class="col-md-2 d-flex align-items-center indexmesg"
+    class="col-md-1 d-flex align-items-center"
+    style="padding-left: 0"
     *ngIf="indexOfMessage + 1 !== 0 && message.length !== 0"
   >
     <mat-icon
@@ -34,7 +36,7 @@
       style="cursor: pointer"
       (click)="previousMessage()"
       >fast_rewind</mat-icon
-    ><span>&nbsp;{{ indexOfMessage + 1 }}</span> &nbsp;&nbsp;<span>of</span>&nbsp;&nbsp;
+    ><span>&nbsp;{{ indexOfMessage + 1 }}</span> &nbsp;&nbsp;of&nbsp;&nbsp;
     <span>{{ message.length }}&nbsp;</span>
     <mat-icon
       matTooltip="Next Message"
